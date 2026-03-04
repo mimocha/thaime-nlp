@@ -24,6 +24,10 @@ thaime-nlp/
 ├── README.md                   # Human-readable project overview
 ├── LICENSE                     # MIT
 ├── .gitignore
+├── pyproject.toml              # Python project & dependencies
+│
+├── .devcontainer/              # Dev container configuration
+│   └── devcontainer.json
 │
 ├── docs/                       # Repo-level documentation
 │   ├── git-workflow.md         # Branching and PR conventions
@@ -58,7 +62,7 @@ thaime-nlp/
 
 2. **Follow the research workflow.** Every experiment follows the four stages defined in `docs/research-workflow.md`. Do not skip stages.
 
-3. **Use Python for all research code.** This repo is Python-only. Research code does not need to be production-quality, but it must be runnable and reproducible (document dependencies, use `requirements.txt` or inline `pip install` commands).
+3. **Use Python for all research code.** This repo is Python-only. Research code does not need to be production-quality, but it must be runnable and reproducible (document dependencies in `pyproject.toml` or use inline `uv pip install` commands).
 
 4. **Keep research branches self-contained.** Each `research/<topic>` branch should contain everything needed to reproduce its results. Do not depend on state from other research branches.
 
@@ -67,9 +71,9 @@ thaime-nlp/
 ## Tech Stack
 
 - **Language:** Python 3.10+
-- **Key libraries:** PyThaiNLP, TLTK, pandas, numpy, matplotlib, jupyter
+- **Key libraries:** PyThaiNLP, TLTK, pandas, numpy, matplotlib, jupyter (see `pyproject.toml`)
 - **Testing:** pytest for shared utilities; benchmark evaluation scripts in `src/utils/`
-- **Environment:** Use `venv` or specify dependencies inline. No Docker required.
+- **Environment:** A devcontainer is provided in `.devcontainer/` with all dependencies pre-installed. For local development, use `uv sync` to create a venv and install dependencies.
 
 ## Context From the Main Project
 

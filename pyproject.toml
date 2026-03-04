@@ -1,0 +1,22 @@
+[project]
+name = "thaime-nlp"
+version = "0.1.0"
+description = "NLP research repository for the THAIME project"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.12"
+
+dependencies = [
+    # Core NLP libraries
+    "pythainlp>=5.0",
+    "tltk>=1.0",
+    # Data & visualization
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "matplotlib>=3.7",
+    # Notebooks
+    "jupyter>=1.0",
+    "ipykernel>=6.0",
+    # Testing
+    "pytest>=7.0",
+]

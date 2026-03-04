@@ -33,6 +33,9 @@ Thumbs.db
 .env
 *.env
 
+# uv
+uv.lock
+
 # Experiment outputs that shouldn't be tracked
 # (large generated files — commit summaries and key results, not raw dumps)
 experiments/*/data/raw/
