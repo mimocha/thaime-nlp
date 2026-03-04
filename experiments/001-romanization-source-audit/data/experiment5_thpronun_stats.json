@@ -1,0 +1,160 @@
+{
+  "thpronun_stats": {
+    "total_words": 80,
+    "errors": 0,
+    "has_output": 80,
+    "multi_reading_words": 36,
+    "exact_match_with_informal": 49,
+    "close_match_with_informal": 7,
+    "match_rate_exact": "61.3%",
+    "match_rate_close": "70.0%",
+    "readings_distribution": {
+      "1": 44,
+      "2": 12,
+      "3": 11,
+      "4": 1,
+      "6": 1,
+      "7": 2,
+      "9": 1,
+      "10": 2,
+      "12": 2,
+      "13": 1,
+      "14": 1,
+      "26": 1,
+      "40": 1
+    },
+    "avg_readings_per_word": 3.3875
+  },
+  "thai2karaoke_analysis": {
+    "name": "thai2karaoke (comdevx)",
+    "type": "Neural network (brain.js) syllable classifier",
+    "language": "JavaScript (Node.js)",
+    "license": "Open source (attribution requested)",
+    "approach": "Uses a neural network trained on Thai syllable patterns to classify syllables into vowel-sound groups (e.g., 'a', 'i', 'ue', 'o', 'ai', etc.). Then assembles romanization by looking up initial/final consonant mappings from a character table and combining with the classified vowel group.",
+    "consonant_system": {
+      "initial_mapping": "RTGS-like (ก→k, ข→kh, ค→kh, จ→ch, etc.)",
+      "final_mapping": "Simplified (จ→t, ซ→t, บ→p, ด→t, etc.)",
+      "note": "Uses 'first' for initial position and 'spell' for final position per consonant"
+    },
+    "vowel_groups": [
+      "a, a1-a8 (sara a variants)",
+      "i, i1-i4 (sara i variants)",
+      "ue, ue1-ue4 (sara ue variants)",
+      "u, u1-u4 (sara u variants)",
+      "e, e1-e4 (sara e variants)",
+      "ae, ae1-ae2 (sara ae variants)",
+      "o, o1-o5 (sara o variants)",
+      "oe, oe1-oe3 (sara oe variants)",
+      "ia, ia1-ia2 (sara ia variants)",
+      "uea, uea1-uea4 (sara uea variants)",
+      "ua, ua1-ua4 (sara ua variants)",
+      "ai, ai1 (sara ai variants)",
+      "ao, ao1-ao2 (sara ao variants)",
+      "ui, ui1 (sara ui variants)",
+      "oei (sara oei)",
+      "am (sara am)",
+      "an (double ร)"
+    ],
+    "training_data_size": "~600 syllable patterns",
+    "strengths": [
+      "Syllable-aligned output (each Thai syllable → Latin chunk)",
+      "Uses neural network to handle ambiguous vowel patterns",
+      "RTGS-based consonant mapping is correct"
+    ],
+    "weaknesses": [
+      "Requires pre-segmented Thai syllables (word segmentation not included)",
+      "Small training set (~600 patterns)",
+      "Node.js only (not directly usable in Python pipeline)",
+      "No maintenance for 6+ years (last updated 2019)",
+      "No tone handling",
+      "Neural network adds complexity vs. simple rule-based approach"
+    ],
+    "relevance_to_thaime": "Low. The consonant and vowel mappings are a subset of what TLTK already provides with better quality. The syllable-level approach is interesting conceptually but the tool itself is not practically usable. The character mapping tables (find_word.js) could be referenced for validation."
+  },
+  "web_sources": [
+    {
+      "name": "thai-language.com",
+      "url": "http://www.thai-language.com/",
+      "size": "30,000+ dictionary entries",
+      "romanization_system": "Custom phonemic system with tone markers using capital letters: M=mid, L=low, H=high, F=falling, R=rising. Example: สวัสดี → 'saL watL deeM'. Also shows RTGS (Royal Thai General System) in a separate field.",
+      "example_romanizations": {
+        "ชา": "chaaM (with tone marker)",
+        "น้ำชา": "namH chaaM",
+        "กรุงเทพ": "grungM thaehpF (per RTGS section: krung thep)"
+      },
+      "api_access": "No public API. Has a 'bulk lookup' feature for registered users.",
+      "scraping_feasibility": "Pages are server-rendered HTML with consistent structure. Dictionary entries have numeric IDs (e.g., /id/131163). Could be scraped, but ToS likely prohibits systematic extraction.",
+      "license": "Proprietary. Copyright notice present. No open data license.",
+      "strengths": [
+        "Very high quality, human-curated entries",
+        "Multiple romanization systems per entry (custom phonemic + RTGS)",
+        "Tone information preserved",
+        "Rich example sentences with full romanization",
+        "Large vocabulary including colloquial Thai"
+      ],
+      "weaknesses": [
+        "No API for programmatic access",
+        "Proprietary — cannot legally extract data at scale",
+        "Custom romanization system (not RTGS) requires post-processing",
+        "Tone markers use capital letters which need stripping for THAIME use"
+      ],
+      "relevance_to_thaime": "High quality but not legally or practically extractable at scale. Could serve as a manual validation/reference source for spot-checking romanization quality. The tone-marked system is not directly useful for THAIME (users don't type tones), but the base romanizations are good."
+    },
+    {
+      "name": "thai2english.com",
+      "url": "https://www.thai2english.com/",
+      "size": "100,000+ entries (claimed)",
+      "romanization_system": "Custom system with diacritic tone markers: â=falling, à=low, ǎ=rising, etc. Example: กรุงเทพ → 'grung tâyp'. Notable differences from RTGS: uses 'g' for ก (not 'k'), 'bp' for ป (not 'p'), 'dt' for ต (not 't').",
+      "example_romanizations": {
+        "กรุงเทพ": "grung tâyp",
+        "เป็น": "bpen",
+        "เมืองหลวง": "meuang lŭang",
+        "ประเทศไทย": "bprà-tâyt tai"
+      },
+      "api_access": "No documented public API. The transliteration feature works client-side via JavaScript. Could potentially reverse-engineer the API endpoint but this is against ToS.",
+      "scraping_feasibility": "The site uses client-side rendering for transliteration. Dictionary pages might be scrapable but ToS likely prohibits it.",
+      "license": "Proprietary. Copyright © 2024 thai2english.com.",
+      "strengths": [
+        "High-quality romanization with tone markers",
+        "Word segmentation built in",
+        "Includes component word breakdowns",
+        "Example sentences with full romanization",
+        "Designed specifically for learners (readable output)"
+      ],
+      "weaknesses": [
+        "Proprietary — no data extraction allowed",
+        "Custom romanization system different from RTGS",
+        "Uses 'g' instead of 'k', 'bp' instead of 'p' — closer to Thai phonology but not intuitive for informal romanization",
+        "Diacritic tone markers not useful for THAIME"
+      ],
+      "relevance_to_thaime": "Medium. The romanization system is phonologically accurate but uses a non-standard convention (g/bp/dt) that doesn't match either RTGS or informal romanization patterns. Not extractable at scale. Could be used as a validation reference."
+    },
+    {
+      "name": "Wiktionary (Thai entries)",
+      "url": "https://en.wiktionary.org/wiki/Category:Thai_terms_with_IPA_pronunciation",
+      "size": "16,000+ Thai entries with IPA pronunciation",
+      "romanization_system": "Multiple systems per entry: IPA, RTGS, and Paiboon+. Structured data extractable via wiktextract tool. Example: สวัสดี has RTGS 'sawatdi', IPA '/sa.wàt.dīː/', Paiboon 'sà-wàt-dee'.",
+      "example_romanizations": {
+        "note": "Based on Wiktionary entry format, not live-tested",
+        "สวัสดี": "RTGS: sawatdi, IPA: /sa.wàt.dīː/, Paiboon: sà-wàt-dee"
+      },
+      "api_access": "Structured data available via wiktextract (Python tool). Wiktionary also has a MediaWiki API for raw wikitext. Pre-extracted data dumps available from kaikki.org.",
+      "scraping_feasibility": "Fully legal — CC-BY-SA 3.0 license.",
+      "license": "CC-BY-SA 3.0 (requires attribution, share-alike)",
+      "strengths": [
+        "Multiple romanization systems (RTGS, IPA, Paiboon)",
+        "Open license (CC-BY-SA 3.0)",
+        "Structured data extractable via wiktextract",
+        "Community-curated with quality standards",
+        "Paiboon system is closest to learner-friendly romanization"
+      ],
+      "weaknesses": [
+        "Only 16K+ entries (smaller than thai2rom-dataset)",
+        "Coverage focuses on common vocabulary, may miss slang",
+        "wiktextract extraction requires processing effort",
+        "CC-BY-SA 3.0 share-alike may have implications for THAIME (MPL 2.0)"
+      ],
+      "relevance_to_thaime": "High. The multi-system romanization data is uniquely valuable — no other source provides RTGS + IPA + Paiboon in structured form. The Paiboon romanizations may be the closest available approximation to informal romanization. The CC-BY-SA license needs legal review for compatibility with THAIME's MPL 2.0 license. Recommended as a follow-up investigation."
+    }
+  ]
+}

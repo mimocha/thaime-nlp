@@ -11,5 +11,4 @@
 
 | Topic | Branch | Stage | Started |
 |-------|--------|-------|---------|
-
-*No research in progress.*
+| Romanization Source Audit | `research/001-romanization-source-audit` | Summary (Stage 4) | 2026-03-04 |

@@ -1,0 +1,9 @@
+{
+  "total_rows": 648241,
+  "unique_thai": 648241,
+  "unique_romanizations": 610465,
+  "mean_variants_per_word": 1.0,
+  "max_variants_per_word": 1,
+  "single_variant_words": 648241,
+  "multi_variant_words": 0
+}

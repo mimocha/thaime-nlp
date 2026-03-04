@@ -1,0 +1,81 @@
+thai,category,english,informal_ref,tltk_roman,tltk_ipa,pythainlp_royin,pythainlp_thai2rom,pythainlp_lookup,iso_11940
+สวัสดี,common,hello,sawatdee,sawatdi,sa2.wat2.diː1,satti,ERROR: No module named 'torch',satti,s̄wạs̄dī
+ขอบคุณ,common,thank you,khopkhun,khopkhun,kʰᴐːp2.kʰun1,khopkun,ERROR: No module named 'torch',khopkun,k̄hxbkhuṇ
+ใช่,common,yes,chai,chai,cʰaj3,chai,ERROR: No module named 'torch',chai,ıch̀
+ไม่,common,no,mai,mai,maj3,mai,ERROR: No module named 'torch',mai,ịm̀
+เป็น,common,to be,pen,pen,pen1,pen,ERROR: No module named 'torch',pen,ep̆n
+ได้,common,can/get,dai,dai,daːj3,dai,ERROR: No module named 'torch',dai,ịd̂
+อะไร,common,what,arai,arai,ʔa2.raj1,anai,ERROR: No module named 'torch',anai,xaịr
+ทำไม,common,why,tammai,thammai,tʰam1.maj1,thammai,ERROR: No module named 'torch',thammai,thåịm
+คน,common,person,khon,khon,kʰon1,khon,ERROR: No module named 'torch',khon,khn
+บ้าน,common,house,baan,ban,baːn3,ban,ERROR: No module named 'torch',ban,b̂ān
+ข้าว,food,rice,khao,khao,kʰaːw3,khao,ERROR: No module named 'torch',khao,k̄ĥāw
+น้ำ,food,water,nam,nam,naːm4,nam,ERROR: No module named 'torch',nam,n̂å
+ผัดไทย,food,pad thai,phat thai,phatthai,pʰat2.tʰaj1,phattai,ERROR: No module named 'torch',phattai,p̄hạdịthy
+ต้มยำกุ้ง,food,tom yum goong,tomyamkung,tomyamkung,tom3.jam1.kuŋ3,tmamkung,ERROR: No module named 'torch',tmamkung,t̂myåkûng
+ส้มตำ,food,som tam,somtam,somtam,som3.tam1,smtam,ERROR: No module named 'torch',smtam,s̄̂mtå
+กาแฟ,food,coffee,kafae,kafae,kaː1.fɛː1,kapae,ERROR: No module named 'torch',kapae,kāæf
+เบียร์,food,beer,bia,bia,biːa1,bia,ERROR: No module named 'torch',beer,ebīyr̒
+ชา,food,tea,cha,cha,cʰaː1,cha,ERROR: No module named 'torch',cha,chā
+ไก่,food,chicken,kai,kai,kaj2,kai,ERROR: No module named 'torch',kai,ịk̀
+หมู,food,pork,moo,mu,muː5,mu,ERROR: No module named 'torch',mu,h̄mū
+กรุงเทพ,places,Bangkok,krungthep,krungthep,kruŋ1.tʰeːp3,knungtep,ERROR: No module named 'torch',knungtep,krungethph
+เชียงใหม่,places,Chiang Mai,chiangmai,chiangmai,cʰiːaŋ1.maj2,chiangaim,ERROR: No module named 'torch',chiangaim,echīyngıh̄m̀
+ภูเก็ต,places,Phuket,phuket,phuket,pʰuː1.ket2,phuket,ERROR: No module named 'torch',phuket,p̣hūek̆t
+พัทยา,places,Pattaya,pattaya,phatthaya,pʰat4.tʰa4.jaː1,phata,ERROR: No module named 'torch',phata,phạthyā
+อยุธยา,places,Ayutthaya,ayutthaya,ayutthaya,ʔa2.jut4.tʰa4.jaː1,uta,ERROR: No module named 'torch',uta,xyuṭhyā
+สุโขทัย,places,Sukhothai,sukhothai,sukhothai,su2.kʰoː5.tʰaj1,sukotai,ERROR: No module named 'torch',sukotai,s̄uok̄hthạy
+หาดใหญ่,places,Hat Yai,hatyai,hatyai,haːt2.jaj2,atain,ERROR: No module named 'torch',atain,h̄ādıh̄ỵ̀
+ประเทศไทย,places,Thailand,pratetthai,prathetthai,pra2.tʰeːt3.tʰaj1,pnatetthai,ERROR: No module named 'torch',pnatetthai,praethṣ̄ịthy
+ไป,verbs,to go,pai,pai,paj1,pai,ERROR: No module named 'torch',pai,ịp
+มา,verbs,to come,ma,ma,maː1,ma,ERROR: No module named 'torch',ma,mā
+กิน,verbs,to eat,kin,kin,kin1,kin,ERROR: No module named 'torch',kin,kin
+ดู,verbs,to look,doo,du,duː1,du,ERROR: No module named 'torch',du,dū
+พูด,verbs,to speak,phood,phut,pʰuːt3,phut,ERROR: No module named 'torch',phut,phūd
+ฟัง,verbs,to listen,fang,fang,faŋ1,fang,ERROR: No module named 'torch',fang,fạng
+อ่าน,verbs,to read,aan,an,ʔaːn2,an,ERROR: No module named 'torch',an,x̀ān
+เขียน,verbs,to write,khian,khian,kʰiːan5,khian,ERROR: No module named 'torch',khian,ek̄hīyn
+รัก,verbs,to love,rak,rak,rak4,rak,ERROR: No module named 'torch',rak,rạk
+ซื้อ,verbs,to buy,sue,sue,sɯː4,sue,ERROR: No module named 'torch',sue,sụ̄̂x
+ขาย,verbs,to sell,khai,khai,kʰaːj5,khai,ERROR: No module named 'torch',khai,k̄hāy
+นอน,verbs,to sleep,non,non,nᴐːn1,non,ERROR: No module named 'torch',non,nxn
+สนุก,slang,fun,sanuk,sanuk,sa2.nuk2,snuk,ERROR: No module named 'torch',snuk,s̄nuk
+เท่,slang,cool,thae,the,tʰeː3,the,ERROR: No module named 'torch',the,eth̀
+แซ่บ,slang,delicious/spicy,saep,,,saep,ERROR: No module named 'torch',saep,æs̀b
+ชิล,slang,chill,chin,chin,cʰin1,chin,ERROR: No module named 'torch',chill,chil
+โอเค,slang,okay,okay,okhe,ʔoː1.kʰeː1,oke,ERROR: No module named 'torch',ok,oxekh
+กลัว,slang,scared,klua,klua,kluːa1,knua,ERROR: No module named 'torch',knua,klạw
+เหนื่อย,slang,tired,nuay,nueai,nɯːaj2,enue,ERROR: No module named 'torch',enue,eh̄nụ̄̀xy
+หิว,slang,hungry,hiu,hio,hiw5,hio,ERROR: No module named 'torch',hio,h̄iw
+อร่อย,slang,delicious,aroi,aroi,ʔa2.rᴐːj2,noi,ERROR: No module named 'torch',noi,xr̀xy
+เผ็ด,slang,spicy,phet,phet,pʰet2,phet,ERROR: No module named 'torch',phet,ep̄h̆d
+โรงเรียน,compounds,school,rongrean,rongrian,roːŋ1.riːan1,rongnian,ERROR: No module named 'torch',rongnian,orngerīyn
+โรงพยาบาล,compounds,hospital,rongphayaban,rongphayaban,roːŋ1.pʰa4.jaː1.baːn1,rongpapan,ERROR: No module named 'torch',rongpapan,orngphyābāl
+สนามบิน,compounds,airport,sanambin,sanambin,sa2.naːm5.bin1,snampin,ERROR: No module named 'torch',snampin,s̄nāmbin
+มหาวิทยาลัย,compounds,university,mahawittayalai,mahawitthayalai,ma4.haː5.wit4.tʰa4.jaː1.laj1,maoิtanai,ERROR: No module named 'torch',maoิtanai,mh̄āwithyālạy
+โทรศัพท์,compounds,telephone,thorasap,thorasap,tʰoː1.ra4.sap2,thontap,ERROR: No module named 'torch',thontap,othrṣ̄ạphth̒
+คอมพิวเตอร์,compounds,computer,khompiwtoe,khomphiotoe,kʰᴐːm1.pʰiw1.tɤː3,khompiotoe,ERROR: No module named 'torch',computer,khxmphiwetxr̒
+ห้องน้ำ,compounds,bathroom,hongnam,hongnam,hᴐːŋ3.naːm4,ongnam,ERROR: No module named 'torch',ongnam,h̄̂xngn̂å
+ตลาด,compounds,market,talat,talat,ta2.laːt2,tnat,ERROR: No module named 'torch',tnat,tlād
+รถไฟ,compounds,train,rotfai,rotfai,rot4.faj1,rtpai,ERROR: No module named 'torch',rtpai,rt̄hịf
+ตำรวจ,compounds,police,tamruat,tamruat,tam1.ruːat2,tamnuat,ERROR: No module named 'torch',tamnuat,tårwc
+แท็กซี่,loanwords,taxi,taxi,thaeksi,tʰɛk4.siː3,thae็kti,ERROR: No module named 'torch',taxi,æth̆ksī̀
+อินเทอร์เน็ต,loanwords,internet,internet,inthoenet,ʔin1.tʰɤː1.net4,intoenet,ERROR: No module named 'torch',internet,xinethxr̒en̆t
+เฟซบุ๊ก,loanwords,Facebook,facebook,fe,feː1.,fetpuk,ERROR: No module named 'torch',facebook,efsbúk
+ไลน์,loanwords,LINE,line,lai,laj1,lai,ERROR: No module named 'torch',line,ịln̒
+กูเกิล,loanwords,Google,google,kukoen,kuː1.kɤːn1,kukoen,ERROR: No module named 'torch',google,kūekil
+ช็อกโกแลต,loanwords,chocolate,chocolate,chokkolaet,cʰᴐk4.koː1.lɛːt4,ch็kkonaet,ERROR: No module named 'torch',chocolate,ch̆xkokælt
+พิซซ่า,loanwords,pizza,pizza,phitsa,pʰit4.saː3,phitta,ERROR: No module named 'torch',phitta,phiss̀ā
+ฟุตบอล,loanwords,football,football,futbon,fut4.bᴐːn1,futpon,ERROR: No module named 'torch',football,futbxl
+วิดีโอ,loanwords,video,video,widi-o,wi4.diː1.ʔoː1,witio,ERROR: No module named 'torch',vdo,widīox
+เซลฟี,loanwords,selfie,selfie,se,seː1.,senpi,ERROR: No module named 'torch',selfie,eslfī
+ครับ,common,polite particle (male),khrap,khrap,kʰrap4,khnap,ERROR: No module named 'torch',khnap,khrạb
+ค่ะ,common,polite particle (female),kha,kha,kʰa3,kha,ERROR: No module named 'torch',kha,kh̀a
+พี่,common,older sibling,phi,phi,pʰiː3,phi,ERROR: No module named 'torch',phi,phī̀
+น้อง,common,younger sibling,nong,nong,nᴐːŋ4,nong,ERROR: No module named 'torch',nong,n̂xng
+แม่,common,mother,mae,mae,mɛː3,mae,ERROR: No module named 'torch',mae,æm̀
+พ่อ,common,father,pho,pho,pʰᴐː3,pho,ERROR: No module named 'torch',pho,ph̀x
+เงิน,common,money,ngoen,ngoen,ŋɤn1,ngoen,ERROR: No module named 'torch',silver,engin
+เวลา,common,time,wela,wela,weː1.laː1,wena,ERROR: No module named 'torch',wena,ewlā
+สวย,common,beautiful,suay,suai,suːaj5,suai,ERROR: No module named 'torch',suai,s̄wy
+หล่อ,common,handsome,lor,lo,lᴐː2,lo,ERROR: No module named 'torch',lo,h̄l̀x

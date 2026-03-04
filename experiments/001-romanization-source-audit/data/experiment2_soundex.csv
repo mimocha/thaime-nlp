@@ -1,0 +1,81 @@
+thai,english,thai_soundex,tltk_roman_soundex,tltk_roman_match,pythainlp_royin_soundex,pythainlp_royin_match,informal_ref_soundex,informal_ref_match
+สวัสดี,hello,2123,7337,False,7337,False,3377,False
+ขอบคุณ,thank you,7125,2875,False,1275,False,2875,False
+ใช่,yes,,2877,False,2877,False,2877,False
+ไม่,no,5,577,False,577,False,577,False
+เป็น,to be,15,175,False,175,False,175,False
+ได้,can/get,3,377,False,377,False,377,False
+อะไร,what,06,0677,False,0577,False,0677,False
+ทำไม,why,35,5577,False,5577,False,5577,False
+คน,person,25,2875,False,2875,False,2875,False
+บ้าน,house,15,175,False,175,False,1775,False
+ข้าว,rice,21,2877,False,2877,False,2877,False
+น้ำ,water,5,575,False,575,False,575,False
+ผัดไทย,pad thai,1339,3877,False,3377,False,3877,False
+ต้มยำกุ้ง,tom yum goong,9252,2752,False,2752,False,2752,False
+ส้มตำ,som tam,253,5375,False,5375,False,5375,False
+กาแฟ,coffee,21,7177,False,7177,False,7177,False
+เบียร์,beer,196,177,False,177,False,177,False
+ชา,tea,,287,False,287,False,287,False
+ไก่,chicken,2,277,False,277,False,277,False
+หมู,pork,5,57,False,57,False,577,False
+กรุงเทพ,Bangkok,5231,3871,False,2371,False,3871,False
+เชียงใหม่,Chiang Mai,5285,2577,False,2775,False,2577,False
+ภูเก็ต,Phuket,123,7273,False,7273,False,7273,False
+พัทยา,Pattaya,139,8797,False,8737,False,3797,False
+อยุธยา,Ayutthaya,0939,8797,False,037,False,8797,False
+สุโขทัย,Sukhothai,2239,3877,False,7377,False,3877,False
+หาดใหญ่,Hat Yai,389,3977,False,3775,False,3977,False
+ประเทศไทย,Thailand,3239,3877,False,3877,False,3877,False
+ไป,to go,1,177,False,177,False,177,False
+มา,to come,5,57,False,57,False,57,False
+กิน,to eat,25,275,False,275,False,275,False
+ดู,to look,3,37,False,37,False,377,False
+พูด,to speak,13,1873,False,1873,False,8773,False
+ฟัง,to listen,152,1752,False,1752,False,1752,False
+อ่าน,to read,05,05,True,05,True,075,False
+เขียน,to write,295,8775,False,8775,False,8775,False
+รัก,to love,62,672,False,672,False,672,False
+ซื้อ,to buy,27,277,False,277,False,277,False
+ขาย,to sell,29,2877,False,2877,False,2877,False
+นอน,to sleep,575,575,True,575,True,575,True
+สนุก,fun,252,7572,False,2572,False,7572,False
+เท่,cool,3,387,False,387,False,3877,False
+แซ่บ,delicious/spicy,21,N/A,False,2771,False,2771,False
+ชิล,chill,4,2875,False,2875,False,2875,False
+โอเค,okay,72,0287,False,027,False,0279,False
+กลัว,scared,241,2477,False,2577,False,2477,False
+เหนื่อย,tired,8579,7777,False,0577,False,5779,False
+หิว,hungry,1,077,False,077,False,077,False
+อร่อย,delicious,0679,0677,False,577,False,0677,False
+เผ็ด,spicy,13,1873,False,1873,False,1873,False
+โรงเรียน,school,2695,6775,False,5775,False,6775,False
+โรงพยาบาล,hospital,1914,7175,False,7175,False,7175,False
+สนามบิน,airport,5515,5175,False,5175,False,5175,False
+มหาวิทยาลัย,university,3949,7477,False,7577,False,7477,False
+โทรศัพท์,telephone,6213,7271,False,5371,False,7271,False
+คอมพิวเตอร์,computer,1376,7377,False,7377,False,1377,False
+ห้องน้ำ,bathroom,7525,2575,False,2575,False,2575,False
+ตลาด,market,343,7473,False,3573,False,7473,False
+รถไฟ,train,631,3177,False,3177,False,3177,False
+ตำรวจ,police,3612,6773,False,5773,False,6773,False
+แท็กซี่,taxi,322,7227,False,7237,False,3727,False
+อินเทอร์เน็ต,internet,7653,7573,False,7573,False,6573,False
+เฟซบุ๊ก,Facebook,1212,17,False,3172,False,1772,False
+ไลน์,LINE,45,477,False,477,False,4757,False
+กูเกิล,Google,224,2775,False,2775,False,7247,False
+ช็อกโกแลต,chocolate,2243,4773,False,5773,False,4737,False
+พิซซ่า,pizza,122,7327,False,7337,False,7227,False
+ฟุตบอล,football,3174,3175,False,3175,False,1744,False
+วิดีโอ,video,137,7377,False,7377,False,7377,False
+เซลฟี,selfie,241,27,False,7517,False,4177,False
+ครับ,polite particle (male),261,8671,False,8571,False,8671,False
+ค่ะ,polite particle (female),2,287,False,287,False,287,False
+พี่,older sibling,1,187,False,187,False,187,False
+น้อง,younger sibling,5752,5752,True,5752,True,5752,True
+แม่,mother,5,577,False,577,False,577,False
+พ่อ,father,17,187,False,187,False,187,False
+เงิน,money,525,2775,False,2775,False,2775,False
+เวลา,time,14,0747,False,0757,False,0747,False
+สวย,beautiful,219,2777,False,2777,False,2779,False
+หล่อ,handsome,47,47,True,47,True,476,False
