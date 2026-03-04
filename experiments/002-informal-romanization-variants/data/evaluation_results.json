@@ -3,11 +3,11 @@
     "total_words": 80,
     "coverage_count": 73,
     "coverage_rate": 0.9125,
-    "avg_noise_rate": 0.4806,
-    "avg_variants_per_word": 5.3,
-    "total_variants": 424,
+    "avg_noise_rate": 0.4812,
+    "avg_variants_per_word": 5.01,
+    "total_variants": 401,
     "min_variants": 0,
-    "max_variants": 48
+    "max_variants": 24
   },
   "per_category": {
     "common": {
@@ -20,7 +20,7 @@
       "count": 10,
       "coverage_count": 9,
       "coverage_rate": 0.9,
-      "avg_variants": 5.1
+      "avg_variants": 5.5
     },
     "food": {
       "count": 12,
@@ -32,13 +32,13 @@
       "count": 10,
       "coverage_count": 7,
       "coverage_rate": 0.7,
-      "avg_variants": 8.9
+      "avg_variants": 5.9
     },
     "places": {
       "count": 10,
       "coverage_count": 10,
       "coverage_rate": 1.0,
-      "avg_variants": 6.9
+      "avg_variants": 7.2
     },
     "slang": {
       "count": 13,
@@ -691,11 +691,14 @@
       "thai": "เชียงใหม่",
       "category": "places",
       "base_roman": "chiangmai",
-      "num_variants": 3,
+      "num_variants": 6,
       "variants": [
         "chiangmai",
+        "chiiangmai",
         "ciangmai",
-        "jiangmai"
+        "ciiangmai",
+        "jiangmai",
+        "jiiangmai"
       ],
       "expected": [
         "chiang mai",
@@ -706,7 +709,7 @@
         "chiangmai"
       ],
       "has_coverage": true,
-      "noise_rate": 0.667
+      "noise_rate": 0.833
     },
     {
       "thai": "ภูเก็ต",
@@ -928,14 +931,16 @@
       ],
       "expected": [
         "pood",
+        "put",
         "puut"
       ],
       "matches": [
         "pood",
+        "put",
         "puut"
       ],
       "has_coverage": true,
-      "noise_rate": 0.833
+      "noise_rate": 0.75
     },
     {
       "thai": "เขียน",
@@ -1567,12 +1572,16 @@
     {
       "thai": "ร้านอาหาร",
       "category": "compounds",
-      "base_roman": "raan--ahan",
-      "num_variants": 4,
+      "base_roman": "raan-aahaan",
+      "num_variants": 8,
       "variants": [
-        "raan--ahan",
+        "raan-aahaan",
+        "raan-aahan",
+        "raan-ahaan",
         "raan-ahan",
-        "ran--ahan",
+        "ran-aahaan",
+        "ran-aahan",
+        "ran-ahaan",
         "ran-ahan"
       ],
       "expected": [
@@ -1807,57 +1816,27 @@
     {
       "thai": "ช็อกโกแลต",
       "category": "loanwords",
-      "base_roman": "chokgolaaed",
-      "num_variants": 48,
+      "base_roman": "chokkolaaet",
+      "num_variants": 18,
       "variants": [
-        "chokgolaaed",
-        "chokgolaaet",
-        "chokgolaed",
-        "chokgolaet",
-        "chokgoolaaed",
-        "chokgoolaaet",
-        "chokgoolaed",
-        "chokgoolaet",
-        "chokkolaaed",
         "chokkolaaet",
-        "chokkolaed",
+        "chokkolaaetd",
+        "chokkolaaett",
         "chokkolaet",
-        "chokkoolaaed",
-        "chokkoolaaet",
-        "chokkoolaed",
-        "chokkoolaet",
-        "cokgolaaed",
-        "cokgolaaet",
-        "cokgolaed",
-        "cokgolaet",
-        "cokgoolaaed",
-        "cokgoolaaet",
-        "cokgoolaed",
-        "cokgoolaet",
-        "cokkolaaed",
+        "chokkolaetd",
+        "chokkolaett",
         "cokkolaaet",
-        "cokkolaed",
+        "cokkolaaetd",
+        "cokkolaaett",
         "cokkolaet",
-        "cokkoolaaed",
-        "cokkoolaaet",
-        "cokkoolaed",
-        "cokkoolaet",
-        "jokgolaaed",
-        "jokgolaaet",
-        "jokgolaed",
-        "jokgolaet",
-        "jokgoolaaed",
-        "jokgoolaaet",
-        "jokgoolaed",
-        "jokgoolaet",
-        "jokkolaaed",
+        "cokkolaetd",
+        "cokkolaett",
         "jokkolaaet",
-        "jokkolaed",
+        "jokkolaaetd",
+        "jokkolaaett",
         "jokkolaet",
-        "jokkoolaaed",
-        "jokkoolaaet",
-        "jokkoolaed",
-        "jokkoolaet"
+        "jokkolaetd",
+        "jokkolaett"
       ],
       "expected": [
         "chocolate",
@@ -1868,7 +1847,7 @@
         "chokkolaet"
       ],
       "has_coverage": true,
-      "noise_rate": 0.979
+      "noise_rate": 0.944
     },
     {
       "thai": "แฮมเบอร์เกอร์",

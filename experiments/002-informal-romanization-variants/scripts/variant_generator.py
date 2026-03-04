@@ -54,15 +54,15 @@ DEFAULT_CONFIG = VariantConfig()
 class SyllableInfo:
     """Phonetic information about a single syllable."""
 
-    thai_text: str
-    romanization: str
-    ipa: str
-    g2p_group: str
-    has_long_vowel: bool = False
-    is_open_syllable: bool = False
-    final_consonant: str = ""
-    initial_cluster: str = ""
-    vowel_nucleus: str = ""
+    thai_text: str  # Thai text of this syllable (e.g., "สวัส")
+    romanization: str  # RTGS-like romanization from th2roman (e.g., "sawat")
+    ipa: str  # IPA transcription from th2ipa (e.g., "sa2.wat2")
+    g2p_group: str  # Full g2p group, with ' separating sub-parts (e.g., "sa1'wat1")
+    has_long_vowel: bool = False  # True if IPA/g2p indicates a long vowel (ː or doubled)
+    is_open_syllable: bool = False  # True if no final consonant (open syllable)
+    final_consonant: str = ""  # Final consonant string (e.g., "t", "ng", or "" if open)
+    initial_cluster: str = ""  # Initial consonant cluster (e.g., "kh", "kr", or "k")
+    vowel_nucleus: str = ""  # Vowel part between initial and final (e.g., "a", "oo")
 
 
 def _clean_tltk_output(s: str) -> str:
@@ -115,7 +115,14 @@ def _split_romanization_by_g2p(
     romanization: str,
     g2p_groups: list[str],
 ) -> list[str]:
-    """Split the whole-word romanization into per-syllable pieces."""
+    """Split the whole-word romanization into per-syllable pieces.
+
+    Strategy: Convert each g2p group to an approximate RTGS romanization
+    to estimate the character length of each syllable. Then split the
+    romanization string at those boundaries, using a heuristic to prefer
+    split points where the next character is a consonant (syllable onset).
+    The last syllable always gets whatever remains.
+    """
     if len(g2p_groups) <= 1:
         return [romanization]
 
@@ -124,6 +131,7 @@ def _split_romanization_by_g2p(
 
     for i, group in enumerate(g2p_groups):
         if i == len(g2p_groups) - 1:
+            # Last syllable gets everything remaining
             result.append(remaining)
             break
 
@@ -131,18 +139,11 @@ def _split_romanization_by_g2p(
         approx_len = len(approx)
 
         if 0 < approx_len <= len(remaining):
-            best_len = approx_len
-            for delta in [0, 1, -1, 2, -2]:
-                test_len = approx_len + delta
-                if 0 < test_len <= len(remaining):
-                    if test_len < len(remaining):
-                        next_char = remaining[test_len]
-                        if next_char not in "aeiou" and delta == 0:
-                            best_len = test_len
-                            break
+            best_len = _find_syllable_boundary(remaining, approx_len)
             result.append(remaining[:best_len])
             remaining = remaining[best_len:]
         else:
+            # Fallback: use approximate length or split evenly
             split_len = max(1, approx_len if approx_len > 0 else len(remaining) // 2)
             split_len = min(split_len, len(remaining))
             result.append(remaining[:split_len])
@@ -152,6 +153,23 @@ def _split_romanization_by_g2p(
         result.append("")
 
     return result
+
+
+def _find_syllable_boundary(remaining: str, approx_len: int) -> int:
+    """Find the best character position to split a syllable boundary.
+
+    Tries the approximate length first, then offsets of ±1 and ±2 characters.
+    Prefers split points where the next character is a consonant (indicating
+    the start of the next syllable). Falls back to the approximate length.
+    """
+    for delta in [0, 1, -1, 2, -2]:
+        test_len = approx_len + delta
+        if 0 < test_len < len(remaining):
+            next_char = remaining[test_len]
+            # A consonant after the split suggests a syllable boundary
+            if next_char not in "aeiou":
+                return test_len
+    return approx_len
 
 
 def _detect_final_consonant(roman_syllable: str) -> str:

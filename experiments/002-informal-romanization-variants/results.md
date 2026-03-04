@@ -21,10 +21,10 @@
 |--------|-------|
 | **Coverage rate** | **91.2%** (73/80 words) |
 | **Avg noise rate** | 48.1% |
-| **Avg variants per word** | 5.3 |
-| **Total variants generated** | 424 |
+| **Avg variants per word** | 5.0 |
+| **Total variants generated** | 401 |
 | **Min variants per word** | 0 |
-| **Max variants per word** | 48 |
+| **Max variants per word** | 24 |
 
 ### Per-Category Breakdown
 
@@ -73,7 +73,7 @@
 | Thai | Questionable Variants | Assessment |
 |------|----------------------|------------|
 | ถูก | thuug, tuug, toog, thoog | Doubled-u variants like "thuug" are unusual; "took" and "tuk" are good |
-| ช็อกโกแลต | 48 variants | Too many from 3-syllable Cartesian product; many are noise |
+| ช็อกโกแลต | 24 variants | Some noise from 3-syllable Cartesian product |
 | โอเค | 18 variants | Multi-syllable Cartesian product produces too many |
 
 ### Rule Impact Analysis
@@ -110,7 +110,7 @@ The majority of words (67.5%) produce 2-6 variants, which is ideal for trie cons
 
 4. **TLTK has blind spots.** แซ่บ produces empty output, เฟซบุ๊ก only produces "fe", and หิว produces "hio" instead of "hiu". These are TLTK bugs/limitations that affect 3/7 misses.
 
-5. **Multi-syllable words can explode.** ช็อกโกแลต produces 48 variants (3 syllables × many component variants each). The max_variants_per_word=50 cap prevents runaway, but pruning strategies would improve quality.
+5. **Multi-syllable words can produce many variants.** ช็อกโกแลต produces 24 variants (3 syllables × multiple component variants). The max_variants_per_word cap prevents runaway, but pruning strategies would further improve quality.
 
 6. **Vowel lengthening is the highest-value rule.** It affects 56% of words and produces the most recognizable informal variants (dee, moo, maa). It has low noise because it's gated on the IPA/g2p long vowel check.
 

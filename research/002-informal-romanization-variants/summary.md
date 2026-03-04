@@ -17,7 +17,7 @@ We built a syllable-aware, rule-based variant generator that decomposes TLTK's r
 
 - **91.2% coverage rate** — 73 of 80 test words had at least one generated variant matching an expected informal romanization. All 15 common words and all 10 place names achieved 100% coverage.
 
-- **5.3 average variants per word** — Well within the manageable range for trie construction. 67.5% of words produced 2-6 variants. The maximum was 48 (ช็อกโกแลต, a 3-syllable loanword), controlled by a configurable cap.
+- **5.0 average variants per word** — Well within the manageable range for trie construction. 67.5% of words produced 2-6 variants. The maximum was 24, controlled by a configurable cap.
 
 - **Five transformation rules, three essential:** Vowel lengthening (affecting 56% of words), final consonant softening (35%), and cluster simplification (44%) are the three highest-value rules. R-dropping (10%) and initial voicing (15%) are supplementary. All five rules combined produce the best results.
 
@@ -45,13 +45,13 @@ We built a syllable-aware, rule-based variant generator that decomposes TLTK's r
 
 For THAIME's trie construction, adopt the variant generator with all five rules active:
 
-1. **Use the variant generator as-is** for expanding TLTK's base romanizations into informal forms. The generator produces an average of 5.3 variants per word with 91% coverage — a strong foundation.
+1. **Use the variant generator as-is** for expanding TLTK's base romanizations into informal forms. The generator produces an average of 5.0 variants per word with 91% coverage — a strong foundation.
 
 2. **Set max_variants_per_word to 20** for production use. The default of 50 allows some multi-syllable words (like ช็อกโกแลต) to produce too many variants. A cap of 20 balances coverage with trie size.
 
 3. **Assign variant romanizations lower confidence weights** than the primary TLTK romanization in the trie. The base TLTK form should always rank highest; generated variants should rank below but above unknown/random inputs.
 
-4. **Supplement loanwords separately** using PyThaiNLP's `lookup` engine for English source words. The variant generator cannot produce "taxi" from "thaeksi" — this requires a different data source.
+4. **Supplement loanwords separately** using PyThaiNLP's `lookup` engine for English source words (validated in Task 001 as uniquely valuable for loanwords). The variant generator cannot produce "taxi" from "thaeksi" — this requires a different data source.
 
 5. **Consider disabling r-dropping for formal/written contexts.** R-dropping is highly productive in spoken Bangkok Thai but may not match all users' typing habits. It could be offered as a configurable option.
 

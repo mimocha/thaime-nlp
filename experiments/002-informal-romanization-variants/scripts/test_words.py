@@ -51,7 +51,7 @@ TEST_WORDS = [
     {"thai": "ตลาด",     "category": "places",    "expected_informal": ["talad", "talat", "talaat"]},
 
     # === VERBS (10 words) ===
-    {"thai": "พูด",      "category": "verbs",     "expected_informal": ["pood", "puut", "pood"]},
+    {"thai": "พูด",      "category": "verbs",     "expected_informal": ["pood", "puut", "put"]},
     {"thai": "เขียน",    "category": "verbs",     "expected_informal": ["kian", "khian", "kiian"]},
     {"thai": "อ่าน",     "category": "verbs",     "expected_informal": ["aan", "arn"]},
     {"thai": "เรียน",    "category": "verbs",     "expected_informal": ["rian", "riian", "learn"]},
