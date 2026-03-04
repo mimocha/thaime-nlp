@@ -1,0 +1,1937 @@
+{
+  "overall": {
+    "total_words": 80,
+    "coverage_count": 73,
+    "coverage_rate": 0.9125,
+    "avg_noise_rate": 0.4806,
+    "avg_variants_per_word": 5.3,
+    "total_variants": 424,
+    "min_variants": 0,
+    "max_variants": 48
+  },
+  "per_category": {
+    "common": {
+      "count": 15,
+      "coverage_count": 15,
+      "coverage_rate": 1.0,
+      "avg_variants": 3.6
+    },
+    "compounds": {
+      "count": 10,
+      "coverage_count": 9,
+      "coverage_rate": 0.9,
+      "avg_variants": 5.1
+    },
+    "food": {
+      "count": 12,
+      "coverage_count": 11,
+      "coverage_rate": 0.9167,
+      "avg_variants": 4.08
+    },
+    "loanwords": {
+      "count": 10,
+      "coverage_count": 7,
+      "coverage_rate": 0.7,
+      "avg_variants": 8.9
+    },
+    "places": {
+      "count": 10,
+      "coverage_count": 10,
+      "coverage_rate": 1.0,
+      "avg_variants": 6.9
+    },
+    "slang": {
+      "count": 13,
+      "coverage_count": 12,
+      "coverage_rate": 0.9231,
+      "avg_variants": 5.15
+    },
+    "verbs": {
+      "count": 10,
+      "coverage_count": 9,
+      "coverage_rate": 0.9,
+      "avg_variants": 4.5
+    }
+  },
+  "details": [
+    {
+      "thai": "สวัสดี",
+      "category": "common",
+      "base_roman": "sawaddee",
+      "num_variants": 6,
+      "variants": [
+        "sawaddee",
+        "sawaddi",
+        "sawaddii",
+        "sawatdee",
+        "sawatdi",
+        "sawatdii"
+      ],
+      "expected": [
+        "sawaddee",
+        "sawasdee",
+        "sawatdee"
+      ],
+      "matches": [
+        "sawaddee",
+        "sawatdee"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.667
+    },
+    {
+      "thai": "ขอบคุณ",
+      "category": "common",
+      "base_roman": "khobkhun",
+      "num_variants": 16,
+      "variants": [
+        "khobkhun",
+        "khobkun",
+        "khoobkhun",
+        "khoobkun",
+        "khoopkhun",
+        "khoopkun",
+        "khopkhun",
+        "khopkun",
+        "kobkhun",
+        "kobkun",
+        "koobkhun",
+        "koobkun",
+        "koopkhun",
+        "koopkun",
+        "kopkhun",
+        "kopkun"
+      ],
+      "expected": [
+        "khobkhun",
+        "kobkun",
+        "kopkhun"
+      ],
+      "matches": [
+        "khobkhun",
+        "kobkun",
+        "kopkhun"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.812
+    },
+    {
+      "thai": "ครับ",
+      "category": "common",
+      "base_roman": "kab",
+      "num_variants": 8,
+      "variants": [
+        "kab",
+        "kap",
+        "khab",
+        "khap",
+        "khrab",
+        "khrap",
+        "krab",
+        "krap"
+      ],
+      "expected": [
+        "krab",
+        "krap",
+        "krub"
+      ],
+      "matches": [
+        "krab",
+        "krap"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.75
+    },
+    {
+      "thai": "ค่ะ",
+      "category": "common",
+      "base_roman": "ka",
+      "num_variants": 2,
+      "variants": [
+        "ka",
+        "kha"
+      ],
+      "expected": [
+        "ka",
+        "kaa",
+        "kha"
+      ],
+      "matches": [
+        "ka",
+        "kha"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "ไม่",
+      "category": "common",
+      "base_roman": "mai",
+      "num_variants": 1,
+      "variants": [
+        "mai"
+      ],
+      "expected": [
+        "mai",
+        "my"
+      ],
+      "matches": [
+        "mai"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "ใช่",
+      "category": "common",
+      "base_roman": "cai",
+      "num_variants": 3,
+      "variants": [
+        "cai",
+        "chai",
+        "jai"
+      ],
+      "expected": [
+        "chai",
+        "chy"
+      ],
+      "matches": [
+        "chai"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.667
+    },
+    {
+      "thai": "ดี",
+      "category": "common",
+      "base_roman": "dee",
+      "num_variants": 3,
+      "variants": [
+        "dee",
+        "di",
+        "dii"
+      ],
+      "expected": [
+        "dee",
+        "dii"
+      ],
+      "matches": [
+        "dee",
+        "dii"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.333
+    },
+    {
+      "thai": "ไป",
+      "category": "common",
+      "base_roman": "pai",
+      "num_variants": 1,
+      "variants": [
+        "pai"
+      ],
+      "expected": [
+        "bai",
+        "pai",
+        "py"
+      ],
+      "matches": [
+        "pai"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "มา",
+      "category": "common",
+      "base_roman": "ma",
+      "num_variants": 2,
+      "variants": [
+        "ma",
+        "maa"
+      ],
+      "expected": [
+        "ma",
+        "maa"
+      ],
+      "matches": [
+        "ma",
+        "maa"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "กิน",
+      "category": "common",
+      "base_roman": "gin",
+      "num_variants": 2,
+      "variants": [
+        "gin",
+        "kin"
+      ],
+      "expected": [
+        "gin",
+        "kin"
+      ],
+      "matches": [
+        "gin",
+        "kin"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "น้ำ",
+      "category": "common",
+      "base_roman": "naam",
+      "num_variants": 2,
+      "variants": [
+        "naam",
+        "nam"
+      ],
+      "expected": [
+        "naam",
+        "nam",
+        "num"
+      ],
+      "matches": [
+        "naam",
+        "nam"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "คน",
+      "category": "common",
+      "base_roman": "khon",
+      "num_variants": 2,
+      "variants": [
+        "khon",
+        "kon"
+      ],
+      "expected": [
+        "khon",
+        "kon"
+      ],
+      "matches": [
+        "khon",
+        "kon"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "เขา",
+      "category": "common",
+      "base_roman": "kao",
+      "num_variants": 2,
+      "variants": [
+        "kao",
+        "khao"
+      ],
+      "expected": [
+        "kao",
+        "khao",
+        "kow"
+      ],
+      "matches": [
+        "kao",
+        "khao"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "นี่",
+      "category": "common",
+      "base_roman": "nee",
+      "num_variants": 3,
+      "variants": [
+        "nee",
+        "ni",
+        "nii"
+      ],
+      "expected": [
+        "nee",
+        "nii"
+      ],
+      "matches": [
+        "nee",
+        "nii"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.333
+    },
+    {
+      "thai": "อะไร",
+      "category": "common",
+      "base_roman": "arai",
+      "num_variants": 1,
+      "variants": [
+        "arai"
+      ],
+      "expected": [
+        "a-rai",
+        "arai"
+      ],
+      "matches": [
+        "arai"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "ข้าว",
+      "category": "food",
+      "base_roman": "kaao",
+      "num_variants": 4,
+      "variants": [
+        "kaao",
+        "kao",
+        "khaao",
+        "khao"
+      ],
+      "expected": [
+        "kao",
+        "khao",
+        "kow"
+      ],
+      "matches": [
+        "kao",
+        "khao"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "ผัดไท",
+      "category": "food",
+      "base_roman": "padtai",
+      "num_variants": 8,
+      "variants": [
+        "padtai",
+        "padthai",
+        "pattai",
+        "patthai",
+        "phadtai",
+        "phadthai",
+        "phattai",
+        "phatthai"
+      ],
+      "expected": [
+        "pad thai",
+        "padthai",
+        "pattai"
+      ],
+      "matches": [
+        "padthai",
+        "pattai"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.75
+    },
+    {
+      "thai": "ส้มตำ",
+      "category": "food",
+      "base_roman": "somtam",
+      "num_variants": 1,
+      "variants": [
+        "somtam"
+      ],
+      "expected": [
+        "som tam",
+        "somtam",
+        "somtum"
+      ],
+      "matches": [
+        "somtam"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "ต้มยำ",
+      "category": "food",
+      "base_roman": "tomyam",
+      "num_variants": 1,
+      "variants": [
+        "tomyam"
+      ],
+      "expected": [
+        "tom yam",
+        "tomyam",
+        "tomyum"
+      ],
+      "matches": [
+        "tomyam"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "แกงเขียวหวาน",
+      "category": "food",
+      "base_roman": "gaaengkhiaowaan",
+      "num_variants": 16,
+      "variants": [
+        "gaaengkhiaowaan",
+        "gaaengkhiaowan",
+        "gaaengkiaowaan",
+        "gaaengkiaowan",
+        "gaengkhiaowaan",
+        "gaengkhiaowan",
+        "gaengkiaowaan",
+        "gaengkiaowan",
+        "kaaengkhiaowaan",
+        "kaaengkhiaowan",
+        "kaaengkiaowaan",
+        "kaaengkiaowan",
+        "kaengkhiaowaan",
+        "kaengkhiaowan",
+        "kaengkiaowaan",
+        "kaengkiaowan"
+      ],
+      "expected": [
+        "gaeng kiew waan",
+        "gang kiaw wan",
+        "kaeng khiao wan"
+      ],
+      "matches": [],
+      "has_coverage": false,
+      "noise_rate": 1.0
+    },
+    {
+      "thai": "หมู",
+      "category": "food",
+      "base_roman": "moo",
+      "num_variants": 3,
+      "variants": [
+        "moo",
+        "mu",
+        "muu"
+      ],
+      "expected": [
+        "moo",
+        "mu",
+        "muu"
+      ],
+      "matches": [
+        "moo",
+        "mu",
+        "muu"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "ไก่",
+      "category": "food",
+      "base_roman": "gai",
+      "num_variants": 2,
+      "variants": [
+        "gai",
+        "kai"
+      ],
+      "expected": [
+        "gai",
+        "guy",
+        "kai"
+      ],
+      "matches": [
+        "gai",
+        "kai"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "ปลา",
+      "category": "food",
+      "base_roman": "pla",
+      "num_variants": 2,
+      "variants": [
+        "pla",
+        "plaa"
+      ],
+      "expected": [
+        "bla",
+        "pla",
+        "plaa"
+      ],
+      "matches": [
+        "pla",
+        "plaa"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "เส้น",
+      "category": "food",
+      "base_roman": "seen",
+      "num_variants": 2,
+      "variants": [
+        "seen",
+        "sen"
+      ],
+      "expected": [
+        "sen",
+        "senn"
+      ],
+      "matches": [
+        "sen"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "เผ็ด",
+      "category": "food",
+      "base_roman": "ped",
+      "num_variants": 4,
+      "variants": [
+        "ped",
+        "pet",
+        "phed",
+        "phet"
+      ],
+      "expected": [
+        "ped",
+        "pet",
+        "phet"
+      ],
+      "matches": [
+        "ped",
+        "pet",
+        "phet"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.25
+    },
+    {
+      "thai": "ก๋วยเตี๋ยว",
+      "category": "food",
+      "base_roman": "guaitiao",
+      "num_variants": 2,
+      "variants": [
+        "guaitiao",
+        "kuaitiao"
+      ],
+      "expected": [
+        "guay tiew",
+        "kuaitiao",
+        "kuay tiew"
+      ],
+      "matches": [
+        "kuaitiao"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "ลาบ",
+      "category": "food",
+      "base_roman": "laab",
+      "num_variants": 4,
+      "variants": [
+        "laab",
+        "laap",
+        "lab",
+        "lap"
+      ],
+      "expected": [
+        "laab",
+        "lab",
+        "larb"
+      ],
+      "matches": [
+        "laab",
+        "lab"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "กรุงเทพ",
+      "category": "places",
+      "base_roman": "krungteb",
+      "num_variants": 16,
+      "variants": [
+        "krungteb",
+        "krungteeb",
+        "krungteep",
+        "krungtep",
+        "krungtheb",
+        "krungtheeb",
+        "krungtheep",
+        "krungthep",
+        "kungteb",
+        "kungteeb",
+        "kungteep",
+        "kungtep",
+        "kungtheb",
+        "kungtheeb",
+        "kungtheep",
+        "kungthep"
+      ],
+      "expected": [
+        "grungtep",
+        "krung thep",
+        "krungthep"
+      ],
+      "matches": [
+        "krungthep"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.938
+    },
+    {
+      "thai": "เชียงใหม่",
+      "category": "places",
+      "base_roman": "chiangmai",
+      "num_variants": 3,
+      "variants": [
+        "chiangmai",
+        "ciangmai",
+        "jiangmai"
+      ],
+      "expected": [
+        "chiang mai",
+        "chiang my",
+        "chiangmai"
+      ],
+      "matches": [
+        "chiangmai"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.667
+    },
+    {
+      "thai": "ภูเก็ต",
+      "category": "places",
+      "base_roman": "phooged",
+      "num_variants": 24,
+      "variants": [
+        "phooged",
+        "phooget",
+        "phooked",
+        "phooket",
+        "phuged",
+        "phuget",
+        "phuked",
+        "phuket",
+        "phuuged",
+        "phuuget",
+        "phuuked",
+        "phuuket",
+        "pooged",
+        "pooget",
+        "pooked",
+        "pooket",
+        "puged",
+        "puget",
+        "puked",
+        "puket",
+        "puuged",
+        "puuget",
+        "puuked",
+        "puuket"
+      ],
+      "expected": [
+        "phuket",
+        "pooket",
+        "puket"
+      ],
+      "matches": [
+        "phuket",
+        "pooket",
+        "puket"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.875
+    },
+    {
+      "thai": "พัทยา",
+      "category": "places",
+      "base_roman": "patthaya",
+      "num_variants": 4,
+      "variants": [
+        "patthaya",
+        "patthayaa",
+        "phatthaya",
+        "phatthayaa"
+      ],
+      "expected": [
+        "pataya",
+        "pattaya",
+        "phatthaya"
+      ],
+      "matches": [
+        "phatthaya"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.75
+    },
+    {
+      "thai": "อยุธยา",
+      "category": "places",
+      "base_roman": "ayutthaya",
+      "num_variants": 2,
+      "variants": [
+        "ayutthaya",
+        "ayutthayaa"
+      ],
+      "expected": [
+        "ayudhya",
+        "ayuttaya",
+        "ayutthaya"
+      ],
+      "matches": [
+        "ayutthaya"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "สุโขทัย",
+      "category": "places",
+      "base_roman": "sukhohtai",
+      "num_variants": 12,
+      "variants": [
+        "sukhohtai",
+        "sukhohthai",
+        "sukhootai",
+        "sukhoothai",
+        "sukhotai",
+        "sukhothai",
+        "sukohtai",
+        "sukohthai",
+        "sukootai",
+        "sukoothai",
+        "sukotai",
+        "sukothai"
+      ],
+      "expected": [
+        "sukhotai",
+        "sukhothai",
+        "sukothai"
+      ],
+      "matches": [
+        "sukhotai",
+        "sukhothai",
+        "sukothai"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.75
+    },
+    {
+      "thai": "เกาะ",
+      "category": "places",
+      "base_roman": "go",
+      "num_variants": 2,
+      "variants": [
+        "go",
+        "ko"
+      ],
+      "expected": [
+        "ko",
+        "koh",
+        "kor"
+      ],
+      "matches": [
+        "ko"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "ถนน",
+      "category": "places",
+      "base_roman": "tanon",
+      "num_variants": 2,
+      "variants": [
+        "tanon",
+        "thanon"
+      ],
+      "expected": [
+        "tanon",
+        "thanon"
+      ],
+      "matches": [
+        "tanon",
+        "thanon"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "วัด",
+      "category": "places",
+      "base_roman": "wad",
+      "num_variants": 2,
+      "variants": [
+        "wad",
+        "wat"
+      ],
+      "expected": [
+        "wad",
+        "wat"
+      ],
+      "matches": [
+        "wad",
+        "wat"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "ตลาด",
+      "category": "places",
+      "base_roman": "talad",
+      "num_variants": 2,
+      "variants": [
+        "talad",
+        "talat"
+      ],
+      "expected": [
+        "talaat",
+        "talad",
+        "talat"
+      ],
+      "matches": [
+        "talad",
+        "talat"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "พูด",
+      "category": "verbs",
+      "base_roman": "phood",
+      "num_variants": 12,
+      "variants": [
+        "phood",
+        "phoot",
+        "phud",
+        "phut",
+        "phuud",
+        "phuut",
+        "pood",
+        "poot",
+        "pud",
+        "put",
+        "puud",
+        "puut"
+      ],
+      "expected": [
+        "pood",
+        "puut"
+      ],
+      "matches": [
+        "pood",
+        "puut"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.833
+    },
+    {
+      "thai": "เขียน",
+      "category": "verbs",
+      "base_roman": "khian",
+      "num_variants": 4,
+      "variants": [
+        "khian",
+        "khiian",
+        "kian",
+        "kiian"
+      ],
+      "expected": [
+        "khian",
+        "kian",
+        "kiian"
+      ],
+      "matches": [
+        "khian",
+        "kian",
+        "kiian"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.25
+    },
+    {
+      "thai": "อ่าน",
+      "category": "verbs",
+      "base_roman": "aan",
+      "num_variants": 2,
+      "variants": [
+        "aan",
+        "an"
+      ],
+      "expected": [
+        "aan",
+        "arn"
+      ],
+      "matches": [
+        "aan"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "เรียน",
+      "category": "verbs",
+      "base_roman": "rian",
+      "num_variants": 2,
+      "variants": [
+        "rian",
+        "riian"
+      ],
+      "expected": [
+        "learn",
+        "rian",
+        "riian"
+      ],
+      "matches": [
+        "rian",
+        "riian"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "ทำงาน",
+      "category": "verbs",
+      "base_roman": "tamngaan",
+      "num_variants": 4,
+      "variants": [
+        "tamngaan",
+        "tamngan",
+        "thamngaan",
+        "thamngan"
+      ],
+      "expected": [
+        "tam ngan",
+        "tamngaan",
+        "tamngan"
+      ],
+      "matches": [
+        "tamngaan",
+        "tamngan"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "ซื้อ",
+      "category": "verbs",
+      "base_roman": "sue",
+      "num_variants": 2,
+      "variants": [
+        "sue",
+        "suee"
+      ],
+      "expected": [
+        "seu",
+        "sue",
+        "suu"
+      ],
+      "matches": [
+        "sue"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "ขาย",
+      "category": "verbs",
+      "base_roman": "kaai",
+      "num_variants": 4,
+      "variants": [
+        "kaai",
+        "kai",
+        "khaai",
+        "khai"
+      ],
+      "expected": [
+        "kaai",
+        "kai",
+        "khai"
+      ],
+      "matches": [
+        "kaai",
+        "kai",
+        "khai"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.25
+    },
+    {
+      "thai": "รัก",
+      "category": "verbs",
+      "base_roman": "rag",
+      "num_variants": 2,
+      "variants": [
+        "rag",
+        "rak"
+      ],
+      "expected": [
+        "rak",
+        "ruk"
+      ],
+      "matches": [
+        "rak"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "ชอบ",
+      "category": "verbs",
+      "base_roman": "chob",
+      "num_variants": 12,
+      "variants": [
+        "chob",
+        "choob",
+        "choop",
+        "chop",
+        "cob",
+        "coob",
+        "coop",
+        "cop",
+        "job",
+        "joob",
+        "joop",
+        "jop"
+      ],
+      "expected": [
+        "chob",
+        "chop",
+        "chorb"
+      ],
+      "matches": [
+        "chob",
+        "chop"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.833
+    },
+    {
+      "thai": "หิว",
+      "category": "verbs",
+      "base_roman": "hio",
+      "num_variants": 1,
+      "variants": [
+        "hio"
+      ],
+      "expected": [
+        "hiew",
+        "hiu",
+        "hiw"
+      ],
+      "matches": [],
+      "has_coverage": false,
+      "noise_rate": 1.0
+    },
+    {
+      "thai": "สบาย",
+      "category": "slang",
+      "base_roman": "sabai",
+      "num_variants": 1,
+      "variants": [
+        "sabai"
+      ],
+      "expected": [
+        "sa bai",
+        "sabaai",
+        "sabai"
+      ],
+      "matches": [
+        "sabai"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "เท่",
+      "category": "slang",
+      "base_roman": "te",
+      "num_variants": 6,
+      "variants": [
+        "te",
+        "tee",
+        "teh",
+        "the",
+        "thee",
+        "theh"
+      ],
+      "expected": [
+        "tay",
+        "te",
+        "teh"
+      ],
+      "matches": [
+        "te",
+        "teh"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.667
+    },
+    {
+      "thai": "อร่อย",
+      "category": "slang",
+      "base_roman": "aroi",
+      "num_variants": 1,
+      "variants": [
+        "aroi"
+      ],
+      "expected": [
+        "aroi",
+        "aroy",
+        "arroy"
+      ],
+      "matches": [
+        "aroi"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "สนุก",
+      "category": "slang",
+      "base_roman": "sanug",
+      "num_variants": 2,
+      "variants": [
+        "sanug",
+        "sanuk"
+      ],
+      "expected": [
+        "sa nuk",
+        "sanook",
+        "sanuk"
+      ],
+      "matches": [
+        "sanuk"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "แซ่บ",
+      "category": "slang",
+      "base_roman": "",
+      "num_variants": 0,
+      "variants": [],
+      "expected": [
+        "saeb",
+        "saep",
+        "zap"
+      ],
+      "matches": [],
+      "has_coverage": false,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "จริง",
+      "category": "slang",
+      "base_roman": "ching",
+      "num_variants": 3,
+      "variants": [
+        "ching",
+        "cing",
+        "jing"
+      ],
+      "expected": [
+        "ching",
+        "cing",
+        "jing"
+      ],
+      "matches": [
+        "ching",
+        "cing",
+        "jing"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "เก่ง",
+      "category": "slang",
+      "base_roman": "geeng",
+      "num_variants": 4,
+      "variants": [
+        "geeng",
+        "geng",
+        "keeng",
+        "keng"
+      ],
+      "expected": [
+        "geng",
+        "keng"
+      ],
+      "matches": [
+        "geng",
+        "keng"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "แพง",
+      "category": "slang",
+      "base_roman": "paaeng",
+      "num_variants": 4,
+      "variants": [
+        "paaeng",
+        "paeng",
+        "phaaeng",
+        "phaeng"
+      ],
+      "expected": [
+        "paeng",
+        "pang",
+        "phang"
+      ],
+      "matches": [
+        "paeng"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.75
+    },
+    {
+      "thai": "ถูก",
+      "category": "slang",
+      "base_roman": "thoog",
+      "num_variants": 12,
+      "variants": [
+        "thoog",
+        "thook",
+        "thug",
+        "thuk",
+        "thuug",
+        "thuuk",
+        "toog",
+        "took",
+        "tug",
+        "tuk",
+        "tuug",
+        "tuuk"
+      ],
+      "expected": [
+        "thook",
+        "took",
+        "tuk"
+      ],
+      "matches": [
+        "thook",
+        "took",
+        "tuk"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.75
+    },
+    {
+      "thai": "หล่อ",
+      "category": "slang",
+      "base_roman": "lo",
+      "num_variants": 3,
+      "variants": [
+        "lo",
+        "loh",
+        "loo"
+      ],
+      "expected": [
+        "law",
+        "lo",
+        "lor"
+      ],
+      "matches": [
+        "lo"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.667
+    },
+    {
+      "thai": "จ๊าบ",
+      "category": "slang",
+      "base_roman": "caab",
+      "num_variants": 12,
+      "variants": [
+        "caab",
+        "caap",
+        "cab",
+        "cap",
+        "chaab",
+        "chaap",
+        "chab",
+        "chap",
+        "jaab",
+        "jaap",
+        "jab",
+        "jap"
+      ],
+      "expected": [
+        "chab",
+        "jaab",
+        "jab"
+      ],
+      "matches": [
+        "chab",
+        "jaab",
+        "jab"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.75
+    },
+    {
+      "thai": "โอเค",
+      "category": "slang",
+      "base_roman": "ohke",
+      "num_variants": 18,
+      "variants": [
+        "ohke",
+        "ohkee",
+        "ohkeh",
+        "ohkhe",
+        "ohkhee",
+        "ohkheh",
+        "oke",
+        "okee",
+        "okeh",
+        "okhe",
+        "okhee",
+        "okheh",
+        "ooke",
+        "ookee",
+        "ookeh",
+        "ookhe",
+        "ookhee",
+        "ookheh"
+      ],
+      "expected": [
+        "ok",
+        "oke",
+        "okhay"
+      ],
+      "matches": [
+        "oke"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.944
+    },
+    {
+      "thai": "ซิ่ง",
+      "category": "slang",
+      "base_roman": "sing",
+      "num_variants": 1,
+      "variants": [
+        "sing"
+      ],
+      "expected": [
+        "sing",
+        "zing"
+      ],
+      "matches": [
+        "sing"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.0
+    },
+    {
+      "thai": "โรงเรียน",
+      "category": "compounds",
+      "base_roman": "rongrian",
+      "num_variants": 4,
+      "variants": [
+        "rongrian",
+        "rongriian",
+        "roongrian",
+        "roongriian"
+      ],
+      "expected": [
+        "rong rian",
+        "rong riian",
+        "rongrian"
+      ],
+      "matches": [
+        "rongrian"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.75
+    },
+    {
+      "thai": "โรงพยาบาล",
+      "category": "compounds",
+      "base_roman": "rongpayabaan",
+      "num_variants": 8,
+      "variants": [
+        "rongpayabaan",
+        "rongpayaban",
+        "rongphayabaan",
+        "rongphayaban",
+        "roongpayabaan",
+        "roongpayaban",
+        "roongphayabaan",
+        "roongphayaban"
+      ],
+      "expected": [
+        "rong pa ya ban",
+        "rong payaban",
+        "rongpayaban"
+      ],
+      "matches": [
+        "rongpayaban"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.875
+    },
+    {
+      "thai": "สนามบิน",
+      "category": "compounds",
+      "base_roman": "sanambeen",
+      "num_variants": 3,
+      "variants": [
+        "sanambeen",
+        "sanambiin",
+        "sanambin"
+      ],
+      "expected": [
+        "sa nam bin",
+        "sanam bin",
+        "sanambin"
+      ],
+      "matches": [
+        "sanambin"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.667
+    },
+    {
+      "thai": "มหาวิทยาลัย",
+      "category": "compounds",
+      "base_roman": "mahawitthayaalai",
+      "num_variants": 2,
+      "variants": [
+        "mahawitthayaalai",
+        "mahawitthayalai"
+      ],
+      "expected": [
+        "maha wit ta ya lai",
+        "mahawittayalai",
+        "mahawitthayalai"
+      ],
+      "matches": [
+        "mahawitthayalai"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "ประเทศ",
+      "category": "compounds",
+      "base_roman": "pated",
+      "num_variants": 16,
+      "variants": [
+        "pated",
+        "pateed",
+        "pateet",
+        "patet",
+        "pathed",
+        "patheed",
+        "patheet",
+        "pathet",
+        "prated",
+        "prateed",
+        "prateet",
+        "pratet",
+        "prathed",
+        "pratheed",
+        "pratheet",
+        "prathet"
+      ],
+      "expected": [
+        "prated",
+        "pratet",
+        "prathet"
+      ],
+      "matches": [
+        "prated",
+        "pratet",
+        "prathet"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.812
+    },
+    {
+      "thai": "ร้านอาหาร",
+      "category": "compounds",
+      "base_roman": "raan--ahan",
+      "num_variants": 4,
+      "variants": [
+        "raan--ahan",
+        "raan-ahan",
+        "ran--ahan",
+        "ran-ahan"
+      ],
+      "expected": [
+        "raan aahaan",
+        "raan ahaan",
+        "ran ahan"
+      ],
+      "matches": [],
+      "has_coverage": false,
+      "noise_rate": 1.0
+    },
+    {
+      "thai": "ห้องน้ำ",
+      "category": "compounds",
+      "base_roman": "hongnaam",
+      "num_variants": 4,
+      "variants": [
+        "hongnaam",
+        "hongnam",
+        "hoongnaam",
+        "hoongnam"
+      ],
+      "expected": [
+        "hong naam",
+        "hong nam",
+        "hongnam"
+      ],
+      "matches": [
+        "hongnam"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.75
+    },
+    {
+      "thai": "รถไฟ",
+      "category": "compounds",
+      "base_roman": "rodfai",
+      "num_variants": 2,
+      "variants": [
+        "rodfai",
+        "rotfai"
+      ],
+      "expected": [
+        "rod fai",
+        "rot fai",
+        "rotfai"
+      ],
+      "matches": [
+        "rotfai"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "เมืองไทย",
+      "category": "compounds",
+      "base_roman": "mueaangtai",
+      "num_variants": 4,
+      "variants": [
+        "mueaangtai",
+        "mueaangthai",
+        "mueangtai",
+        "mueangthai"
+      ],
+      "expected": [
+        "muang thai",
+        "mueangthai",
+        "mueng tai"
+      ],
+      "matches": [
+        "mueangthai"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.75
+    },
+    {
+      "thai": "ตำรวจ",
+      "category": "compounds",
+      "base_roman": "tamruaad",
+      "num_variants": 4,
+      "variants": [
+        "tamruaad",
+        "tamruaat",
+        "tamruad",
+        "tamruat"
+      ],
+      "expected": [
+        "tamruad",
+        "tamruat"
+      ],
+      "matches": [
+        "tamruad",
+        "tamruat"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "แท็กซี่",
+      "category": "loanwords",
+      "base_roman": "taegsi",
+      "num_variants": 4,
+      "variants": [
+        "taegsi",
+        "taeksi",
+        "thaegsi",
+        "thaeksi"
+      ],
+      "expected": [
+        "taksi",
+        "taxi",
+        "teksee"
+      ],
+      "matches": [],
+      "has_coverage": false,
+      "noise_rate": 1.0
+    },
+    {
+      "thai": "อินเทอร์เน็ต",
+      "category": "loanwords",
+      "base_roman": "inthoened",
+      "num_variants": 4,
+      "variants": [
+        "inthoened",
+        "inthoenet",
+        "intoened",
+        "intoenet"
+      ],
+      "expected": [
+        "intanet",
+        "internet",
+        "inthoenet"
+      ],
+      "matches": [
+        "inthoenet"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.75
+    },
+    {
+      "thai": "คอมพิวเตอร์",
+      "category": "loanwords",
+      "base_roman": "khomphiotoe",
+      "num_variants": 8,
+      "variants": [
+        "khomphiotoe",
+        "khompiotoe",
+        "khoomphiotoe",
+        "khoompiotoe",
+        "komphiotoe",
+        "kompiotoe",
+        "koomphiotoe",
+        "koompiotoe"
+      ],
+      "expected": [
+        "computer",
+        "khomphiuter",
+        "kom piw ter"
+      ],
+      "matches": [],
+      "has_coverage": false,
+      "noise_rate": 1.0
+    },
+    {
+      "thai": "โทรศัพท์",
+      "category": "loanwords",
+      "base_roman": "thorasab",
+      "num_variants": 4,
+      "variants": [
+        "thorasab",
+        "thorasap",
+        "torasab",
+        "torasap"
+      ],
+      "expected": [
+        "thorasap",
+        "torasap",
+        "torasub"
+      ],
+      "matches": [
+        "thorasap",
+        "torasap"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "เฟซบุ๊ก",
+      "category": "loanwords",
+      "base_roman": "fe",
+      "num_variants": 3,
+      "variants": [
+        "fe",
+        "fee",
+        "feh"
+      ],
+      "expected": [
+        "facebook",
+        "fesabuk",
+        "fesbuk"
+      ],
+      "matches": [],
+      "has_coverage": false,
+      "noise_rate": 1.0
+    },
+    {
+      "thai": "กาแฟ",
+      "category": "loanwords",
+      "base_roman": "gaafaae",
+      "num_variants": 8,
+      "variants": [
+        "gaafaae",
+        "gaafae",
+        "gafaae",
+        "gafae",
+        "kaafaae",
+        "kaafae",
+        "kafaae",
+        "kafae"
+      ],
+      "expected": [
+        "cafe",
+        "kafae",
+        "kafee"
+      ],
+      "matches": [
+        "kafae"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.875
+    },
+    {
+      "thai": "ช็อกโกแลต",
+      "category": "loanwords",
+      "base_roman": "chokgolaaed",
+      "num_variants": 48,
+      "variants": [
+        "chokgolaaed",
+        "chokgolaaet",
+        "chokgolaed",
+        "chokgolaet",
+        "chokgoolaaed",
+        "chokgoolaaet",
+        "chokgoolaed",
+        "chokgoolaet",
+        "chokkolaaed",
+        "chokkolaaet",
+        "chokkolaed",
+        "chokkolaet",
+        "chokkoolaaed",
+        "chokkoolaaet",
+        "chokkoolaed",
+        "chokkoolaet",
+        "cokgolaaed",
+        "cokgolaaet",
+        "cokgolaed",
+        "cokgolaet",
+        "cokgoolaaed",
+        "cokgoolaaet",
+        "cokgoolaed",
+        "cokgoolaet",
+        "cokkolaaed",
+        "cokkolaaet",
+        "cokkolaed",
+        "cokkolaet",
+        "cokkoolaaed",
+        "cokkoolaaet",
+        "cokkoolaed",
+        "cokkoolaet",
+        "jokgolaaed",
+        "jokgolaaet",
+        "jokgolaed",
+        "jokgolaet",
+        "jokgoolaaed",
+        "jokgoolaaet",
+        "jokgoolaed",
+        "jokgoolaet",
+        "jokkolaaed",
+        "jokkolaaet",
+        "jokkolaed",
+        "jokkolaet",
+        "jokkoolaaed",
+        "jokkoolaaet",
+        "jokkoolaed",
+        "jokkoolaet"
+      ],
+      "expected": [
+        "chocolate",
+        "chokkolaet",
+        "chokkolat"
+      ],
+      "matches": [
+        "chokkolaet"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.979
+    },
+    {
+      "thai": "แฮมเบอร์เกอร์",
+      "category": "loanwords",
+      "base_roman": "haaemboegoe",
+      "num_variants": 4,
+      "variants": [
+        "haaemboegoe",
+        "haaemboekoe",
+        "haemboegoe",
+        "haemboekoe"
+      ],
+      "expected": [
+        "haemboekoe",
+        "hamberger",
+        "hamburger"
+      ],
+      "matches": [
+        "haemboekoe"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.75
+    },
+    {
+      "thai": "เบียร์",
+      "category": "loanwords",
+      "base_roman": "bia",
+      "num_variants": 2,
+      "variants": [
+        "bia",
+        "biia"
+      ],
+      "expected": [
+        "beer",
+        "bia"
+      ],
+      "matches": [
+        "bia"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.5
+    },
+    {
+      "thai": "ฟุตบอล",
+      "category": "loanwords",
+      "base_roman": "fudbon",
+      "num_variants": 4,
+      "variants": [
+        "fudbon",
+        "fudboon",
+        "futbon",
+        "futboon"
+      ],
+      "expected": [
+        "football",
+        "fut bon",
+        "futbon"
+      ],
+      "matches": [
+        "futbon"
+      ],
+      "has_coverage": true,
+      "noise_rate": 0.75
+    }
+  ]
+}
