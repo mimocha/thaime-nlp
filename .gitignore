@@ -29,6 +29,9 @@ Thumbs.db
 *.h5
 *.hdf5
 
+# Raw corpus data (downloaded via scripts, not version controlled)
+data/corpora/raw/
+
 # Environment
 .env
 *.env
