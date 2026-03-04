@@ -35,6 +35,7 @@ data/corpora/raw/
 # Environment
 .env
 *.env
+.claude/
 
 # uv
 uv.lock
