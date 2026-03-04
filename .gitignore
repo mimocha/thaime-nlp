@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+*.egg
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large data files (keep tracked data small)
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+
+# Environment
+.env
+*.env
+
+# Experiment outputs that shouldn't be tracked
+# (large generated files — commit summaries and key results, not raw dumps)
+experiments/*/data/raw/
+experiments/*/data/*.csv.gz
