@@ -23,7 +23,10 @@ See [`research/index.md`](research/index.md) for all completed and in-progress r
 
 1. Clone the repo and read the docs in `docs/`.
 2. Create a research branch: `git checkout -b research/<topic-name>`
-3. Follow the workflow in [`docs/research-workflow.md`](docs/research-workflow.md).
+3. Follow the four-stage workflow in [`docs/research-workflow.md`](docs/research-workflow.md).
+4. When done, create a clean `summary/<topic-name>` branch from `main` containing only the deliverable files (e.g. `summary.md`), then open a PR from `summary/` → `main`.
+
+Research branches hold all experimental code and are kept for reference; only summary branches get merged via GitHub's standard UI. See [`docs/git-workflow.md`](docs/git-workflow.md) for full details.
 
 ### For AI agents
 

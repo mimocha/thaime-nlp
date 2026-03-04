@@ -186,8 +186,10 @@ Session 4:
   1. Read all previous artifacts
   2. Perform Stage 4 (Summary)
   3. Write research/<topic-name>/summary.md
-  4. Commit and push
-  5. Notify maintainer that the topic is ready for review
+  4. Commit and push the research branch
+  5. Create summary/<topic-name> branch from main with only deliverable files
+  6. Open PR from summary/<topic-name> → main (see docs/git-workflow.md)
+  7. Notify maintainer that the topic is ready for review
 ```
 
 ## For Humans: Starting a Research Topic
