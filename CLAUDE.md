@@ -49,6 +49,11 @@ thaime-nlp/
 │   ├── corpora/               # Processed corpus data
 │   └── dictionaries/          # Word lists, frequency tables
 │
+├── pipelines/                  # Production data generation pipelines
+│   └── <pipeline-name>/       # One directory per pipeline
+│       ├── README.md          # Pipeline documentation
+│       └── *.py               # Pipeline code
+│
 ├── src/                        # Shared utility code
 │   └── utils/                 # Common helpers (evaluation, data loading, etc.)
 │
@@ -67,6 +72,14 @@ thaime-nlp/
 4. **Keep research branches self-contained.** Each `research/<topic>` branch should contain everything needed to reproduce its results. Do not depend on state from other research branches.
 
 5. **Only summaries merge to main.** When a research topic is complete, only the summary document (and any new shared utilities or benchmark additions) merge into `main` via pull request. Experimental notebooks and intermediate artifacts stay on the research branch for reference.
+
+## Pipeline Work
+
+- Pipelines live in `pipelines/` and follow the `pipeline/<name>` branching convention (see `docs/git-workflow.md`).
+- Pipeline code should be production-quality: proper error handling, logging, docstrings, and a README documenting inputs, outputs, configuration, and how to run.
+- Pipelines import shared modules from `src/` — do not duplicate code from `src/` into pipeline directories.
+- Pipeline outputs (generated data files) are `.gitignore`'d. The pipeline must be runnable to regenerate outputs on demand. Stable outputs are published via GitHub Releases.
+- Pipeline code uses Python, same as research code. Dependencies go in `pyproject.toml`.
 
 ## Tech Stack
 

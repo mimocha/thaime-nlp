@@ -2,10 +2,10 @@
 
 ## Branching Model
 
-This repo uses a three-tier branching model designed for research workflows:
+This repo uses a branching model designed for research and pipeline workflows:
 
 ```
-main ─────────────────────────────────────────────────
+main ─────────────────────────────────────────────────────────
   │                    ↑ (PR: standard GitHub merge)
   │    summary/roman-coverage ──┘   (clean: only summary.md + approved infra)
   │
@@ -15,6 +15,12 @@ main ─────────────────────────
   │    summary/trie-comparison ─────┘
   │
   ├── research/trie-comparison
+  │
+  │                    ↑ (PR: standard GitHub merge)
+  │    pipeline/trie-v1 ────────────┘   (code + pipeline merge to main)
+  │
+  │                    ↑ (PR: standard GitHub merge)
+  │    pipeline/trie-loanwords ─────┘   (iterative additions)
   │
   │                    ↑ (PR: standard GitHub merge)
   │    summary/ngram-smoothing ─────┘
@@ -111,6 +117,55 @@ git commit -m "[summary] <topic-name> findings"
 git push origin summary/<topic-name>
 ```
 
+### `pipeline/<name>` branches
+
+Pipeline branches are used for production data generation pipelines — trie building, corpus processing, language model training, and similar tasks that produce artifacts consumed by the main THAIME engine.
+
+Unlike research branches, pipeline branches merge their **actual code** to `main` (not just a summary document). Main should always contain working pipeline code.
+
+#### Naming
+
+Use short, descriptive, kebab-cased names:
+
+```bash
+# Good branch names
+pipeline/trie-v1
+pipeline/trie-loanwords
+pipeline/corpus-processing
+pipeline/ngram-training
+
+# Bad branch names
+pipeline/test
+pipeline/fix
+```
+
+#### Workflow
+
+1. Branch from `main`: `git checkout -b pipeline/<name>`
+2. Develop the pipeline iteratively. Commit freely.
+3. When functional, open a PR from `pipeline/<name>` → `main`.
+4. PR review focuses on code quality, reproducibility, and documentation rather than research conclusions.
+5. After merge, the pipeline code lives in `pipelines/<name>/` on `main`.
+
+Multiple rounds of iteration are expected. For example, `pipeline/trie-v1` merges the initial pipeline, then later `pipeline/trie-loanwords` adds a new data source to the existing pipeline.
+
+#### Creating a pipeline branch
+
+```bash
+git checkout main
+git pull origin main
+git checkout -b pipeline/<name>
+
+# Develop in pipelines/<name>/
+mkdir -p pipelines/<name>
+# Write pipeline code, README, etc.
+
+git add .
+git commit -m "[pipeline] Initial <name> pipeline"
+git push origin pipeline/<name>
+# Open PR → main
+```
+
 ## Commit Message Conventions
 
 Use short, descriptive messages. Prefix with the stage of research when relevant:
@@ -120,6 +175,7 @@ Use short, descriptive messages. Prefix with the stage of research when relevant
 [plan] Define experiment parameters for romanization coverage
 [experiment] Run RTGS-only benchmark, record results
 [summary] Write findings for romanization coverage study
+[pipeline] Add trie generation pipeline
 [infra] Add word-conversion benchmark loader utility
 [benchmark] Add 50 compound word test cases
 [docs] Update research index with new topic
