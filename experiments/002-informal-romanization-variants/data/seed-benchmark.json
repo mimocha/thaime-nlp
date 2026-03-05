@@ -1,0 +1,2442 @@
+[
+  {
+    "thai": "สวัสดี",
+    "accepted_romanizations": [
+      "sawaddee",
+      "sawaddi",
+      "sawaddii",
+      "sawasdee",
+      "sawatdee",
+      "sawatdi",
+      "sawatdii"
+    ],
+    "category": "common",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "sawaddee",
+        "sawasdee",
+        "sawatdee"
+      ],
+      "from_generator": [
+        "sawaddee",
+        "sawaddi",
+        "sawaddii",
+        "sawatdee",
+        "sawatdi",
+        "sawatdii"
+      ],
+      "overlap": [
+        "sawaddee",
+        "sawatdee"
+      ]
+    }
+  },
+  {
+    "thai": "ขอบคุณ",
+    "accepted_romanizations": [
+      "khobkhun",
+      "khobkun",
+      "khoobkhun",
+      "khoobkun",
+      "khoopkhun",
+      "khoopkun",
+      "khopkhun",
+      "khopkun",
+      "kobkhun",
+      "kobkun",
+      "koobkhun",
+      "koobkun",
+      "koopkhun",
+      "koopkun",
+      "kopkhun",
+      "kopkun"
+    ],
+    "category": "common",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "khobkhun",
+        "kobkun",
+        "kopkhun"
+      ],
+      "from_generator": [
+        "khobkhun",
+        "khobkun",
+        "khoobkhun",
+        "khoobkun",
+        "khoopkhun",
+        "khoopkun",
+        "khopkhun",
+        "khopkun",
+        "kobkhun",
+        "kobkun",
+        "koobkhun",
+        "koobkun",
+        "koopkhun",
+        "koopkun",
+        "kopkhun",
+        "kopkun"
+      ],
+      "overlap": [
+        "khobkhun",
+        "kobkun",
+        "kopkhun"
+      ]
+    }
+  },
+  {
+    "thai": "ครับ",
+    "accepted_romanizations": [
+      "kab",
+      "kap",
+      "khab",
+      "khap",
+      "khrab",
+      "khrap",
+      "krab",
+      "krap",
+      "krub"
+    ],
+    "category": "common",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "krab",
+        "krap",
+        "krub"
+      ],
+      "from_generator": [
+        "kab",
+        "kap",
+        "khab",
+        "khap",
+        "khrab",
+        "khrap",
+        "krab",
+        "krap"
+      ],
+      "overlap": [
+        "krab",
+        "krap"
+      ]
+    }
+  },
+  {
+    "thai": "ค่ะ",
+    "accepted_romanizations": [
+      "ka",
+      "kaa",
+      "kha"
+    ],
+    "category": "common",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "ka",
+        "kaa",
+        "kha"
+      ],
+      "from_generator": [
+        "ka",
+        "kha"
+      ],
+      "overlap": [
+        "ka",
+        "kha"
+      ]
+    }
+  },
+  {
+    "thai": "ไม่",
+    "accepted_romanizations": [
+      "mai",
+      "my"
+    ],
+    "category": "common",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "mai",
+        "my"
+      ],
+      "from_generator": [
+        "mai"
+      ],
+      "overlap": [
+        "mai"
+      ]
+    }
+  },
+  {
+    "thai": "ใช่",
+    "accepted_romanizations": [
+      "cai",
+      "chai",
+      "chy",
+      "jai"
+    ],
+    "category": "common",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "chai",
+        "chy"
+      ],
+      "from_generator": [
+        "cai",
+        "chai",
+        "jai"
+      ],
+      "overlap": [
+        "chai"
+      ]
+    }
+  },
+  {
+    "thai": "ดี",
+    "accepted_romanizations": [
+      "dee",
+      "di",
+      "dii"
+    ],
+    "category": "common",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "dee",
+        "dii"
+      ],
+      "from_generator": [
+        "dee",
+        "di",
+        "dii"
+      ],
+      "overlap": [
+        "dee",
+        "dii"
+      ]
+    }
+  },
+  {
+    "thai": "ไป",
+    "accepted_romanizations": [
+      "bai",
+      "pai",
+      "py"
+    ],
+    "category": "common",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "bai",
+        "pai",
+        "py"
+      ],
+      "from_generator": [
+        "pai"
+      ],
+      "overlap": [
+        "pai"
+      ]
+    }
+  },
+  {
+    "thai": "มา",
+    "accepted_romanizations": [
+      "ma",
+      "maa"
+    ],
+    "category": "common",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "ma",
+        "maa"
+      ],
+      "from_generator": [
+        "ma",
+        "maa"
+      ],
+      "overlap": [
+        "ma",
+        "maa"
+      ]
+    }
+  },
+  {
+    "thai": "กิน",
+    "accepted_romanizations": [
+      "gin",
+      "kin"
+    ],
+    "category": "common",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "gin",
+        "kin"
+      ],
+      "from_generator": [
+        "gin",
+        "kin"
+      ],
+      "overlap": [
+        "gin",
+        "kin"
+      ]
+    }
+  },
+  {
+    "thai": "น้ำ",
+    "accepted_romanizations": [
+      "naam",
+      "nam",
+      "num"
+    ],
+    "category": "common",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "naam",
+        "nam",
+        "num"
+      ],
+      "from_generator": [
+        "naam",
+        "nam"
+      ],
+      "overlap": [
+        "naam",
+        "nam"
+      ]
+    }
+  },
+  {
+    "thai": "คน",
+    "accepted_romanizations": [
+      "khon",
+      "kon"
+    ],
+    "category": "common",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "khon",
+        "kon"
+      ],
+      "from_generator": [
+        "khon",
+        "kon"
+      ],
+      "overlap": [
+        "khon",
+        "kon"
+      ]
+    }
+  },
+  {
+    "thai": "เขา",
+    "accepted_romanizations": [
+      "kao",
+      "khao",
+      "kow"
+    ],
+    "category": "common",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "kao",
+        "khao",
+        "kow"
+      ],
+      "from_generator": [
+        "kao",
+        "khao"
+      ],
+      "overlap": [
+        "kao",
+        "khao"
+      ]
+    }
+  },
+  {
+    "thai": "นี่",
+    "accepted_romanizations": [
+      "nee",
+      "ni",
+      "nii"
+    ],
+    "category": "common",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "nee",
+        "nii"
+      ],
+      "from_generator": [
+        "nee",
+        "ni",
+        "nii"
+      ],
+      "overlap": [
+        "nee",
+        "nii"
+      ]
+    }
+  },
+  {
+    "thai": "อะไร",
+    "accepted_romanizations": [
+      "a-rai",
+      "arai"
+    ],
+    "category": "common",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "a-rai",
+        "arai"
+      ],
+      "from_generator": [
+        "arai"
+      ],
+      "overlap": [
+        "arai"
+      ]
+    }
+  },
+  {
+    "thai": "ข้าว",
+    "accepted_romanizations": [
+      "kaao",
+      "kao",
+      "khaao",
+      "khao",
+      "kow"
+    ],
+    "category": "food",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "kao",
+        "khao",
+        "kow"
+      ],
+      "from_generator": [
+        "kaao",
+        "kao",
+        "khaao",
+        "khao"
+      ],
+      "overlap": [
+        "kao",
+        "khao"
+      ]
+    }
+  },
+  {
+    "thai": "ผัดไท",
+    "accepted_romanizations": [
+      "pad thai",
+      "padtai",
+      "padthai",
+      "pattai",
+      "patthai",
+      "phadtai",
+      "phadthai",
+      "phattai",
+      "phatthai"
+    ],
+    "category": "food",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "pad thai",
+        "padthai",
+        "pattai"
+      ],
+      "from_generator": [
+        "padtai",
+        "padthai",
+        "pattai",
+        "patthai",
+        "phadtai",
+        "phadthai",
+        "phattai",
+        "phatthai"
+      ],
+      "overlap": [
+        "padthai",
+        "pattai"
+      ]
+    }
+  },
+  {
+    "thai": "ส้มตำ",
+    "accepted_romanizations": [
+      "som tam",
+      "somtam",
+      "somtum"
+    ],
+    "category": "food",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "som tam",
+        "somtam",
+        "somtum"
+      ],
+      "from_generator": [
+        "somtam"
+      ],
+      "overlap": [
+        "somtam"
+      ]
+    }
+  },
+  {
+    "thai": "ต้มยำ",
+    "accepted_romanizations": [
+      "tom yam",
+      "tomyam",
+      "tomyum"
+    ],
+    "category": "food",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "tom yam",
+        "tomyam",
+        "tomyum"
+      ],
+      "from_generator": [
+        "tomyam"
+      ],
+      "overlap": [
+        "tomyam"
+      ]
+    }
+  },
+  {
+    "thai": "แกงเขียวหวาน",
+    "accepted_romanizations": [
+      "gaaengkhiaowaan",
+      "gaaengkhiaowan",
+      "gaaengkiaowaan",
+      "gaaengkiaowan",
+      "gaeng kiew waan",
+      "gaengkhiaowaan",
+      "gaengkhiaowan",
+      "gaengkiaowaan",
+      "gaengkiaowan",
+      "gang kiaw wan",
+      "kaaengkhiaowaan",
+      "kaaengkhiaowan",
+      "kaaengkiaowaan",
+      "kaaengkiaowan",
+      "kaeng khiao wan",
+      "kaengkhiaowaan",
+      "kaengkhiaowan",
+      "kaengkiaowaan",
+      "kaengkiaowan"
+    ],
+    "category": "food",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "gaeng kiew waan",
+        "gang kiaw wan",
+        "kaeng khiao wan"
+      ],
+      "from_generator": [
+        "gaaengkhiaowaan",
+        "gaaengkhiaowan",
+        "gaaengkiaowaan",
+        "gaaengkiaowan",
+        "gaengkhiaowaan",
+        "gaengkhiaowan",
+        "gaengkiaowaan",
+        "gaengkiaowan",
+        "kaaengkhiaowaan",
+        "kaaengkhiaowan",
+        "kaaengkiaowaan",
+        "kaaengkiaowan",
+        "kaengkhiaowaan",
+        "kaengkhiaowan",
+        "kaengkiaowaan",
+        "kaengkiaowan"
+      ],
+      "overlap": []
+    }
+  },
+  {
+    "thai": "หมู",
+    "accepted_romanizations": [
+      "moo",
+      "mu",
+      "muu"
+    ],
+    "category": "food",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "moo",
+        "mu",
+        "muu"
+      ],
+      "from_generator": [
+        "moo",
+        "mu",
+        "muu"
+      ],
+      "overlap": [
+        "moo",
+        "mu",
+        "muu"
+      ]
+    }
+  },
+  {
+    "thai": "ไก่",
+    "accepted_romanizations": [
+      "gai",
+      "guy",
+      "kai"
+    ],
+    "category": "food",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "gai",
+        "guy",
+        "kai"
+      ],
+      "from_generator": [
+        "gai",
+        "kai"
+      ],
+      "overlap": [
+        "gai",
+        "kai"
+      ]
+    }
+  },
+  {
+    "thai": "ปลา",
+    "accepted_romanizations": [
+      "bla",
+      "pla",
+      "plaa"
+    ],
+    "category": "food",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "bla",
+        "pla",
+        "plaa"
+      ],
+      "from_generator": [
+        "pla",
+        "plaa"
+      ],
+      "overlap": [
+        "pla",
+        "plaa"
+      ]
+    }
+  },
+  {
+    "thai": "เส้น",
+    "accepted_romanizations": [
+      "seen",
+      "sen",
+      "senn"
+    ],
+    "category": "food",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "sen",
+        "senn"
+      ],
+      "from_generator": [
+        "seen",
+        "sen"
+      ],
+      "overlap": [
+        "sen"
+      ]
+    }
+  },
+  {
+    "thai": "เผ็ด",
+    "accepted_romanizations": [
+      "ped",
+      "pet",
+      "phed",
+      "phet"
+    ],
+    "category": "food",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "ped",
+        "pet",
+        "phet"
+      ],
+      "from_generator": [
+        "ped",
+        "pet",
+        "phed",
+        "phet"
+      ],
+      "overlap": [
+        "ped",
+        "pet",
+        "phet"
+      ]
+    }
+  },
+  {
+    "thai": "ก๋วยเตี๋ยว",
+    "accepted_romanizations": [
+      "guaitiao",
+      "guay tiew",
+      "kuaitiao",
+      "kuay tiew"
+    ],
+    "category": "food",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "guay tiew",
+        "kuaitiao",
+        "kuay tiew"
+      ],
+      "from_generator": [
+        "guaitiao",
+        "kuaitiao"
+      ],
+      "overlap": [
+        "kuaitiao"
+      ]
+    }
+  },
+  {
+    "thai": "ลาบ",
+    "accepted_romanizations": [
+      "laab",
+      "laap",
+      "lab",
+      "lap",
+      "larb"
+    ],
+    "category": "food",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "laab",
+        "lab",
+        "larb"
+      ],
+      "from_generator": [
+        "laab",
+        "laap",
+        "lab",
+        "lap"
+      ],
+      "overlap": [
+        "laab",
+        "lab"
+      ]
+    }
+  },
+  {
+    "thai": "กรุงเทพ",
+    "accepted_romanizations": [
+      "grungtep",
+      "krung thep",
+      "krungteb",
+      "krungteeb",
+      "krungteep",
+      "krungtep",
+      "krungtheb",
+      "krungtheeb",
+      "krungtheep",
+      "krungthep",
+      "kungteb",
+      "kungteeb",
+      "kungteep",
+      "kungtep",
+      "kungtheb",
+      "kungtheeb",
+      "kungtheep",
+      "kungthep"
+    ],
+    "category": "places",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "grungtep",
+        "krung thep",
+        "krungthep"
+      ],
+      "from_generator": [
+        "krungteb",
+        "krungteeb",
+        "krungteep",
+        "krungtep",
+        "krungtheb",
+        "krungtheeb",
+        "krungtheep",
+        "krungthep",
+        "kungteb",
+        "kungteeb",
+        "kungteep",
+        "kungtep",
+        "kungtheb",
+        "kungtheeb",
+        "kungtheep",
+        "kungthep"
+      ],
+      "overlap": [
+        "krungthep"
+      ]
+    }
+  },
+  {
+    "thai": "เชียงใหม่",
+    "accepted_romanizations": [
+      "chiang mai",
+      "chiang my",
+      "chiangmai",
+      "chiiangmai",
+      "ciangmai",
+      "ciiangmai",
+      "jiangmai",
+      "jiiangmai"
+    ],
+    "category": "places",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "chiang mai",
+        "chiang my",
+        "chiangmai"
+      ],
+      "from_generator": [
+        "chiangmai",
+        "chiiangmai",
+        "ciangmai",
+        "ciiangmai",
+        "jiangmai",
+        "jiiangmai"
+      ],
+      "overlap": [
+        "chiangmai"
+      ]
+    }
+  },
+  {
+    "thai": "ภูเก็ต",
+    "accepted_romanizations": [
+      "phooged",
+      "phooget",
+      "phooked",
+      "phooket",
+      "phuged",
+      "phuget",
+      "phuked",
+      "phuket",
+      "phuuged",
+      "phuuget",
+      "phuuked",
+      "phuuket",
+      "pooged",
+      "pooget",
+      "pooked",
+      "pooket",
+      "puged",
+      "puget",
+      "puked",
+      "puket",
+      "puuged",
+      "puuget",
+      "puuked",
+      "puuket"
+    ],
+    "category": "places",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "phuket",
+        "pooket",
+        "puket"
+      ],
+      "from_generator": [
+        "phooged",
+        "phooget",
+        "phooked",
+        "phooket",
+        "phuged",
+        "phuget",
+        "phuked",
+        "phuket",
+        "phuuged",
+        "phuuget",
+        "phuuked",
+        "phuuket",
+        "pooged",
+        "pooget",
+        "pooked",
+        "pooket",
+        "puged",
+        "puget",
+        "puked",
+        "puket",
+        "puuged",
+        "puuget",
+        "puuked",
+        "puuket"
+      ],
+      "overlap": [
+        "phuket",
+        "pooket",
+        "puket"
+      ]
+    }
+  },
+  {
+    "thai": "พัทยา",
+    "accepted_romanizations": [
+      "pataya",
+      "pattaya",
+      "patthaya",
+      "patthayaa",
+      "phatthaya",
+      "phatthayaa"
+    ],
+    "category": "places",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "pataya",
+        "pattaya",
+        "phatthaya"
+      ],
+      "from_generator": [
+        "patthaya",
+        "patthayaa",
+        "phatthaya",
+        "phatthayaa"
+      ],
+      "overlap": [
+        "phatthaya"
+      ]
+    }
+  },
+  {
+    "thai": "อยุธยา",
+    "accepted_romanizations": [
+      "ayudhya",
+      "ayuttaya",
+      "ayutthaya",
+      "ayutthayaa"
+    ],
+    "category": "places",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "ayudhya",
+        "ayuttaya",
+        "ayutthaya"
+      ],
+      "from_generator": [
+        "ayutthaya",
+        "ayutthayaa"
+      ],
+      "overlap": [
+        "ayutthaya"
+      ]
+    }
+  },
+  {
+    "thai": "สุโขทัย",
+    "accepted_romanizations": [
+      "sukhohtai",
+      "sukhohthai",
+      "sukhootai",
+      "sukhoothai",
+      "sukhotai",
+      "sukhothai",
+      "sukohtai",
+      "sukohthai",
+      "sukootai",
+      "sukoothai",
+      "sukotai",
+      "sukothai"
+    ],
+    "category": "places",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "sukhotai",
+        "sukhothai",
+        "sukothai"
+      ],
+      "from_generator": [
+        "sukhohtai",
+        "sukhohthai",
+        "sukhootai",
+        "sukhoothai",
+        "sukhotai",
+        "sukhothai",
+        "sukohtai",
+        "sukohthai",
+        "sukootai",
+        "sukoothai",
+        "sukotai",
+        "sukothai"
+      ],
+      "overlap": [
+        "sukhotai",
+        "sukhothai",
+        "sukothai"
+      ]
+    }
+  },
+  {
+    "thai": "เกาะ",
+    "accepted_romanizations": [
+      "go",
+      "ko",
+      "koh",
+      "kor"
+    ],
+    "category": "places",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "ko",
+        "koh",
+        "kor"
+      ],
+      "from_generator": [
+        "go",
+        "ko"
+      ],
+      "overlap": [
+        "ko"
+      ]
+    }
+  },
+  {
+    "thai": "ถนน",
+    "accepted_romanizations": [
+      "tanon",
+      "thanon"
+    ],
+    "category": "places",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "tanon",
+        "thanon"
+      ],
+      "from_generator": [
+        "tanon",
+        "thanon"
+      ],
+      "overlap": [
+        "tanon",
+        "thanon"
+      ]
+    }
+  },
+  {
+    "thai": "วัด",
+    "accepted_romanizations": [
+      "wad",
+      "wat"
+    ],
+    "category": "places",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "wad",
+        "wat"
+      ],
+      "from_generator": [
+        "wad",
+        "wat"
+      ],
+      "overlap": [
+        "wad",
+        "wat"
+      ]
+    }
+  },
+  {
+    "thai": "ตลาด",
+    "accepted_romanizations": [
+      "talaat",
+      "talad",
+      "talat"
+    ],
+    "category": "places",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "talaat",
+        "talad",
+        "talat"
+      ],
+      "from_generator": [
+        "talad",
+        "talat"
+      ],
+      "overlap": [
+        "talad",
+        "talat"
+      ]
+    }
+  },
+  {
+    "thai": "พูด",
+    "accepted_romanizations": [
+      "phood",
+      "phoot",
+      "phud",
+      "phut",
+      "phuud",
+      "phuut",
+      "pood",
+      "poot",
+      "pud",
+      "put",
+      "puud",
+      "puut"
+    ],
+    "category": "verbs",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "pood",
+        "put",
+        "puut"
+      ],
+      "from_generator": [
+        "phood",
+        "phoot",
+        "phud",
+        "phut",
+        "phuud",
+        "phuut",
+        "pood",
+        "poot",
+        "pud",
+        "put",
+        "puud",
+        "puut"
+      ],
+      "overlap": [
+        "pood",
+        "put",
+        "puut"
+      ]
+    }
+  },
+  {
+    "thai": "เขียน",
+    "accepted_romanizations": [
+      "khian",
+      "khiian",
+      "kian",
+      "kiian"
+    ],
+    "category": "verbs",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "khian",
+        "kian",
+        "kiian"
+      ],
+      "from_generator": [
+        "khian",
+        "khiian",
+        "kian",
+        "kiian"
+      ],
+      "overlap": [
+        "khian",
+        "kian",
+        "kiian"
+      ]
+    }
+  },
+  {
+    "thai": "อ่าน",
+    "accepted_romanizations": [
+      "aan",
+      "an",
+      "arn"
+    ],
+    "category": "verbs",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "aan",
+        "arn"
+      ],
+      "from_generator": [
+        "aan",
+        "an"
+      ],
+      "overlap": [
+        "aan"
+      ]
+    }
+  },
+  {
+    "thai": "เรียน",
+    "accepted_romanizations": [
+      "learn",
+      "rian",
+      "riian"
+    ],
+    "category": "verbs",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "learn",
+        "rian",
+        "riian"
+      ],
+      "from_generator": [
+        "rian",
+        "riian"
+      ],
+      "overlap": [
+        "rian",
+        "riian"
+      ]
+    }
+  },
+  {
+    "thai": "ทำงาน",
+    "accepted_romanizations": [
+      "tam ngan",
+      "tamngaan",
+      "tamngan",
+      "thamngaan",
+      "thamngan"
+    ],
+    "category": "verbs",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "tam ngan",
+        "tamngaan",
+        "tamngan"
+      ],
+      "from_generator": [
+        "tamngaan",
+        "tamngan",
+        "thamngaan",
+        "thamngan"
+      ],
+      "overlap": [
+        "tamngaan",
+        "tamngan"
+      ]
+    }
+  },
+  {
+    "thai": "ซื้อ",
+    "accepted_romanizations": [
+      "seu",
+      "sue",
+      "suee",
+      "suu"
+    ],
+    "category": "verbs",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "seu",
+        "sue",
+        "suu"
+      ],
+      "from_generator": [
+        "sue",
+        "suee"
+      ],
+      "overlap": [
+        "sue"
+      ]
+    }
+  },
+  {
+    "thai": "ขาย",
+    "accepted_romanizations": [
+      "kaai",
+      "kai",
+      "khaai",
+      "khai"
+    ],
+    "category": "verbs",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "kaai",
+        "kai",
+        "khai"
+      ],
+      "from_generator": [
+        "kaai",
+        "kai",
+        "khaai",
+        "khai"
+      ],
+      "overlap": [
+        "kaai",
+        "kai",
+        "khai"
+      ]
+    }
+  },
+  {
+    "thai": "รัก",
+    "accepted_romanizations": [
+      "rag",
+      "rak",
+      "ruk"
+    ],
+    "category": "verbs",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "rak",
+        "ruk"
+      ],
+      "from_generator": [
+        "rag",
+        "rak"
+      ],
+      "overlap": [
+        "rak"
+      ]
+    }
+  },
+  {
+    "thai": "ชอบ",
+    "accepted_romanizations": [
+      "chob",
+      "choob",
+      "choop",
+      "chop",
+      "chorb",
+      "cob",
+      "coob",
+      "coop",
+      "cop",
+      "job",
+      "joob",
+      "joop",
+      "jop"
+    ],
+    "category": "verbs",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "chob",
+        "chop",
+        "chorb"
+      ],
+      "from_generator": [
+        "chob",
+        "choob",
+        "choop",
+        "chop",
+        "cob",
+        "coob",
+        "coop",
+        "cop",
+        "job",
+        "joob",
+        "joop",
+        "jop"
+      ],
+      "overlap": [
+        "chob",
+        "chop"
+      ]
+    }
+  },
+  {
+    "thai": "หิว",
+    "accepted_romanizations": [
+      "hiew",
+      "hio",
+      "hiu",
+      "hiw"
+    ],
+    "category": "verbs",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "hiew",
+        "hiu",
+        "hiw"
+      ],
+      "from_generator": [
+        "hio"
+      ],
+      "overlap": []
+    }
+  },
+  {
+    "thai": "สบาย",
+    "accepted_romanizations": [
+      "sa bai",
+      "sabaai",
+      "sabai"
+    ],
+    "category": "slang",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "sa bai",
+        "sabaai",
+        "sabai"
+      ],
+      "from_generator": [
+        "sabai"
+      ],
+      "overlap": [
+        "sabai"
+      ]
+    }
+  },
+  {
+    "thai": "เท่",
+    "accepted_romanizations": [
+      "tay",
+      "te",
+      "tee",
+      "teh",
+      "the",
+      "thee",
+      "theh"
+    ],
+    "category": "slang",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "tay",
+        "te",
+        "teh"
+      ],
+      "from_generator": [
+        "te",
+        "tee",
+        "teh",
+        "the",
+        "thee",
+        "theh"
+      ],
+      "overlap": [
+        "te",
+        "teh"
+      ]
+    }
+  },
+  {
+    "thai": "อร่อย",
+    "accepted_romanizations": [
+      "aroi",
+      "aroy",
+      "arroy"
+    ],
+    "category": "slang",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "aroi",
+        "aroy",
+        "arroy"
+      ],
+      "from_generator": [
+        "aroi"
+      ],
+      "overlap": [
+        "aroi"
+      ]
+    }
+  },
+  {
+    "thai": "สนุก",
+    "accepted_romanizations": [
+      "sa nuk",
+      "sanook",
+      "sanug",
+      "sanuk"
+    ],
+    "category": "slang",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "sa nuk",
+        "sanook",
+        "sanuk"
+      ],
+      "from_generator": [
+        "sanug",
+        "sanuk"
+      ],
+      "overlap": [
+        "sanuk"
+      ]
+    }
+  },
+  {
+    "thai": "แซ่บ",
+    "accepted_romanizations": [
+      "saeb",
+      "saep",
+      "zap"
+    ],
+    "category": "slang",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "saeb",
+        "saep",
+        "zap"
+      ],
+      "from_generator": [],
+      "overlap": []
+    }
+  },
+  {
+    "thai": "จริง",
+    "accepted_romanizations": [
+      "ching",
+      "cing",
+      "jing"
+    ],
+    "category": "slang",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "ching",
+        "cing",
+        "jing"
+      ],
+      "from_generator": [
+        "ching",
+        "cing",
+        "jing"
+      ],
+      "overlap": [
+        "ching",
+        "cing",
+        "jing"
+      ]
+    }
+  },
+  {
+    "thai": "เก่ง",
+    "accepted_romanizations": [
+      "geeng",
+      "geng",
+      "keeng",
+      "keng"
+    ],
+    "category": "slang",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "geng",
+        "keng"
+      ],
+      "from_generator": [
+        "geeng",
+        "geng",
+        "keeng",
+        "keng"
+      ],
+      "overlap": [
+        "geng",
+        "keng"
+      ]
+    }
+  },
+  {
+    "thai": "แพง",
+    "accepted_romanizations": [
+      "paaeng",
+      "paeng",
+      "pang",
+      "phaaeng",
+      "phaeng",
+      "phang"
+    ],
+    "category": "slang",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "paeng",
+        "pang",
+        "phang"
+      ],
+      "from_generator": [
+        "paaeng",
+        "paeng",
+        "phaaeng",
+        "phaeng"
+      ],
+      "overlap": [
+        "paeng"
+      ]
+    }
+  },
+  {
+    "thai": "ถูก",
+    "accepted_romanizations": [
+      "thoog",
+      "thook",
+      "thug",
+      "thuk",
+      "thuug",
+      "thuuk",
+      "toog",
+      "took",
+      "tug",
+      "tuk",
+      "tuug",
+      "tuuk"
+    ],
+    "category": "slang",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "thook",
+        "took",
+        "tuk"
+      ],
+      "from_generator": [
+        "thoog",
+        "thook",
+        "thug",
+        "thuk",
+        "thuug",
+        "thuuk",
+        "toog",
+        "took",
+        "tug",
+        "tuk",
+        "tuug",
+        "tuuk"
+      ],
+      "overlap": [
+        "thook",
+        "took",
+        "tuk"
+      ]
+    }
+  },
+  {
+    "thai": "หล่อ",
+    "accepted_romanizations": [
+      "law",
+      "lo",
+      "loh",
+      "loo",
+      "lor"
+    ],
+    "category": "slang",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "law",
+        "lo",
+        "lor"
+      ],
+      "from_generator": [
+        "lo",
+        "loh",
+        "loo"
+      ],
+      "overlap": [
+        "lo"
+      ]
+    }
+  },
+  {
+    "thai": "จ๊าบ",
+    "accepted_romanizations": [
+      "caab",
+      "caap",
+      "cab",
+      "cap",
+      "chaab",
+      "chaap",
+      "chab",
+      "chap",
+      "jaab",
+      "jaap",
+      "jab",
+      "jap"
+    ],
+    "category": "slang",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "chab",
+        "jaab",
+        "jab"
+      ],
+      "from_generator": [
+        "caab",
+        "caap",
+        "cab",
+        "cap",
+        "chaab",
+        "chaap",
+        "chab",
+        "chap",
+        "jaab",
+        "jaap",
+        "jab",
+        "jap"
+      ],
+      "overlap": [
+        "chab",
+        "jaab",
+        "jab"
+      ]
+    }
+  },
+  {
+    "thai": "โอเค",
+    "accepted_romanizations": [
+      "ohke",
+      "ohkee",
+      "ohkeh",
+      "ohkhe",
+      "ohkhee",
+      "ohkheh",
+      "ok",
+      "oke",
+      "okee",
+      "okeh",
+      "okhay",
+      "okhe",
+      "okhee",
+      "okheh",
+      "ooke",
+      "ookee",
+      "ookeh",
+      "ookhe",
+      "ookhee",
+      "ookheh"
+    ],
+    "category": "slang",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "ok",
+        "oke",
+        "okhay"
+      ],
+      "from_generator": [
+        "ohke",
+        "ohkee",
+        "ohkeh",
+        "ohkhe",
+        "ohkhee",
+        "ohkheh",
+        "oke",
+        "okee",
+        "okeh",
+        "okhe",
+        "okhee",
+        "okheh",
+        "ooke",
+        "ookee",
+        "ookeh",
+        "ookhe",
+        "ookhee",
+        "ookheh"
+      ],
+      "overlap": [
+        "oke"
+      ]
+    }
+  },
+  {
+    "thai": "ซิ่ง",
+    "accepted_romanizations": [
+      "sing",
+      "zing"
+    ],
+    "category": "slang",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "sing",
+        "zing"
+      ],
+      "from_generator": [
+        "sing"
+      ],
+      "overlap": [
+        "sing"
+      ]
+    }
+  },
+  {
+    "thai": "โรงเรียน",
+    "accepted_romanizations": [
+      "rong rian",
+      "rong riian",
+      "rongrian",
+      "rongriian",
+      "roongrian",
+      "roongriian"
+    ],
+    "category": "compounds",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "rong rian",
+        "rong riian",
+        "rongrian"
+      ],
+      "from_generator": [
+        "rongrian",
+        "rongriian",
+        "roongrian",
+        "roongriian"
+      ],
+      "overlap": [
+        "rongrian"
+      ]
+    }
+  },
+  {
+    "thai": "โรงพยาบาล",
+    "accepted_romanizations": [
+      "rong pa ya ban",
+      "rong payaban",
+      "rongpayabaan",
+      "rongpayaban",
+      "rongphayabaan",
+      "rongphayaban",
+      "roongpayabaan",
+      "roongpayaban",
+      "roongphayabaan",
+      "roongphayaban"
+    ],
+    "category": "compounds",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "rong pa ya ban",
+        "rong payaban",
+        "rongpayaban"
+      ],
+      "from_generator": [
+        "rongpayabaan",
+        "rongpayaban",
+        "rongphayabaan",
+        "rongphayaban",
+        "roongpayabaan",
+        "roongpayaban",
+        "roongphayabaan",
+        "roongphayaban"
+      ],
+      "overlap": [
+        "rongpayaban"
+      ]
+    }
+  },
+  {
+    "thai": "สนามบิน",
+    "accepted_romanizations": [
+      "sa nam bin",
+      "sanam bin",
+      "sanambeen",
+      "sanambiin",
+      "sanambin"
+    ],
+    "category": "compounds",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "sa nam bin",
+        "sanam bin",
+        "sanambin"
+      ],
+      "from_generator": [
+        "sanambeen",
+        "sanambiin",
+        "sanambin"
+      ],
+      "overlap": [
+        "sanambin"
+      ]
+    }
+  },
+  {
+    "thai": "มหาวิทยาลัย",
+    "accepted_romanizations": [
+      "maha wit ta ya lai",
+      "mahawittayalai",
+      "mahawitthayaalai",
+      "mahawitthayalai"
+    ],
+    "category": "compounds",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "maha wit ta ya lai",
+        "mahawittayalai",
+        "mahawitthayalai"
+      ],
+      "from_generator": [
+        "mahawitthayaalai",
+        "mahawitthayalai"
+      ],
+      "overlap": [
+        "mahawitthayalai"
+      ]
+    }
+  },
+  {
+    "thai": "ประเทศ",
+    "accepted_romanizations": [
+      "pated",
+      "pateed",
+      "pateet",
+      "patet",
+      "pathed",
+      "patheed",
+      "patheet",
+      "pathet",
+      "prated",
+      "prateed",
+      "prateet",
+      "pratet",
+      "prathed",
+      "pratheed",
+      "pratheet",
+      "prathet"
+    ],
+    "category": "compounds",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "prated",
+        "pratet",
+        "prathet"
+      ],
+      "from_generator": [
+        "pated",
+        "pateed",
+        "pateet",
+        "patet",
+        "pathed",
+        "patheed",
+        "patheet",
+        "pathet",
+        "prated",
+        "prateed",
+        "prateet",
+        "pratet",
+        "prathed",
+        "pratheed",
+        "pratheet",
+        "prathet"
+      ],
+      "overlap": [
+        "prated",
+        "pratet",
+        "prathet"
+      ]
+    }
+  },
+  {
+    "thai": "ร้านอาหาร",
+    "accepted_romanizations": [
+      "raan aahaan",
+      "raan ahaan",
+      "raan-aahaan",
+      "raan-aahan",
+      "raan-ahaan",
+      "raan-ahan",
+      "ran ahan",
+      "ran-aahaan",
+      "ran-aahan",
+      "ran-ahaan",
+      "ran-ahan"
+    ],
+    "category": "compounds",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "raan aahaan",
+        "raan ahaan",
+        "ran ahan"
+      ],
+      "from_generator": [
+        "raan-aahaan",
+        "raan-aahan",
+        "raan-ahaan",
+        "raan-ahan",
+        "ran-aahaan",
+        "ran-aahan",
+        "ran-ahaan",
+        "ran-ahan"
+      ],
+      "overlap": []
+    }
+  },
+  {
+    "thai": "ห้องน้ำ",
+    "accepted_romanizations": [
+      "hong naam",
+      "hong nam",
+      "hongnaam",
+      "hongnam",
+      "hoongnaam",
+      "hoongnam"
+    ],
+    "category": "compounds",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "hong naam",
+        "hong nam",
+        "hongnam"
+      ],
+      "from_generator": [
+        "hongnaam",
+        "hongnam",
+        "hoongnaam",
+        "hoongnam"
+      ],
+      "overlap": [
+        "hongnam"
+      ]
+    }
+  },
+  {
+    "thai": "รถไฟ",
+    "accepted_romanizations": [
+      "rod fai",
+      "rodfai",
+      "rot fai",
+      "rotfai"
+    ],
+    "category": "compounds",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "rod fai",
+        "rot fai",
+        "rotfai"
+      ],
+      "from_generator": [
+        "rodfai",
+        "rotfai"
+      ],
+      "overlap": [
+        "rotfai"
+      ]
+    }
+  },
+  {
+    "thai": "เมืองไทย",
+    "accepted_romanizations": [
+      "muang thai",
+      "mueaangtai",
+      "mueaangthai",
+      "mueangtai",
+      "mueangthai",
+      "mueng tai"
+    ],
+    "category": "compounds",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "muang thai",
+        "mueangthai",
+        "mueng tai"
+      ],
+      "from_generator": [
+        "mueaangtai",
+        "mueaangthai",
+        "mueangtai",
+        "mueangthai"
+      ],
+      "overlap": [
+        "mueangthai"
+      ]
+    }
+  },
+  {
+    "thai": "ตำรวจ",
+    "accepted_romanizations": [
+      "tamruaad",
+      "tamruaat",
+      "tamruad",
+      "tamruat"
+    ],
+    "category": "compounds",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "tamruad",
+        "tamruat"
+      ],
+      "from_generator": [
+        "tamruaad",
+        "tamruaat",
+        "tamruad",
+        "tamruat"
+      ],
+      "overlap": [
+        "tamruad",
+        "tamruat"
+      ]
+    }
+  },
+  {
+    "thai": "แท็กซี่",
+    "accepted_romanizations": [
+      "taegsi",
+      "taeksi",
+      "taksi",
+      "taxi",
+      "teksee",
+      "thaegsi",
+      "thaeksi"
+    ],
+    "category": "loanwords",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "taksi",
+        "taxi",
+        "teksee"
+      ],
+      "from_generator": [
+        "taegsi",
+        "taeksi",
+        "thaegsi",
+        "thaeksi"
+      ],
+      "overlap": []
+    }
+  },
+  {
+    "thai": "อินเทอร์เน็ต",
+    "accepted_romanizations": [
+      "intanet",
+      "internet",
+      "inthoened",
+      "inthoenet",
+      "intoened",
+      "intoenet"
+    ],
+    "category": "loanwords",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "intanet",
+        "internet",
+        "inthoenet"
+      ],
+      "from_generator": [
+        "inthoened",
+        "inthoenet",
+        "intoened",
+        "intoenet"
+      ],
+      "overlap": [
+        "inthoenet"
+      ]
+    }
+  },
+  {
+    "thai": "คอมพิวเตอร์",
+    "accepted_romanizations": [
+      "computer",
+      "khomphiotoe",
+      "khomphiuter",
+      "khompiotoe",
+      "khoomphiotoe",
+      "khoompiotoe",
+      "kom piw ter",
+      "komphiotoe",
+      "kompiotoe",
+      "koomphiotoe",
+      "koompiotoe"
+    ],
+    "category": "loanwords",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "computer",
+        "khomphiuter",
+        "kom piw ter"
+      ],
+      "from_generator": [
+        "khomphiotoe",
+        "khompiotoe",
+        "khoomphiotoe",
+        "khoompiotoe",
+        "komphiotoe",
+        "kompiotoe",
+        "koomphiotoe",
+        "koompiotoe"
+      ],
+      "overlap": []
+    }
+  },
+  {
+    "thai": "โทรศัพท์",
+    "accepted_romanizations": [
+      "thorasab",
+      "thorasap",
+      "torasab",
+      "torasap",
+      "torasub"
+    ],
+    "category": "loanwords",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "thorasap",
+        "torasap",
+        "torasub"
+      ],
+      "from_generator": [
+        "thorasab",
+        "thorasap",
+        "torasab",
+        "torasap"
+      ],
+      "overlap": [
+        "thorasap",
+        "torasap"
+      ]
+    }
+  },
+  {
+    "thai": "เฟซบุ๊ก",
+    "accepted_romanizations": [
+      "facebook",
+      "fe",
+      "fee",
+      "feh",
+      "fesabuk",
+      "fesbuk"
+    ],
+    "category": "loanwords",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "facebook",
+        "fesabuk",
+        "fesbuk"
+      ],
+      "from_generator": [
+        "fe",
+        "fee",
+        "feh"
+      ],
+      "overlap": []
+    }
+  },
+  {
+    "thai": "กาแฟ",
+    "accepted_romanizations": [
+      "cafe",
+      "gaafaae",
+      "gaafae",
+      "gafaae",
+      "gafae",
+      "kaafaae",
+      "kaafae",
+      "kafaae",
+      "kafae",
+      "kafee"
+    ],
+    "category": "loanwords",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "cafe",
+        "kafae",
+        "kafee"
+      ],
+      "from_generator": [
+        "gaafaae",
+        "gaafae",
+        "gafaae",
+        "gafae",
+        "kaafaae",
+        "kaafae",
+        "kafaae",
+        "kafae"
+      ],
+      "overlap": [
+        "kafae"
+      ]
+    }
+  },
+  {
+    "thai": "ช็อกโกแลต",
+    "accepted_romanizations": [
+      "chocolate",
+      "chokkolaaet",
+      "chokkolaaetd",
+      "chokkolaaett",
+      "chokkolaet",
+      "chokkolaetd",
+      "chokkolaett",
+      "chokkolat",
+      "cokkolaaet",
+      "cokkolaaetd",
+      "cokkolaaett",
+      "cokkolaet",
+      "cokkolaetd",
+      "cokkolaett",
+      "jokkolaaet",
+      "jokkolaaetd",
+      "jokkolaaett",
+      "jokkolaet",
+      "jokkolaetd",
+      "jokkolaett"
+    ],
+    "category": "loanwords",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "chocolate",
+        "chokkolaet",
+        "chokkolat"
+      ],
+      "from_generator": [
+        "chokkolaaet",
+        "chokkolaaetd",
+        "chokkolaaett",
+        "chokkolaet",
+        "chokkolaetd",
+        "chokkolaett",
+        "cokkolaaet",
+        "cokkolaaetd",
+        "cokkolaaett",
+        "cokkolaet",
+        "cokkolaetd",
+        "cokkolaett",
+        "jokkolaaet",
+        "jokkolaaetd",
+        "jokkolaaett",
+        "jokkolaet",
+        "jokkolaetd",
+        "jokkolaett"
+      ],
+      "overlap": [
+        "chokkolaet"
+      ]
+    }
+  },
+  {
+    "thai": "แฮมเบอร์เกอร์",
+    "accepted_romanizations": [
+      "haaemboegoe",
+      "haaemboekoe",
+      "haemboegoe",
+      "haemboekoe",
+      "hamberger",
+      "hamburger"
+    ],
+    "category": "loanwords",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "haemboekoe",
+        "hamberger",
+        "hamburger"
+      ],
+      "from_generator": [
+        "haaemboegoe",
+        "haaemboekoe",
+        "haemboegoe",
+        "haemboekoe"
+      ],
+      "overlap": [
+        "haemboekoe"
+      ]
+    }
+  },
+  {
+    "thai": "เบียร์",
+    "accepted_romanizations": [
+      "beer",
+      "bia",
+      "biia"
+    ],
+    "category": "loanwords",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "beer",
+        "bia"
+      ],
+      "from_generator": [
+        "bia",
+        "biia"
+      ],
+      "overlap": [
+        "bia"
+      ]
+    }
+  },
+  {
+    "thai": "ฟุตบอล",
+    "accepted_romanizations": [
+      "football",
+      "fudbon",
+      "fudboon",
+      "fut bon",
+      "futbon",
+      "futboon"
+    ],
+    "category": "loanwords",
+    "source": "task-002-generated",
+    "notes": {
+      "from_expected": [
+        "football",
+        "fut bon",
+        "futbon"
+      ],
+      "from_generator": [
+        "fudbon",
+        "fudboon",
+        "futbon",
+        "futboon"
+      ],
+      "overlap": [
+        "futbon"
+      ]
+    }
+  }
+]
