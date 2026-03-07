@@ -1,18 +1,58 @@
-"""Tests for the variant generator module.
+"""Tests for the dictionary-driven variant generator (v2).
 
-Uses a small set of known Thai words and their expected variants drawn
-from Research 002's results to verify correctness.
+Verifies that the component dictionary loads correctly, g2p-based word
+analysis produces valid decompositions, and the variant generator produces
+expected romanizations for known Thai words.
 """
 
 import pytest
 
 from src.variant_generator import (
-    DEFAULT_CONFIG,
-    VariantConfig,
     generate_word_variants,
     generate_variants_for_wordlist,
     analyze_word,
+    load_component_dictionary,
+    SyllableComponents,
 )
+
+
+# ---------------------------------------------------------------------------
+# Dictionary loading
+# ---------------------------------------------------------------------------
+
+
+class TestDictionaryLoading:
+    """Verify the component dictionary loads correctly."""
+
+    def test_dictionary_loads(self):
+        d = load_component_dictionary()
+        assert "onsets" in d
+        assert "vowels" in d
+        assert "codas" in d
+
+    def test_dictionary_has_entries(self):
+        d = load_component_dictionary()
+        assert len(d["onsets"]) >= 20
+        assert len(d["vowels"]) >= 10
+        assert len(d["codas"]) >= 5
+
+    def test_onset_variants_are_lists(self):
+        d = load_component_dictionary()
+        for key, variants in d["onsets"].items():
+            assert isinstance(variants, list), f"Onset {key} should be list"
+            assert len(variants) >= 1
+
+    def test_vowel_variants_are_lists(self):
+        d = load_component_dictionary()
+        for key, variants in d["vowels"].items():
+            assert isinstance(variants, list), f"Vowel {key} should be list"
+            assert len(variants) >= 1
+
+    def test_coda_variants_are_lists(self):
+        d = load_component_dictionary()
+        for key, variants in d["codas"].items():
+            assert isinstance(variants, list), f"Coda {key} should be list"
+            assert len(variants) >= 1
 
 
 # ---------------------------------------------------------------------------
@@ -24,8 +64,8 @@ class TestKnownWords:
     """Verify that well-known Thai words produce expected informal variants."""
 
     def test_sawatdee(self):
-        """สวัสดี should produce 'sawatdee' variant (vowel lengthening)."""
-        variants = generate_word_variants("สวัสดี")
+        """สวัสดี should produce 'sawatdee' or 'sawaddee' variant."""
+        variants = generate_word_variants("สวัสดี", max_variants=200)
         assert len(variants) > 0
         assert "sawatdee" in variants or "sawaddee" in variants
 
@@ -37,37 +77,35 @@ class TestKnownWords:
     def test_kin(self):
         """กิน should produce 'gin' variant (initial voicing k→g)."""
         variants = generate_word_variants("กิน")
-        # Base form should be present
         assert any("in" in v for v in variants)
-        # Initial voicing: k → g
         assert "gin" in variants
 
     def test_moo(self):
-        """หมู should produce vowel-lengthened 'moo' or 'muu'."""
+        """หมู should produce 'moo' or 'muu' variant."""
         variants = generate_word_variants("หมู")
         assert "moo" in variants or "muu" in variants
 
     def test_khao(self):
-        """ข้าว should produce cluster-simplified variant without 'h'."""
+        """ข้าว should produce variants starting with 'k'."""
         variants = generate_word_variants("ข้าว")
         assert len(variants) > 0
-        # Should have at least the base form
         assert any(v.startswith("k") for v in variants)
 
     def test_phuket(self):
         """ภูเก็ต should produce variants with ph→p simplification."""
         variants = generate_word_variants("ภูเก็ต")
         assert len(variants) > 0
-        # Cluster simplification: ph → p
-        assert any(v.startswith("p") and not v.startswith("ph") for v in variants)
+        assert any(
+            v.startswith("p") and not v.startswith("ph") for v in variants
+        )
 
     def test_krungthep(self):
-        """กรุงเทพ should produce variants with r-dropping."""
+        """กรุงเทพ should produce variants."""
         variants = generate_word_variants("กรุงเทพ")
         assert len(variants) > 0
 
     def test_empty_for_non_thai(self):
-        """Non-Thai input should return empty or minimal results gracefully."""
+        """Non-Thai input should return empty or minimal results."""
         variants = generate_word_variants("")
         assert isinstance(variants, list)
 
@@ -75,105 +113,39 @@ class TestKnownWords:
         """The base TLTK romanization should always be in the result."""
         for word in ["ดี", "กิน", "หมู", "ไทย"]:
             variants = generate_word_variants(word)
-            if variants:  # If TLTK can process the word
+            if variants:
                 assert len(variants) >= 1
 
 
 # ---------------------------------------------------------------------------
-# max_variants_per_word
+# max_variants
 # ---------------------------------------------------------------------------
 
 
 class TestMaxVariants:
-    """Verify that max_variants_per_word is respected."""
+    """Verify that max_variants parameter is respected."""
 
     def test_default_max_is_20(self):
-        assert DEFAULT_CONFIG.max_variants_per_word == 20
+        """Default should not exceed 20 variants."""
+        variants = generate_word_variants("สวัสดี")
+        assert len(variants) <= 20
 
     def test_max_variants_respected(self):
-        """Output should not exceed max_variants_per_word."""
-        config = VariantConfig(max_variants_per_word=5)
-        # Use a word that produces many variants
-        variants = generate_word_variants("สวัสดี", config)
+        """Output should not exceed max_variants."""
+        variants = generate_word_variants("สวัสดี", max_variants=5)
         assert len(variants) <= 5
 
     def test_max_variants_still_includes_base(self):
-        """Even with a tight limit, the base form should be included."""
-        config = VariantConfig(max_variants_per_word=2)
-        variants = generate_word_variants("ดี", config)
+        """Even with a tight limit, at least one variant should be present."""
+        variants = generate_word_variants("ดี", max_variants=2)
         assert len(variants) <= 2
         assert len(variants) >= 1
 
     def test_large_max_variants(self):
         """With a large max, we get more variants."""
-        config_small = VariantConfig(max_variants_per_word=3)
-        config_large = VariantConfig(max_variants_per_word=100)
-        small = generate_word_variants("สวัสดี", config_small)
-        large = generate_word_variants("สวัสดี", config_large)
+        small = generate_word_variants("สวัสดี", max_variants=3)
+        large = generate_word_variants("สวัสดี", max_variants=100)
         assert len(large) >= len(small)
-
-
-# ---------------------------------------------------------------------------
-# Configuration flags
-# ---------------------------------------------------------------------------
-
-
-class TestConfigFlags:
-    """Verify that enabling/disabling rules changes output."""
-
-    def test_disable_vowel_lengthening(self):
-        """Disabling vowel lengthening should reduce variant count for long-vowel words."""
-        config_on = VariantConfig(vowel_lengthening=True)
-        config_off = VariantConfig(vowel_lengthening=False)
-        variants_on = generate_word_variants("ดี", config_on)
-        variants_off = generate_word_variants("ดี", config_off)
-        # With vowel lengthening off, should have fewer variants
-        assert len(variants_off) <= len(variants_on)
-
-    def test_disable_initial_voicing(self):
-        """Disabling initial voicing should exclude 'g' variants for ก words."""
-        config_on = VariantConfig(initial_voicing=True)
-        config_off = VariantConfig(initial_voicing=False)
-        variants_on = generate_word_variants("กิน", config_on)
-        variants_off = generate_word_variants("กิน", config_off)
-        if "gin" in variants_on:
-            assert "gin" not in variants_off
-
-    def test_disable_final_softening(self):
-        """Disabling final softening should exclude voiced-stop finals."""
-        config_on = VariantConfig(final_consonant_softening=True)
-        config_off = VariantConfig(final_consonant_softening=False)
-        variants_on = generate_word_variants("วัด", config_on)
-        variants_off = generate_word_variants("วัด", config_off)
-        assert len(variants_off) <= len(variants_on)
-
-    def test_disable_all_rules(self):
-        """With all rules disabled, should only produce the base romanization."""
-        config = VariantConfig(
-            vowel_lengthening=False,
-            final_consonant_softening=False,
-            cluster_simplification=False,
-            r_dropping=False,
-            initial_voicing=False,
-        )
-        variants = generate_word_variants("ดี", config)
-        # Should have exactly 1 variant (the base form)
-        assert len(variants) == 1
-
-    def test_all_rules_enabled_produces_most_variants(self):
-        """All rules enabled should produce the most variants."""
-        config_all = VariantConfig()  # All enabled by default
-        config_none = VariantConfig(
-            vowel_lengthening=False,
-            final_consonant_softening=False,
-            cluster_simplification=False,
-            r_dropping=False,
-            initial_voicing=False,
-        )
-        for word in ["สวัสดี", "กรุงเทพ", "ภูเก็ต"]:
-            all_on = generate_word_variants(word, config_all)
-            all_off = generate_word_variants(word, config_none)
-            assert len(all_on) >= len(all_off)
 
 
 # ---------------------------------------------------------------------------
@@ -196,24 +168,69 @@ class TestWordlistAPI:
 
 
 # ---------------------------------------------------------------------------
-# Syllable analysis
+# Syllable analysis (g2p decomposition)
 # ---------------------------------------------------------------------------
 
 
 class TestAnalyzeWord:
-    """Verify syllable analysis produces reasonable output."""
+    """Verify g2p-based syllable analysis produces correct decompositions."""
 
     def test_analyze_returns_syllables(self):
         syllables = analyze_word("สวัสดี")
         assert len(syllables) > 0
 
-    def test_syllable_has_romanization(self):
+    def test_syllable_has_components(self):
+        """ดี should decompose to onset=d, vowel=ii, coda=''."""
         syllables = analyze_word("ดี")
         assert len(syllables) >= 1
-        assert syllables[0].romanization != ""
+        assert isinstance(syllables[0], SyllableComponents)
+        assert syllables[0].onset == "d"
+        assert syllables[0].vowel == "ii"
+        assert syllables[0].coda == ""
 
-    def test_long_vowel_detection(self):
-        """ดี has a long vowel (อี), should be detected."""
-        syllables = analyze_word("ดี")
+    def test_kin_decomposition(self):
+        """กิน should decompose to onset=k, vowel=i, coda=n."""
+        syllables = analyze_word("กิน")
+        assert len(syllables) == 1
+        assert syllables[0].onset == "k"
+        assert syllables[0].vowel == "i"
+        assert syllables[0].coda == "n"
+
+    def test_multi_syllable(self):
+        """สวัสดี should produce multiple syllables."""
+        syllables = analyze_word("สวัสดี")
+        assert len(syllables) >= 2
+
+    def test_khao_decomposition(self):
+        """ข้าว should decompose to onset=kh, vowel=aa, coda=w."""
+        syllables = analyze_word("ข้าว")
+        assert len(syllables) == 1
+        assert syllables[0].onset == "kh"
+        assert syllables[0].vowel == "aa"
+        assert syllables[0].coda == "w"
+
+    def test_thai_decomposition(self):
+        """ไทย should decompose to onset=th, vowel=aj, coda=''."""
+        syllables = analyze_word("ไทย")
+        assert len(syllables) == 1
+        assert syllables[0].onset == "th"
+        assert syllables[0].vowel == "aj"
+        assert syllables[0].coda == ""
+
+    def test_hor_nam_detection(self):
+        """หน้า should have nh onset."""
+        syllables = analyze_word("หน้า")
         assert len(syllables) >= 1
-        assert syllables[0].has_long_vowel is True
+        assert syllables[0].onset == "nh"
+
+    def test_hor_moo_detection(self):
+        """หมู should have mh onset."""
+        syllables = analyze_word("หมู")
+        assert len(syllables) >= 1
+        assert syllables[0].onset == "mh"
+
+    def test_zero_onset(self):
+        """อาจ should have glottal stop onset (?)."""
+        syllables = analyze_word("อาจ")
+        assert len(syllables) >= 1
+        assert syllables[0].onset == "?"

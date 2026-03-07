@@ -10,9 +10,11 @@ dependencies = [
     # Core NLP libraries
     "pythainlp>=5.0",
     "tltk>=1.0",
-    # Data & visualization
+    # Data & serialization
     "pandas>=2.0",
     "numpy>=1.24",
+    "pyyaml>=6.0",
+    # Visualization
     "matplotlib>=3.7",
     # Notebooks
     "jupyter>=1.0",

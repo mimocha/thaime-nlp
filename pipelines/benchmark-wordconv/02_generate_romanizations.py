@@ -31,7 +31,6 @@ OUTPUT_DIR = Path(__file__).resolve().parent / "output"
 sys.path.insert(0, str(REPO_ROOT))
 
 from src.variant_generator import (
-    VariantConfig,
     analyze_word,
     generate_word_variants,
     _clean_tltk_output,
@@ -187,8 +186,7 @@ def main() -> None:
 
     print(f"  Loaded {len(words)} words from {input_path}")
 
-    # Configure variant generator
-    config = VariantConfig(max_variants_per_word=args.max_variants)
+    max_variants = args.max_variants
 
     # Process each word
     print(f"\n{'=' * 60}")
@@ -213,7 +211,7 @@ def main() -> None:
             continue
 
         # Generate variants
-        variants = generate_word_variants(thai_word, config)
+        variants = generate_word_variants(thai_word, max_variants)
 
         # Analyze syllables
         syllable_count = _count_syllables(thai_word)
