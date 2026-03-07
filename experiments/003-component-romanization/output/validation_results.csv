@@ -1,0 +1,327 @@
+thai_word,expected_count,generated_count,matched_count,status,matched_entries,missed_entries
+กก,4,12,4,ok,gog; gok; kog; kok,
+กฎหมาย,8,48,8,ok,godmaai; godmai; gotmaai; gotmai; kodmaai; kodmai; kotmaai; kotmai,
+กรณี,6,3,3,fallback,koranee; korani; koranii,goranee; gorani; goranii
+กรอบ,2,12,2,ok,krob; krop,
+กลับ,3,20,3,ok,klab; klap; klub,
+กลุ่ม,4,6,4,ok,gloom; glum; kloom; klum,
+กว่า,4,1,1,fallback,kwa,gwa; gwaa; kwaa
+กัน,4,10,4,ok,gan; gun; kan; kun,
+กับ,4,20,4,ok,gab; gap; kab; kap,
+การ,6,10,6,ok,gaan; gan; garn; kaan; kan; karn,
+กาแฟ,9,20,8,ok,gaafaae; gaafae; gafaae; gafae; kaafaae; kaafae; kafaae; kafae,coffee
+กำลัง,8,50,8,ok,gamlang; gamlung; gumlang; gumlung; kamlang; kamlung; kumlang; kumlung,
+กิน,2,6,2,ok,gin; kin,
+กุ้ง,4,6,4,ok,goong; gung; koong; kung,
+กู,6,6,6,ok,goo; gu; guu; koo; ku; kuu,
+ก็,8,6,6,ok,go; goh; gor; ko; koh; kor,goo; koo
+ก็ได้,8,24,6,ok,godai; gohdai; gordai; kodai; kohdai; kordai,gawdai; kawdai
+ก่อน,4,6,4,ok,gon; gorn; kon; korn,
+ก้อน,4,6,2,ok,gon; kon,goon; koon
+ก๋วยเตี๋ยว,8,36,4,ok,guaitiao; guaytiao; kuaitiao; kuaytiao,guaitiaow; guaytiaow; kuaitiaow; kuaytiaow
+ขนาด,4,1,1,fallback,khanat,kanad; kanat; khanad
+ขวด,8,8,8,ok,khuaad; khuaat; khuad; khuat; kuaad; kuaat; kuad; kuat,
+ขอ,6,6,6,ok,kho; khoh; khor; ko; koh; kor,
+ของ,2,6,2,ok,khong; kong,
+ขับ,8,20,8,ok,kab; kap; khab; khap; khub; khup; kub; kup,
+ขาย,4,8,4,ok,kaai; kai; khaai; khai,
+ขึ้น,4,8,4,ok,keun; kheun; khuen; kuen,
+ข้อมูล,18,18,12,ok,khohmoon; khohmun; khohmuun; khomoon; khomun; khomuun; kohmoon; kohmun; kohmuun; komoon; komun; komuun,khoomoon; khoomun; khoomuun; koomoon; koomun; koomuun
+ข้าว,4,6,4,ok,kaao; kao; khaao; khao,
+คง,2,6,2,ok,khong; kong,
+คน,2,6,2,ok,khon; kon,
+ครับ,13,30,7,ok,khrab; khrap; khrub; krab; krap; krub; krup,kab; kap; khab; khap; kub; kup
+ครั้ง,4,15,4,ok,khrang; khrung; krang; krung,
+ควร,4,4,4,ok,khuaan; khuan; kuaan; kuan,
+ความ,2,1,1,fallback,khwam,kwam
+คะ,2,10,2,ok,ka; kha,
+คับ,8,20,8,ok,kab; kap; khab; khap; khub; khup; kub; kup,
+คำ,3,10,3,ok,kam; kham; kum,
+คิด,4,12,4,ok,khid; khit; kid; kit,
+คือ,4,8,4,ok,khue; khuee; kue; kuee,
+คุณ,2,6,2,ok,khun; kun,
+ค่อนข้าง,8,60,8,ok,khonkaang; khonkang; khonkhaang; khonkhang; konkaang; konkang; konkhaang; konkhang,
+ค่ะ,2,10,2,ok,ka; kha,
+ค่า,4,10,4,ok,ka; kaa; kha; khaa,
+งาน,2,5,2,ok,ngaan; ngan,
+จน,2,9,2,ok,chon; jon,
+จริง,2,9,2,ok,ching; jing,
+จริงๆ,4,1,1,fallback,ching ching,chingching; jing jing; jingjing
+จะ,2,15,2,ok,cha; ja,
+จังหวัด,12,300,12,ok,changwad; changwat; changwut; chungwad; chungwat; chungwut; jangwad; jangwat; jangwut; jungwad; jungwat; jungwut,
+จัด,4,30,4,ok,chad; chat; jad; jat,
+จาก,8,30,8,ok,chaag; chaak; chag; chak; jaag; jaak; jag; jak,
+จาน,4,15,4,ok,chaan; chan; jaan; jan,
+จำนวน,4,30,4,ok,chamnuan; chumnuan; jamnuan; jumnuan,
+จึง,4,12,4,ok,cheung; chueng; jeung; jueng,
+ชอบ,4,18,4,ok,chob; chop; shob; shop,
+ชั้น,5,15,4,ok,chan; chun; shan; shun,can
+ชา,2,15,2,ok,cha; sha,
+ชิม,1,9,1,ok,chim,
+ชิ้น,2,9,2,ok,chin; shin,
+ชื่อ,3,12,3,ok,cheu; chue; chuee,
+ชุด,8,18,8,ok,chood; choot; chud; chut; shood; shoot; shud; shut,
+ช่วง,3,6,2,ok,chuang; shuang,cuang
+ช่วย,2,6,2,ok,chuai; shuai,
+ช้าง,4,15,4,ok,chaang; chang; shaang; shang,
+ซึ่ง,2,4,2,ok,seung; sueng,
+ซื้อ,2,4,2,ok,seu; sue,
+ซุป,6,6,4,ok,soob; soop; sub; sup,soub; soup
+ญี่ปุ่น,7,27,6,ok,yeepoon; yeepun; yiipoon; yiipun; yipoon; yipun,japan
+ดังกล่าว,4,30,4,ok,dangklaao; dangklao; dungklaao; dungklao,
+ดี,3,3,3,ok,dee; di; dii,
+ดีกว่า,6,3,3,fallback,deekwa; diikwa; dikwa,deegwa; digwa; diigwa
+ดู,3,3,3,ok,doo; du; duu,
+ด้วย,2,2,2,ok,duai; duay,
+ด้าน,2,5,2,ok,daan; dan,
+ตรง,2,6,2,ok,drong; trong,
+ตอน,4,9,4,ok,don; dorn; ton; torn,
+ตอนนี้,4,27,4,ok,donnee; donni; tonnee; tonni,
+ตัว,2,6,2,ok,dua; tua,
+ตั้งแต่,5,90,5,ok,dungdae; tangdae; tangtae; tungdae; tungtae,
+ตาม,4,15,4,ok,daam; dam; taam; tam,
+ติด,3,18,3,ok,did; tid; tit,
+ต่อ,3,9,3,ok,to; toh; tor,
+ต่างๆ,2,1,1,fallback,tang tang,tangtang
+ต้อง,2,9,1,ok,tong,toong
+ถนน,2,1,1,fallback,thanon,tanon
+ถาม,4,10,4,ok,taam; tam; thaam; tham,
+ถึง,4,8,4,ok,teung; theung; thueng; tueng,
+ถือว่า,4,80,4,ok,teuwa; theuwa; thuewa; tuewa,
+ถูก,12,12,12,ok,thoog; thook; thug; thuk; thuug; thuuk; toog; took; tug; tuk; tuug; tuuk,
+ถ้า,4,10,4,ok,ta; taa; tha; thaa,
+ทอด,4,12,4,ok,thod; thot; tod; tot,
+ทั้ง,4,10,4,ok,tang; thang; thung; tung,
+ทาง,4,10,4,ok,taang; tang; thaang; thang,
+ทาน,4,10,4,ok,taan; tan; thaan; than,
+ทำ,4,10,4,ok,tam; tham; thum; tum,
+ทำให้,4,40,4,ok,tamhai; thamhai; thumhai; tumhai,
+ทำไม,4,40,4,ok,tammai; thammai; thummai; tummai,
+ที่,6,6,6,ok,tee; thee; thi; thii; ti; tii,
+ที่จะ,12,90,12,ok,teecha; teeja; theecha; theeja; thicha; thiicha; thiija; thija; ticha; tiicha; tiija; tija,
+ที่นี่,18,18,18,ok,teenee; teeni; teenii; theenee; theeni; theenii; thiinee; thiini; thiinii; thinee; thini; thinii; tiinee; tiini; tiinii; tinee; tini; tinii,
+ที่สุด,18,36,18,ok,teesood; teesud; teesut; theesood; theesud; theesut; thiisood; thiisud; thiisut; thisood; thisud; thisut; tiisood; tiisud; tiisut; tisood; tisud; tisut,
+ทุก,4,12,4,ok,thuk; took; tug; tuk,
+ท่าน,4,10,4,ok,tan; than; thun; tun,
+นะ,1,5,1,ok,na,
+นะคะ,2,50,2,ok,naka; nakha,
+นั่ง,2,5,2,ok,nang; nung,
+นั้น,2,5,2,ok,nan; nun,
+นาน,2,5,2,ok,naan; nan,
+นาย,2,4,2,ok,naai; nai,
+นำ,2,5,2,ok,nam; num,
+นี่,3,3,3,ok,nee; ni; nii,
+นี้,3,3,3,ok,nee; ni; nii,
+นุ่ม,2,3,2,ok,noom; num,
+น่า,2,5,2,ok,na; naa,
+น่าจะ,4,75,4,ok,naacha; naaja; nacha; naja,
+น้อง,2,3,1,ok,nong,noong
+น้อย,2,3,2,ok,noi; noy,
+น้ำ,4,5,4,ok,naam; nahm; nam; num,
+น้ำจิ้ม,6,45,6,ok,naamchim; naamjim; namchim; namjim; numchim; numjim,
+บน,1,3,1,ok,bon,
+บรรยากาศ,16,500,16,ok,banyaagaad; banyaagaat; banyaagad; banyaagat; banyaakaad; banyaakaat; banyaakad; banyaakat; banyagaad; banyagaat; banyagad; banyagat; banyakaad; banyakaat; banyakad; banyakat,
+บริการ,6,10,6,fallback,borigaan; borigan; borigarn; borikaan; borikan; borikarn,
+บริษัท,4,10,4,fallback,borisad; borisat; borisud; borisut,
+บอ,3,3,2,ok,bo; boh,boo
+บอก,4,6,4,ok,bog; bok; borg; bork,
+บัตร,3,10,3,ok,bad; bat; but,
+บาง,2,5,2,ok,baang; bang,
+บาท,5,10,5,ok,baad; baat; bad; baht; bat,
+บ้าง,2,5,2,ok,baang; bang,
+บ้าน,2,5,2,ok,baan; ban,
+ปกติ,2,9,2,fallback,pokkadi; pokkati,
+ประชาชน,4,30,1,fallback,prachachon,prachashon; prashachon; prashashon
+ประมาณ,2,50,2,ok,pramaan; praman,
+ประเทศ,16,160,8,ok,prated; prateed; prateet; pratet; prathed; pratheed; pratheet; prathet,pated; pateed; pateet; patet; pathed; patheed; patheet; pathet
+ปลา,2,10,2,ok,pla; plaa,
+ปัญหา,2,75,2,ok,panha; panhaa,
+ปี,3,9,3,ok,pee; pi; pii,
+ผม,2,6,2,ok,phom; pom,
+ผัก,4,20,4,ok,pag; pak; phag; phak,
+ผัด,6,20,6,ok,pad; pat; phad; phat; pud; put,
+ผิว,6,1,1,fallback,phio,phiu; phiw; pio; piu; piw
+ผู้,6,6,6,ok,phoo; phu; phuu; poo; pu; puu,
+ผ่าน,4,10,4,ok,paan; pan; phaan; phan,
+พนักงาน,8,5,2,fallback,phanakngaan; phanakngan,panagngaan; panagngan; panakngaan; panakngan; phanagngaan; phanagngan
+พบ,4,12,4,ok,phob; phop; pob; pop,
+พร้อม,2,6,2,ok,phrom; prom,
+พวก,8,8,8,ok,phuaag; phuaak; phuag; phuak; puaag; puaak; puag; puak,
+พอ,5,6,4,ok,pho; phoh; po; poh,phoo
+พา,4,10,4,ok,pa; paa; pha; phaa,
+พิเศษ,8,48,8,ok,phised; phiseed; phiseet; phiset; pised; piseed; piseet; piset,
+พี่,6,6,6,ok,pee; phee; phi; phii; pi; pii,
+พื้นที่,12,48,12,ok,peuntee; peunthee; peunthi; peunti; phuentee; phuenthee; phuenthi; phuenti; puentee; puenthee; puenthi; puenti,
+ฟรี,3,3,3,ok,free; fri; frii,
+ภายใน,4,32,4,ok,paainai; painai; phaainai; phainai,
+มัน,2,5,2,ok,man; mun,
+มั้ย,2,4,2,ok,maai; mai,
+มา,2,5,2,ok,ma; maa,
+มาก,4,10,4,ok,maag; maak; mag; mak,
+มากกว่า,12,10,6,fallback,maagkwa; maakkwa; magkwa; makkwa; margkwa; markkwa,maaggwa; maakgwa; maggwa; makgwa; marggwa; markgwa
+มาจาก,12,150,12,ok,maachaag; maachaak; maachag; maachak; maajaag; maajaak; maajag; maajak; machaag; machaak; machag; machak,
+มี,4,3,3,ok,mee; mi; mii,me
+ยัง,3,5,2,ok,yang; yung,young
+ยังมี,3,15,3,ok,yangmee; yangmi; yangmii,
+ยา,2,5,2,ok,ya; yaa,
+ย่าง,2,5,2,ok,yaang; yang,
+รถ,2,6,2,ok,rod; rot,
+รวม,2,2,2,ok,ruaam; ruam,
+รส,3,6,2,ok,rod; rot,ros
+รสชาติ,16,180,16,ok,rodchaad; rodchaat; rodchad; rodchat; rodjaad; rodjaat; rodjad; rodjat; rotchaad; rotchaat; rotchad; rotchat; rotjaad; rotjaat; rotjad; rotjat,
+รอ,3,3,3,ok,ro; roh; ror,
+รอบ,4,6,4,ok,rob; rop; rorb; rorp,
+ระบบ,2,30,2,ok,rabob; rabop,
+ระหว่าง,2,50,2,ok,rawaang; rawang,
+รักษา,4,50,4,ok,ragsa; ragsaa; raksa; raksaa,
+รัฐ,4,10,4,ok,rad; rat; rud; rut,
+รัฐบาล,2,5,2,fallback,ratthabaan; ratthaban,
+รับ,4,10,4,ok,rab; rap; rub; rup,
+ราคา,8,50,8,ok,raaka; raakaa; raakha; raakhaa; raka; rakaa; rakha; rakhaa,
+ริ,1,3,1,ok,ri,
+รุ่น,2,3,2,ok,roon; run,
+รู้,3,3,3,ok,roo; ru; ruu,
+รู้สึก,12,24,12,ok,rooseug; rooseuk; roosueg; roosuek; ruseug; ruseuk; rusueg; rusuek; ruuseug; ruuseuk; ruusueg; ruusuek,
+ร่วม,2,2,2,ok,ruaam; ruam,
+ร้อน,2,3,2,ok,ron; rorn,
+ร้าน,2,5,2,ok,raan; ran,
+ลง,1,3,1,ok,long,
+ลด,2,6,2,ok,lod; lot,
+ลอง,2,3,1,ok,long,rong
+ละ,1,5,1,ok,la,
+ลูกค้า,20,60,20,ok,loogka; loogkaa; loogkha; loogkhaa; lookka; lookkaa; lookkha; lookkhaa; lugka; lugkaa; lugkha; lugkhaa; lukka; lukkaa; lukkha; lukkhaa; luugka; luugkaa; luugkha; luugkhaa,
+ล้าน,2,5,2,ok,laan; lan,
+วัน,3,10,2,ok,wan; wun,one
+วันที่,8,60,8,ok,wantee; wanthee; wanthi; wanti; wuntee; wunthee; wunthi; wunti,
+วันนี้,3,30,3,ok,wannee; wanni; wannii,
+ว่า,2,10,2,ok,wa; waa,
+สด,2,6,2,ok,sod; sot,
+สบาย,1,1,1,fallback,sabai,
+สร้าง,3,5,3,ok,saang; sang; sarng,
+สวย,1,2,1,ok,suai,
+สอง,1,3,1,ok,song,
+สังคม,4,30,4,ok,sangkhom; sangkom; sungkhom; sungkom,
+สั่ง,2,5,2,ok,sang; sung,
+สาขา,8,50,8,ok,saaka; saakaa; saakha; saakhaa; saka; sakaa; sakha; sakhaa,
+สามารถ,8,50,8,ok,saamaad; saamaat; saamad; saamat; samaad; samaat; samad; samat,
+สำคัญ,6,50,6,ok,samkan; samkhan; samkun; sumkan; sumkhan; sumkun,
+สำหรับ,6,50,6,ok,samrab; samrap; samrub; sumrab; sumrap; sumrub,
+สิทธิ,4,36,4,ok,sidthi; sidti; sitthi; sitti,
+สิ่ง,1,3,1,ok,sing,
+สี,3,3,3,ok,see; si; sii,
+สุด,4,6,4,ok,sood; soot; sud; sut,
+สูง,3,3,3,ok,soong; sung; suung,
+ส่ง,1,3,1,ok,song,
+ส่วน,2,2,2,ok,suaan; suan,
+หนึ่ง,2,4,2,ok,neung; nueng,
+หน่อย,3,3,3,ok,noi; noii; noy,
+หน้า,4,5,2,ok,na; naa,nha; nhaa
+หมด,4,6,2,ok,mod; mot,mhod; mhot
+หมู,5,3,3,ok,moo; mu; muu,mhoo; mhu
+หรือ,2,4,2,ok,rue; ruee,
+หลัง,2,5,2,ok,lang; lung,
+หลาย,2,4,2,ok,laai; lai,
+หวาน,2,10,2,ok,waan; wan,
+หอม,2,3,2,ok,hom; horm,
+หา,2,5,2,ok,ha; haa,
+หาก,4,10,4,ok,haag; haak; hag; hak,
+อยาก,6,10,6,ok,yaag; yaak; yag; yak; yarg; yark,
+อยู่,4,3,3,ok,yoo; yu; yuu,you
+อย่า,2,5,2,ok,ya; yaa,
+อย่าง,2,5,2,ok,yaang; yang,
+อร่อย,2,1,1,fallback,aroi,aroy
+ออก,6,6,4,ok,og; ok; org; ork,oog; ook
+ออกมา,6,30,4,ok,ogma; okma; orgma; orkma,oogma; ookma
+อะ,2,5,2,ok,a; ah,
+อะไร,4,20,2,ok,arai; aray,alai; alay
+อาจ,6,10,4,ok,aad; aat; ad; at,aaj; aj
+อาจจะ,9,150,8,ok,aadcha; aadja; aatcha; aatja; adcha; adja; atcha; atja,ajja
+อาหาร,9,25,9,ok,aahaan; aahan; aaharn; ahaan; ahan; aharn; arhaan; arhan; arharn,
+อี,4,3,3,ok,ee; i; ii,e
+อีก,6,6,6,ok,eeg; eek; ig; iig; iik; ik,
+อื่น,2,4,2,ok,eun; uen,
+เกิด,6,20,6,ok,gerd; goed; goet; kerd; koed; koet,
+เขา,2,6,2,ok,kao; khao,
+เข้า,2,6,2,ok,kao; khao,
+เข้ามา,2,30,2,ok,kaoma; khaoma,
+เข้าไป,2,72,2,ok,kaopai; khaopai,
+เคย,2,1,1,fallback,khoei,koei
+เครื่อง,4,9,4,ok,khreuang; khrueang; kreuang; krueang,
+เครื่องดื่ม,16,36,4,ok,khrueangdueem; khrueangduem; krueangdueem; krueangduem,khrueaangdueem; khrueaangduem; khueaangdueem; khueaangduem; khueangdueem; khueangduem; krueaangdueem; krueaangduem; kueaangdueem; kueaangduem; kueangdueem; kueangduem
+เค้ก,9,16,8,ok,keeg; keek; keg; kek; kheeg; kheek; kheg; khek,cake
+เค้า,2,6,2,ok,kao; khao,
+เงิน,2,5,2,ok,ngeon; ngoen,
+เจอ,3,15,3,ok,cher; choe; jer,
+เช่น,2,12,2,ok,chen; shen,
+เดิน,3,5,3,ok,deon; dern; doen,
+เดียว,3,3,1,ok,diao,deao; deaw
+เดือน,2,3,2,ok,deuan; duean,
+เด็ก,2,8,2,ok,deg; dek,
+เต็ม,2,12,2,ok,dem; tem,
+เท่านั้น,4,30,4,ok,taonan; taonun; thaonan; thaonun,
+เนื้อ,2,3,2,ok,neua; nuea,
+เบียร์,5,2,2,ok,bea; bia,beea; beer; biia
+เปิด,4,30,4,ok,peod; peot; poed; poet,
+เป็น,1,12,1,ok,pen,
+เพราะ,4,6,2,ok,phro; pro,phroa; proa
+เพิ่ม,5,10,5,ok,peom; perm; pheom; phoem; poem,
+เพียง,6,4,4,ok,peang; pheang; phiang; piang,phyang; pyang
+เพื่อ,4,6,2,ok,phuea; puea,phueaa; pueaa
+เพื่อน,4,6,4,ok,peuan; pheuan; phuean; puean,
+เมนู,9,12,9,ok,maynoo; maynu; maynuu; mehnoo; mehnu; mehnuu; menoo; menu; menuu,
+เมือง,2,3,2,ok,meuang; mueang,
+เมื่อ,2,3,2,ok,meua; muea,
+เยอะ,3,5,2,ok,yer; yoe,yoer
+เย็น,1,4,1,ok,yen,
+เรา,3,3,2,ok,rao; raw,rau
+เริ่ม,3,5,2,ok,reom; roem,ream
+เรียก,6,4,4,ok,reag; reak; riag; riak,riiag; riiak
+เรื่อง,4,3,2,ok,reuang; rueang,leuang; lueang
+เลย,2,1,1,fallback,loei,loey
+เลือก,4,6,4,ok,leuag; leuak; lueag; lueak,
+เล็ก,2,8,2,ok,leg; lek,
+เวลา,6,40,4,ok,vehla; vela; wehla; wela,vaela; waela
+เส้น,1,4,1,ok,sen,
+เหมือน,2,3,2,ok,meuan; muean,
+เห็น,1,4,1,ok,hen,
+เอง,3,4,2,ok,eeng; eng,aeng
+เอา,4,3,2,ok,ao; aw,aow; ow
+แค่,4,4,4,ok,kaae; kae; khaae; khae,
+แต่,4,6,4,ok,daae; dae; taae; tae,
+แถม,4,4,4,ok,taaem; taem; thaaem; thaem,
+แนะนำ,2,10,2,ok,naenam; naenum,
+แบบ,4,4,4,ok,baaeb; baaep; baeb; baep,
+แบบนี้,4,12,4,ok,baebnee; baebni; baepnee; baepni,
+แป้ง,1,6,1,ok,paeng,
+แพง,2,4,2,ok,paeng; phaeng,
+แม่,2,2,2,ok,maae; mae,
+แรก,4,4,4,ok,raaeg; raaek; raeg; raek,
+แรงงาน,1,10,1,ok,raengngan,
+และ,1,2,1,ok,lae,
+แล้ว,2,1,1,fallback,laeo,laew
+แวะ,1,4,1,ok,wae,
+แห่ง,1,2,1,ok,haeng,
+โครงการ,12,90,12,ok,khronggaan; khronggan; khronggarn; khrongkaan; khrongkan; khrongkarn; kronggaan; kronggan; kronggarn; krongkaan; krongkan; krongkarn,
+โดย,2,3,2,ok,doi; doy,
+โต๊ะ,4,9,4,ok,do; doh; to; toh,
+โอเค,7,24,6,ok,ohke; ohkhe; okay; oke; okeh; okhe,ok
+ใคร,3,12,2,ok,khrai; krai,khai
+ใช่,3,12,2,ok,chai; shai,cai
+ใช้,2,12,2,ok,chai; shai,
+ใช้ได้,2,48,2,ok,chaidaai; chaidai,
+ใน,1,4,1,ok,nai,
+ใส่,2,4,2,ok,sai; say,
+ใหญ่,1,4,1,ok,yai,
+ใหม่,2,4,1,ok,mai,mhai
+ให้,1,4,1,ok,hai,
+ไก่,2,8,2,ok,gai; kai,
+ได้,2,4,2,ok,daai; dai,
+ได้รับ,6,40,6,ok,daairab; daairap; daairub; dairab; dairap; dairub,
+ไทย,2,8,2,ok,tai; thai,
+ไป,1,12,1,ok,pai,
+ไม่,1,4,1,ok,mai,
+ไม่ค่อย,2,24,2,ok,maikhoi; maikoi,
+ไม่ต้อง,2,36,2,ok,maidong; maitong,
+ไว้,3,8,3,ok,wai; waii; way,
+ไหน,1,4,1,ok,nai,
+ไหม,1,4,1,ok,mai,

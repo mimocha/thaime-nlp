@@ -1,0 +1,22 @@
+word,syllable,romanization,status,onset,vowel,coda
+กรณี,กร,kora,missing: vowel=ora,k,ora,
+กว่า,กว่า,kwa,missing: vowel=wa,k,wa,
+ขนาด,ขนาด,khanat,missing: vowel=ana,kh,ana,t
+ความ,ความ,khwam,missing: vowel=wa,kh,wa,m
+จริงๆ,จริง,ching ching,missing: vowel=ing chi,ch,ing chi,ng
+ดีกว่า,กว่า,kwa,missing: vowel=wa,k,wa,
+ต่างๆ,ต่าง,tang tang,missing: vowel=ang ta,t,ang ta,ng
+ถนน,ถนน,thanon,missing: vowel=ano,th,ano,n
+บริการ,บริ,bori,missing: vowel=ori,b,ori,
+บริษัท,บริ,bori,missing: vowel=ori,b,ori,
+ปกติ,ปก,pokka,missing: vowel=okka,p,okka,
+ประชาชน,ชา,chac,missing: coda=c,ch,a,c
+ผิว,ผิว,phio,missing: vowel=io,ph,io,
+พนักงาน,พนัก,phanak,missing: vowel=ana,ph,ana,k
+มากกว่า,กว่า,kwa,missing: vowel=wa,k,wa,
+รัฐบาล,รัฐ,rattha,missing: vowel=attha,r,attha,
+สบาย,สบาย,sabai,missing: vowel=abai,s,abai,
+อร่อย,อร่อย,aroi,missing: vowel=aroi,,aroi,
+เคย,เคย,khoei,missing: vowel=oei,kh,oei,
+เลย,เลย,loei,missing: vowel=oei,l,oei,
+แล้ว,แล้ว,laeo,missing: vowel=aeo,l,aeo,

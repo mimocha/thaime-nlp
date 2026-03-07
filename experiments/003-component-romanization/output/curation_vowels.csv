@@ -1,0 +1,88 @@
+component,count,examples,valid
+a,444,มา=ma (มา); จะ=cha (จะ); ว่า=wa (ว่า); ร้าน=ran (ร้าน); การ=kan (การ),y
+o,183,ก็=ko (ก็); ของ=khong (ของ); คน=khon (คน); ต้อง=tong (ต้อง); เพราะ=phro (เพราะ),y
+i,139,ที่=thi (ที่); มี=mi (มี); นี้=ni (นี้); ดี=di (ดี); กิน=kin (กิน),y
+ai,112,ไม่=mai (ไม่); ได้=dai (ได้); ใน=nai (ใน); ไป=pai (ไป); ให้=hai (ให้),y
+u,75,อยู่=yu (อยู่); นู=nu (เมนู); ดู=du (ดู); ถูก=thuk (ถูก); หมู=mu (หมู),y
+e,59,เป็น=pen (เป็น); เม=me (เมนู); เห็น=hen (เห็น); เทศ=thet (ประเทศ); เว=we (เวลา),y
+ae,58,และ=lae (และ); แต่=tae (แต่); แบบ=baep (แบบ); แค่=khae (แค่); แพง=phaeng (แพง),y
+ue,42,คือ=khue (คือ); หรือ=rue (หรือ); ซึ่ง=sueng (ซึ่ง); ถึง=thueng (ถึง); ซื้อ=sue (ซื้อ),y
+ao,40,เรา=rao (เรา); เอา=ao (เอา); เขา=khao (เขา); เข้า=khao (เข้า); เค้า=khao (เค้า),y
+ua,35,ส่วน=suan (ส่วน); ตัว=tua (ตัว); ช่วง=chuang (ช่วง); พวก=phuak (พวก); ร่วม=ruam (ร่วม),y
+oe,28,เยอะ=yoe (เยอะ); เปิด=poet (เปิด); เพิ่ม=phoem (เพิ่ม); เกิด=koet (เกิด); เจอ=choe (เจอ),y
+uea,25,เพื่อ=phuea (เพื่อ); เรื่อง=rueang (เรื่อง); เมื่อ=muea (เมื่อ); เนื้อ=nuea (เนื้อ); เลือก=lueak (เลือก),y
+ia,19,เบียร์=bia (เบียร์); เพียง=phiang (เพียง); เรียก=riak (เรียก); เปลี่ยน=plian (เปลี่ยน); เสีย=sia (เสีย),y
+oi,13,โดย=doi (โดย); หน่อย=noi (หน่อย); น้อย=noi (น้อย); ค่อย=khoi (ไม่ค่อย); ซอย=soi (ซอย),y
+(none),12,ๆ= (จริงๆ); ๆ= (ต่างๆ); ๆ= (อื่นๆ); นุม=m (ชุมนุม); บ้าน=n (ชาวบ้าน),n
+iao,12,เดียว=diao (เดียว); เตี๋ยว=tiao (ก๋วยเตี๋ยว); เกี่ยว=kiao (เกี่ยวกับ); เดียว=diao (ทีเดียว); เปรี้ยว=priao (เปรี้ยว),y
+ana,11,พนัก=phanak (พนักงาน); ขนาด=khanat (ขนาด); อนา=-ana (ผ้าอนามัย); คณะ=khana (คณะกรรมการ); สนับ=sanap (สนับสนุน),n
+uai,9,ด้วย=duai (ด้วย); ช่วย=chuai (ช่วย); สวย=suai (สวย); ก๋วย=kuai (ก๋วยเตี๋ยว); ถ้วย=thuai (ถ้วย),y
+wa,7,กว่า=kwa (กว่า); ความ=khwam (ความ); กว่า=kwa (มากกว่า); กว่า=kwa (ดีกว่า); ความ=khwam (ความรุนแรง),n
+aeo,6,แล้ว=laeo (แล้ว); แก้ว=kaeo (แก้ว); แล้ว=laeo (แล้วก็); แถว=thaeo (แถว); แนว=naeo (แนว),n
+attha,5,รัฐ=rattha (รัฐบาล); รัฐ=rattha (รัฐธรรมนูญ); พัฒ=phattha (พัฒนา); รัฐ=rattha (นายกรัฐมนตรี); พัฒ=phattha (การพัฒนา),n
+oei,4,เลย=loei (เลย); เคย=khoei (เคย); เฉย=choei (เฉย); เผย=phoei (เปิดเผย),n
+ori,4,บริ=bori (บริการ); บริ=bori (บริษัท); บริ=bori (บริเวณ); บริ=bori (ให้บริการ),n
+io,4,ผิว=phio (ผิว); วิว=wio (รีวิว); หิว=hio (หิว); คิว=khio (คิว),n
+ano,3,ถนน=thanon (ถนน); ขนม=khanom (ขนม); ขนม=khanom (ขนมปัง),n
+amma,3,ธรรม=thamma (รัฐธรรมนูญ); ธรรม=thamma (ธรรมดา); กรรม=kamma (คณะกรรมการ),n
+ala,3,ตลาด=talat (ตลาด); สลัด=salat (สลัด); พลัง=phalang (พลัง),n
+sa,3,ษา=ksa (การศึกษา); ษา=ksa (นักศึกษา); ษา=ksa (ศึกษา),n
+aha,2,ทหาร=thahan (ทหาร); มหา=maha (มหาวิทยาลัย),n
+aya,2,พยา=phaya (โรงพยาบาล); พยา=phaya (พยายาม),n
+adi,2,คดี=khadi (คดี); อดีต=adit (อดีต),n
+attra,2,มาตรา=mattra (มาตรา); มาตร=mattra (มาตรฐาน),n
+anoe,2,เสนอ=sanoe (เสนอ); เสนอ=sanoe (นำเสนอ),n
+apho,2,เฉพาะ=chapho (โดยเฉพาะ); เฉพาะ=chapho (เฉพาะ),n
+anu,2,สนุน=sanun (สนับสนุน); สนุก=sanuk (สนุก),n
+ama,2,พม่า=phama (พม่า); สมา=sama (สมาชิก),n
+apha,2,สภา=sapha (สภา); สภาพ=saphap (สภาพ),n
+acha,2,วจะ=wacha (วจะ); รจา=racha (เจรจา),n
+aroi,1,อร่อย=aroi (อร่อย),n
+ing chi,1,จริง=ching ching (จริงๆ),n
+ang ta,1,ต่าง=tang tang (ต่างๆ),n
+ora,1,กร=kora (กรณี),n
+okka,1,ปก=pokka (ปกติ),n
+abai,1,สบาย=sabai (สบาย),n
+alo,1,ตลอด=talot (ตลอด),n
+ukkha,1,สุข=sukkha (สุขภาพ),n
+uen ue,1,อื่น=uen uen (อื่นๆ),n
+umnu,1,ชุม=chumnu (ชุมนุม),n
+asa,1,สสัน=sasan (นิสสัน),n
+ippa,1,ธิป=hippa (ประชาธิปไตย),n
+aoba,1,ชาว=chaoba (ชาวบ้าน),n
+aru,1,สรุป=sarup (สรุป),n
+unna,1,คุณ=khunna (คุณภาพ),n
+um,1,ชุม=chumc (ชุมชน),n
+ayo,1,นโย=nayo (นโยบาย),n
+eo,1,เร็ว=reo (เร็ว),n
+la,1,พลาด=phlat (พลาด),n
+aba,1,ฉบับ=chabap (ฉบับ),n
+iwi,1,ชี=chiwi (ชีวิต),n
+itcha,1,กิจ=kitcha (กิจกรรม),n
+ ,1,ๆ=ๆ ๆ (ๆๆ),n
+at,1,ชัด=chatc (ชัดเจน),n
+atai,1,สไตล์=satai (สไตล์),n
+ari,1,ปริ=pari (ปริมาณ),n
+aso,1,ผสม=phasom (ผสม),n
+le,1,เพลง=phleng (เพลง),n
+athana,1,สถาน=sathana (สถานการณ์),n
+ettha,1,เศรษฐ=settha (เศรษฐกิจ),n
+anue,1,ดนึง=danueng (นิดนึง),n
+ueai rueai,1,เรื่อย=rueai rueai (เรื่อยๆ),n
+anutsaya,1,มนุษย=manutsaya (สิทธิมนุษยชน),n
+enka,1,เช่น=chenka (เช่นกัน),n
+ui,1,คุย=khui (คุย),n
+ittha,1,วิท=wittha (มหาวิทยาลัย),n
+it ni,1,นิด=nit nit (นิดๆ),n
+adae,1,แสดง=sadaeng (แสดง),n
+atha,1,สถา=satha (สถาบัน),n
+ali,1,ผลิต=phalit (ผลิต),n
+ura,1,ธุร=thura (ธุรกิจ),n
+ai ngai,1,ง่าย=ngai ngai (ง่ายๆ),n
+amo,1,ลมอน=lamon (แซลมอน),n
+uamo,1,ชั่ว=chuamo (ชั่วโมง),n
+ate,1,สเต็ก=satek (สเต็ก),n
+asai,1,ไอศ=asai (ไอศครีม),n
+pai,1,ไป=npai (ขึ้นไป),n
+akri,1,ศกรีม=sakrim (ไอศกรีม),n
+ani,1,ชนิด=chanit (ชนิด),n
