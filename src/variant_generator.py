@@ -281,12 +281,16 @@ def _detect_hor_nam(thai_segment: str) -> Optional[str]:
     if not thai_segment:
         return None
 
-    # Extract base consonants only (skip Thai combining marks).
+    # Extract base consonants only (skip Thai combining marks and leading vowels).
     # Thai combining characters: U+0E31..U+0E3A (above/below vowels)
     # and U+0E47..U+0E4E (tone marks, thanthakhat, etc.)
+    # Thai leading vowels (written before consonant): เ แ โ ใ ไ
+    _leading_vowels = {0x0E40, 0x0E41, 0x0E42, 0x0E43, 0x0E44}
     base_chars: list[str] = []
     for ch in thai_segment:
         cp = ord(ch)
+        if cp in _leading_vowels:
+            continue  # Skip leading vowels
         if not (0x0E31 <= cp <= 0x0E3A or 0x0E47 <= cp <= 0x0E4E):
             base_chars.append(ch)
         if len(base_chars) >= 2:
@@ -299,6 +303,28 @@ def _detect_hor_nam(thai_segment: str) -> Optional[str]:
             return "mh"
 
     return None
+
+
+def _detect_jor_coda(thai_segment: str) -> bool:
+    """Detect if the syllable's coda consonant is จ (U+0E08).
+
+    TLTK g2p maps จ-as-coda to ``t``, but we have a separate ``c`` coda
+    entry with additional variants (j, d). This function detects จ from
+    the Thai text so we can use the correct dictionary key.
+
+    Returns:
+        ``True`` if the last Thai consonant in the segment is จ.
+    """
+    if not thai_segment:
+        return False
+
+    # Find the last Thai consonant (ก U+0E01 through ฮ U+0E2E)
+    last_consonant = None
+    for ch in thai_segment:
+        if 0x0E01 <= ord(ch) <= 0x0E2E:
+            last_consonant = ch
+
+    return last_consonant == "\u0e08"  # จ
 
 
 # ---------------------------------------------------------------------------
@@ -362,6 +388,10 @@ def analyze_word(thai_word: str) -> list[SyllableComponents]:
                 if hor_nam and comp.onset in ("n", "m"):
                     comp.onset = hor_nam
 
+            # Apply จ-as-coda correction (TLTK maps จ coda to 't')
+            if comp.coda == "t" and _detect_jor_coda(thai_seg):
+                comp.coda = "c"
+
             syllables.append(comp)
 
     return syllables
@@ -403,6 +433,11 @@ def generate_syllable_variants(comp: SyllableComponents) -> list[str]:
             vowel_variants = [comp.vowel]
         else:
             vowel_variants = [""]
+
+    # Guard: short "a" → "u" only valid in closed syllables (with coda).
+    # In open syllables (จะ, นะ, ค่ะ), "u" produces implausible forms.
+    if comp.vowel == "a" and not comp.coda and "u" in vowel_variants:
+        vowel_variants = [v for v in vowel_variants if v != "u"]
 
     # Look up coda variants
     coda_variants = dictionary["codas"].get(comp.coda, None)

@@ -25,12 +25,23 @@
 #     manageable at this scale. Revisit if the inventory grows significantly.
 
 metadata:
-  version: "0.2.0"
+  version: "0.2.1"
   description: "Component-level Thai informal romanization mappings (g2p-keyed)"
   source_vocabulary: "top 1000 words from wisesight+wongnai+prachathai"
   inventory_date: "2026-03-07"
-  total_entries: 59
+  total_entries: 67
   changelog: |
+    v0.2.1 (2026-03-07): Validation-driven variant refinements (Change Plan 04, commit 3).
+      - Added "oo" variant to short u vowel.
+      - Added "oh" to short o, "oa" to short O, "ou" to long uu.
+      - Added "ae" to long ee, "ow"/"aow"/"au" to ao diphthong.
+      - Added "iia" to ia, "ueaa" to uea, "eao"/"eaw" to iao diphthongs.
+      - Removed "aa"→"u" (invalid for long vowel; only valid for short a in closed syllables).
+      - Removed all j→y coda/diphthong variants (ai→ay, oi→oy, uai→uay, coda j→y).
+      - Removed "j" from ch onset (ช/ฉ; only valid for จ).
+      - Removed "gr" from khr onset (no benchmark evidence).
+      - Fixed hor-nam (หน/หม) detection to skip leading vowels.
+      - Fixed จ-as-coda detection (TLTK maps to 't'; now correctly uses 'c' coda entry).
     v0.2.0 (2026-03-07): Re-keyed from RTGS to TLTK g2p strings.
       - Split RTGS "ch" into g2p "c" (จ) and "ch" (ช/ฉ/ฌ) with distinct variants.
       - Split RTGS "o" vowel into g2p "O" (ออ) and "o" (โอ) with distinct variants.
@@ -39,7 +50,7 @@ metadata:
     v0.1.0 (2026-03-06): Initial version with RTGS keys (from Research 003).
 
 # ===========================================================================
-# ONSETS (31 entries)
+# ONSETS (32 entries)
 # ===========================================================================
 # Initial consonants and clusters. Keys are TLTK g2p phoneme strings.
 #
@@ -72,7 +83,7 @@ onsets:
     rtgs: "khr"
     g2p: "khr"
     thai: "ขร/คร"
-    variants: ["khr", "kr", "gr"]
+    variants: ["khr", "kr"]
     notes: "ขร/คร -- de-aspiration and/or voicing"
   kl:
     rtgs: "kl"
@@ -91,13 +102,13 @@ onsets:
     g2p: "c"
     thai: "จ"
     variants: ["j", "ch"]
-    notes: "จ (/c/) -- j is primary informal, ch in medial/formal contexts"
+    notes: "จ (/c/) -- j is primary, ch in medial contexts"
   ch:
     rtgs: "ch"
     g2p: "ch"
     thai: "ช/ฉ/ฌ"
-    variants: ["ch", "sh", "j"]
-    notes: "ช/ฉ/ฌ (/ch/) -- ch/sh primary, j rare crossover"
+    variants: ["ch", "sh"]
+    notes: "ช/ฉ/ฌ (/ch/) -- ch/sh primary. Removed j (only valid for จ, not ช/ฉ)."
   d:
     rtgs: "d"
     g2p: "d"
@@ -244,7 +255,7 @@ onsets:
     notes: "ส/ศ/ซ -- no common informal variants"
 
 # ===========================================================================
-# VOWELS (18 entries)
+# VOWELS (26 entries)
 # ===========================================================================
 # Vowel nuclei. Keys are TLTK g2p phoneme strings.
 #
@@ -268,7 +279,7 @@ vowels:
     rtgs: "a"
     g2p: "aa"
     variants: ["a", "aa", "ar", "ah"]
-    notes: "อา (long) -- aa/ar/ah for long vowel"
+    notes: "อา (long) -- aa/ar/ah for long vowel. No u variant (only valid for short a in closed syllables)."
   e:
     rtgs: "e"
     g2p: "e"
@@ -277,8 +288,8 @@ vowels:
   ee:
     rtgs: "e"
     g2p: "ee"
-    variants: ["e", "ee", "eh", "ay"]
-    notes: "เอ (long) -- ee for long, eh/ay for open syllables"
+    variants: ["e", "ee", "eh", "ay", "ae"]
+    notes: "เอ (long) -- ee for long, eh/ay for open syllables, ae crossover with แอ"
   i:
     rtgs: "i"
     g2p: "i"
@@ -292,8 +303,8 @@ vowels:
   o:
     rtgs: "o"
     g2p: "o"
-    variants: ["o"]
-    notes: "โอะ (short)"
+    variants: ["o", "oh"]
+    notes: "โอะ (short) -- oh in open syllable contexts"
   oo:
     rtgs: "o"
     g2p: "oo"
@@ -302,8 +313,8 @@ vowels:
   O:
     rtgs: "o"
     g2p: "O"
-    variants: ["o", "or"]
-    notes: "ออ (short, /ɔ/) -- or informal variant. Distinct from โอะ."
+    variants: ["o", "or", "oa"]
+    notes: "ออ (short, /ɔ/) -- or/oa informal variants. Distinct from โอะ."
   OO:
     rtgs: "o"
     g2p: "OO"
@@ -312,13 +323,13 @@ vowels:
   u:
     rtgs: "u"
     g2p: "u"
-    variants: ["u"]
-    notes: "อุ (short)"
+    variants: ["u", "oo"]
+    notes: "อุ (short) -- oo common informal spelling (e.g. sood, koong)"
   uu:
     rtgs: "u"
     g2p: "uu"
-    variants: ["u", "oo", "uu"]
-    notes: "อู (long) -- oo/uu for long vowel"
+    variants: ["u", "oo", "uu", "ou"]
+    notes: "อู (long) -- oo/uu for long vowel, ou for Anglicized contexts"
   ae:
     rtgs: "ae"
     g2p: "x"
@@ -354,13 +365,13 @@ vowels:
   ai:
     rtgs: "ai"
     g2p: "aj"
-    variants: ["ai", "ay", "aai", "aii"]
-    notes: "ไอ/ใอ -- g2p uses 'aj'. ay common informal, aai/aii length variants"
+    variants: ["ai", "aai", "aii"]
+    notes: "ไอ/ใอ -- g2p uses 'aj'. aai/aii length variants. Removed ay (looks like English)."
   ao:
     rtgs: "ao"
     g2p: "aw"
-    variants: ["ao", "aw", "aao"]
-    notes: "เอา -- g2p uses 'aw'. aw common informal"
+    variants: ["ao", "aw", "aao", "ow", "aow", "au"]
+    notes: "เอา -- g2p uses 'aw'. aw/ow common informal, au alternative"
   ua:
     rtgs: "ua"
     g2p: "ua"
@@ -369,31 +380,31 @@ vowels:
   uea:
     rtgs: "uea"
     g2p: "UUa"
-    variants: ["uea", "ua", "eua"]
-    notes: "เอือ -- ua simplification, eua reordering"
+    variants: ["uea", "ua", "eua", "ueaa"]
+    notes: "เอือ -- ua simplification, eua reordering, ueaa length variant"
   ia:
     rtgs: "ia"
     g2p: "iia"
-    variants: ["ia", "ea"]
-    notes: "เอีย -- ea common informal spelling"
+    variants: ["ia", "ea", "iia"]
+    notes: "เอีย -- ea common informal, iia length doubling"
   oi:
     rtgs: "oi"
     g2p: "Oj"
-    variants: ["oi", "oy", "oii"]
-    notes: "โอย -- oy common, oii length variant"
+    variants: ["oi", "oii"]
+    notes: "โอย -- oii length variant. Removed oy (j->y pattern looks wrong in context)."
   iao:
     rtgs: "iao"
     g2p: "iiaw"
-    variants: ["iao", "iaw", "iew"]
-    notes: "เอียว -- iaw/iew common informal"
+    variants: ["iao", "iaw", "iew", "eao", "eaw"]
+    notes: "เอียว -- iaw/iew common informal, eao/eaw ea-spelling variant"
   uai:
     rtgs: "uai"
     g2p: "uaj"
-    variants: ["uai", "uay"]
-    notes: "อวย -- uay common informal"
+    variants: ["uai"]
+    notes: "อวย -- removed uay (j->y pattern). Single variant only."
 
 # ===========================================================================
-# CODAS (10 entries)
+# CODAS (9 entries)
 # ===========================================================================
 # Final consonants. Keys are TLTK g2p phoneme strings.
 
@@ -441,5 +452,5 @@ codas:
   y:
     rtgs: "y"
     g2p: "j"
-    variants: ["y", "i"]
-    notes: "glide coda -- khoey/khoei, khuy/khui. g2p uses 'j' for ย coda"
+    variants: ["i"]
+    notes: "glide coda -- g2p uses 'j' for ย coda. Removed y (looks like English in context)."
