@@ -1,0 +1,128 @@
+{
+  "10k": [
+    {
+      "name": "StandardTrie",
+      "display_name": "Standard Trie (dict-of-dicts)",
+      "build_time_s": 0.0128,
+      "serialized_size_bytes": 451495,
+      "memory_footprint_bytes": 10292656,
+      "cps_avg_ns": 1327.3,
+      "cps_p99_ns": 3506,
+      "exact_match_avg_ns": 625.7
+    },
+    {
+      "name": "RadixTrie",
+      "display_name": "Radix Trie (pygtrie)",
+      "build_time_s": 0.0663,
+      "serialized_size_bytes": 333962,
+      "memory_footprint_bytes": 5829400,
+      "cps_avg_ns": 6950.6,
+      "cps_p99_ns": 12092,
+      "exact_match_avg_ns": 1872.6
+    },
+    {
+      "name": "DoubleArrayTrie",
+      "display_name": "Double-Array Trie (datrie)",
+      "build_time_s": 0.065,
+      "serialized_size_bytes": 472736,
+      "memory_footprint_bytes": 627835,
+      "cps_avg_ns": 2458.4,
+      "cps_p99_ns": 4528,
+      "exact_match_avg_ns": 1669.3
+    },
+    {
+      "name": "MarisaTrie",
+      "display_name": "MARISA-Trie",
+      "build_time_s": 0.0304,
+      "serialized_size_bytes": 93944,
+      "memory_footprint_bytes": 118288,
+      "cps_avg_ns": 8050.6,
+      "cps_p99_ns": 16861,
+      "exact_match_avg_ns": 2625.2
+    }
+  ],
+  "50k": [
+    {
+      "name": "StandardTrie",
+      "display_name": "Standard Trie (dict-of-dicts)",
+      "build_time_s": 0.1192,
+      "serialized_size_bytes": 2190163,
+      "memory_footprint_bytes": 47936472,
+      "cps_avg_ns": 2161.0,
+      "cps_p99_ns": 4960,
+      "exact_match_avg_ns": 1075.6
+    },
+    {
+      "name": "RadixTrie",
+      "display_name": "Radix Trie (pygtrie)",
+      "build_time_s": 0.5638,
+      "serialized_size_bytes": 1619572,
+      "memory_footprint_bytes": 27318064,
+      "cps_avg_ns": 8923.9,
+      "cps_p99_ns": 17512,
+      "exact_match_avg_ns": 2646.7
+    },
+    {
+      "name": "DoubleArrayTrie",
+      "display_name": "Double-Array Trie (datrie)",
+      "build_time_s": 0.342,
+      "serialized_size_bytes": 2277609,
+      "memory_footprint_bytes": 3071248,
+      "cps_avg_ns": 3644.1,
+      "cps_p99_ns": 8286,
+      "exact_match_avg_ns": 1970.0
+    },
+    {
+      "name": "MarisaTrie",
+      "display_name": "MARISA-Trie",
+      "build_time_s": 0.1623,
+      "serialized_size_bytes": 437264,
+      "memory_footprint_bytes": 118088,
+      "cps_avg_ns": 9670.9,
+      "cps_p99_ns": 20047,
+      "exact_match_avg_ns": 2742.4
+    }
+  ],
+  "100k": [
+    {
+      "name": "StandardTrie",
+      "display_name": "Standard Trie (dict-of-dicts)",
+      "build_time_s": 0.2875,
+      "serialized_size_bytes": 4252008,
+      "memory_footprint_bytes": 91726736,
+      "cps_avg_ns": 2535.3,
+      "cps_p99_ns": 5760,
+      "exact_match_avg_ns": 1229.4
+    },
+    {
+      "name": "RadixTrie",
+      "display_name": "Radix Trie (pygtrie)",
+      "build_time_s": 1.1526,
+      "serialized_size_bytes": 3175898,
+      "memory_footprint_bytes": 52230472,
+      "cps_avg_ns": 9573.1,
+      "cps_p99_ns": 20578,
+      "exact_match_avg_ns": 2705.6
+    },
+    {
+      "name": "DoubleArrayTrie",
+      "display_name": "Double-Array Trie (datrie)",
+      "build_time_s": 0.7799,
+      "serialized_size_bytes": 4498052,
+      "memory_footprint_bytes": 6122306,
+      "cps_avg_ns": 4603.6,
+      "cps_p99_ns": 9778,
+      "exact_match_avg_ns": 2132.4
+    },
+    {
+      "name": "MarisaTrie",
+      "display_name": "MARISA-Trie",
+      "build_time_s": 0.3217,
+      "serialized_size_bytes": 899136,
+      "memory_footprint_bytes": 117896,
+      "cps_avg_ns": 10890.4,
+      "cps_p99_ns": 22162,
+      "exact_match_avg_ns": 2768.3
+    }
+  ]
+}
