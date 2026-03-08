@@ -28,6 +28,7 @@ def generate_base_romanization(word_id: int, seed_str: str) -> str:
     Uses a deterministic hash to produce a plausible-looking ASCII key
     of length 3–15 characters.
     """
+    # MD5 used for deterministic pseudo-random generation, not security
     h = hashlib.md5(seed_str.encode()).hexdigest()
     # Use hash to determine length (3-15) and characters
     length = 3 + (int(h[:2], 16) % 13)  # 3 to 15 chars

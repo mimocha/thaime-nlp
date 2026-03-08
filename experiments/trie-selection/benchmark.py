@@ -479,14 +479,18 @@ def run_benchmark(
     }
 
 
+_KB = 1024
+_MB = 1024 * 1024
+
+
 def format_bytes(n: int) -> str:
     """Format byte count as human-readable string."""
-    if n < 1024:
+    if n < _KB:
         return f"{n} B"
-    elif n < 1024 * 1024:
-        return f"{n / 1024:.1f} KB"
+    elif n < _MB:
+        return f"{n / _KB:.1f} KB"
     else:
-        return f"{n / (1024 * 1024):.1f} MB"
+        return f"{n / _MB:.1f} MB"
 
 
 def format_ns(ns: float) -> str:
