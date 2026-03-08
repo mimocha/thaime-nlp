@@ -6,6 +6,7 @@
 #
 # Produced by Research 003 (component-romanization).
 # Source vocabulary: top 1000 words from wisesight+wongnai+prachathai.
+# Expanded via 10K validation (Change Plan 04, commit 5).
 #
 # Convention:
 #   - "rtgs" is the base RTGS romanization for the component
@@ -23,14 +24,28 @@
 #     Kept atomic for now because (a) not all combinations are valid,
 #     (b) the inventory is small (~7 entries), and (c) manual curation is
 #     manageable at this scale. Revisit if the inventory grows significantly.
+#
+# Known limitations (see data/dictionaries/README.md for details):
+#   - TLTK g2p maps ทร → /s/ unconditionally, including loanwords (ทรู, ทริม)
+#     where the correct pronunciation is /tr/. These words get "s" variants
+#     instead of "tr"/"thr". Not fixable at the dictionary level.
+#   - The "thr" onset entry covers ธร clusters only (not ทร).
 
 metadata:
-  version: "0.2.3"
+  version: "0.3.1"
   description: "Component-level Thai informal romanization mappings (g2p-keyed)"
-  source_vocabulary: "top 1000 words from wisesight+wongnai+prachathai"
-  inventory_date: "2026-03-08"
-  total_entries: 67
+  source_vocabulary: "top 10K words from wisesight+wongnai+prachathai"
+  inventory_date: "2026-03-09"
+  total_entries: 71
   changelog: |
+    v0.3.1 (2026-03-09): Replaced "dr" onset variant with "dtr" (ตร cluster).
+      - "dtr" added to match Paiboon-like systems
+        "dr" was a holdover from an earlier iteration and was removed to match ต onset
+    v0.3.0 (2026-03-09): 10K scale-up validation (Change Plan 04, commit 5).
+      - Added 4 onset clusters found in 10K vocabulary: khl (ขล/คล), phl (พล/ผล),
+        bl (บล), thr (ธร). Covers 130 previously-unknown onset occurrences.
+      - Removed "d" from ต onset (produces noise at scale; "dt" kept for disambiguation).
+      - Dictionary coverage on 10K vocabulary: 99.1% → ~99.9% after additions.
     v0.2.3 (2026-03-08): Second review-driven cleanup (Change Plan 04, commit 4 iteration).
       - Added "uay" to uaj (อวย) diphthong (ด้วย->duay natural).
       - Removed "ur" from UU (อื) vowel (produces unnatural forms: kur, rur, purntii).
@@ -56,7 +71,7 @@ metadata:
     v0.1.0 (2026-03-06): Initial version with RTGS keys (from Research 003).
 
 # ===========================================================================
-# ONSETS (32 entries)
+# ONSETS (36 entries)
 # ===========================================================================
 # Initial consonants and clusters. Keys are TLTK g2p phoneme strings.
 #
@@ -91,6 +106,12 @@ onsets:
     thai: "ขร/คร"
     variants: ["khr", "kr"]
     notes: "ขร/คร -- de-aspiration and/or voicing"
+  khl:
+    rtgs: "khl"
+    g2p: "khl"
+    thai: "ขล/คล"
+    variants: ["khl", "kl"]
+    notes: "ขล/คล -- de-aspiration"
   kl:
     rtgs: "kl"
     g2p: "kl"
@@ -125,8 +146,8 @@ onsets:
     rtgs: "t"
     g2p: "t"
     thai: "ต"
-    variants: ["t", "d", "dt"]
-    notes: "ต -- voicing common; dt from Paiboon-like systems"
+    variants: ["t", "dt"]
+    notes: "ต -- dt from Paiboon-like systems; d removed (produces noise at scale)"
   th:
     rtgs: "th"
     g2p: "th"
@@ -137,8 +158,14 @@ onsets:
     rtgs: "tr"
     g2p: "tr"
     thai: "ตร"
-    variants: ["tr", "dr"]
+    variants: ["tr", "dtr"]
     notes: "ตร -- voiced variant"
+  thr:
+    rtgs: "thr"
+    g2p: "thr"
+    thai: "ธร"
+    variants: ["thr", "tr"]
+    notes: "ธร -- de-aspiration. Covers ธร only; ทร maps to /s/ in TLTK g2p (see README)."
   n:
     rtgs: "n"
     g2p: "n"
@@ -175,6 +202,12 @@ onsets:
     thai: "พร"
     variants: ["phr", "pr"]
     notes: "พร -- de-aspiration"
+  phl:
+    rtgs: "phl"
+    g2p: "phl"
+    thai: "พล/ผล"
+    variants: ["phl", "pl"]
+    notes: "พล/ผล -- de-aspiration"
   pr:
     rtgs: "pr"
     g2p: "pr"
@@ -187,6 +220,12 @@ onsets:
     thai: "ปล"
     variants: ["pl"]
     notes: "ปล -- Removed bl (ป→b produces nonsense)."
+  bl:
+    rtgs: "bl"
+    g2p: "bl"
+    thai: "บล"
+    variants: ["bl"]
+    notes: "บล -- mostly loanwords (บล็อก, บลูเบอร์รี่)"
   f:
     rtgs: "f"
     g2p: "f"

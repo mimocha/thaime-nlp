@@ -9,6 +9,7 @@ Output: pipelines/benchmark-wordconv/output/draft_benchmark.json
 Usage:
     python -m pipelines.benchmark-wordconv.02_generate_romanizations
     python -m pipelines.benchmark-wordconv.02_generate_romanizations --top-k 300
+    python -m pipelines.benchmark-wordconv.02_generate_romanizations --top-k 10000 --workers 4
 """
 
 from __future__ import annotations
@@ -16,6 +17,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import multiprocessing
 import sys
 from pathlib import Path
 
@@ -34,15 +36,7 @@ OUTPUT_DIR = Path(__file__).resolve().parent / "output"
 # Add repo root to path so we can import src modules
 sys.path.insert(0, str(REPO_ROOT))
 
-from src.variant_generator import (
-    analyze_word,
-    generate_word_variants,
-    generate_syllable_variants,
-    _clean_tltk_output,
-    _get_dictionary,
-)
-
-import tltk
+from src.variant_generator import _get_dictionary  # noqa: F401 — pre-warm cache
 
 # ---------------------------------------------------------------------------
 # Category / difficulty heuristics
@@ -128,6 +122,100 @@ def classify_word(
 
 
 # ---------------------------------------------------------------------------
+# Per-word processing (used by both sequential and parallel paths)
+# ---------------------------------------------------------------------------
+
+
+def _process_single_word(
+    thai_word: str, rank: int, corpus_count: int, max_variants: int,
+) -> dict:
+    """Process a single word: TLTK calls, variant generation, classification.
+
+    Returns a dict with key ``"status"`` set to ``"ok"`` or ``"failed"``.
+    Must be a top-level function so it is picklable for multiprocessing.
+    """
+    # Lazy imports — each child process needs its own import
+    import tltk
+    from src.variant_generator import (
+        analyze_word,
+        generate_word_variants,
+        _clean_tltk_output,
+        _get_dictionary,
+    )
+
+    # Get TLTK base romanization
+    try:
+        base_roman = _clean_tltk_output(tltk.nlp.th2roman(thai_word))
+    except Exception:
+        base_roman = ""
+
+    if not base_roman:
+        return {"status": "failed", "thai_word": thai_word, "rank": rank, "reason": "TLTK empty"}
+
+    # Analyze syllables via g2p
+    syllable_components = analyze_word(thai_word)
+    syllable_count = max(1, len(syllable_components))
+
+    # Generate variants — pass pre-computed base_roman and syllables
+    # to avoid redundant TLTK calls inside generate_word_variants()
+    variants = generate_word_variants(
+        thai_word,
+        max_variants,
+        _base_roman=base_roman,
+        _syllables=syllable_components,
+    )
+
+    # Build component-level decomposition for the review CLI
+    dictionary = _get_dictionary()
+    components: list[dict] = []
+    for comp in syllable_components:
+        onset_variants = dictionary["onsets"].get(comp.onset, None)
+        if onset_variants is None:
+            onset_variants = [""] if comp.onset in ("?", "") else [comp.onset]
+        vowel_variants = dictionary["vowels"].get(comp.vowel, None)
+        if vowel_variants is None:
+            vowel_variants = [comp.vowel] if comp.vowel else [""]
+        coda_variants = dictionary["codas"].get(comp.coda, None)
+        if coda_variants is None:
+            coda_variants = [comp.coda] if comp.coda else [""]
+        components.append({
+            "thai_segment": comp.thai_segment,
+            "onset": comp.onset,
+            "vowel": comp.vowel,
+            "coda": comp.coda,
+            "tone": comp.tone,
+            "onset_variants": onset_variants,
+            "vowel_variants": vowel_variants,
+            "coda_variants": coda_variants,
+        })
+
+    # Classify
+    category, difficulty = classify_word(
+        thai_word=thai_word,
+        romanization=base_roman,
+        variant_count=len(variants),
+        merged_rank=rank,
+        syllable_count=syllable_count,
+    )
+
+    return {
+        "status": "ok",
+        "thai_word": thai_word,
+        "rtgs_romanization": base_roman,
+        "variants": variants,
+        "variant_count": len(variants),
+        "components": components,
+        "category": category,
+        "difficulty": difficulty,
+        "syllable_count": syllable_count,
+        "frequency_rank": rank,
+        "corpus_count": corpus_count,
+        "notes": "",
+        "review_status": "pending",
+    }
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -160,6 +248,12 @@ def main() -> None:
         default=None,
         help="Output JSON path (default: output/draft_benchmark.json)",
     )
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=1,
+        help="Number of parallel workers (default: 1 = sequential)",
+    )
     args = parser.parse_args()
 
     input_path = Path(args.input) if args.input else OUTPUT_DIR / "word_frequencies.csv"
@@ -182,99 +276,65 @@ def main() -> None:
     print(f"  Loaded {len(words)} words from {input_path}")
 
     max_variants = args.max_variants
-
-    # Pre-load dictionary once (avoid per-word function-call overhead)
-    dictionary = _get_dictionary()
+    num_workers = args.workers
 
     # Process each word
     print(f"\n{'=' * 60}")
     print("Generating romanizations and variants")
     print("=" * 60)
 
+    # Build work items
+    work_items = [
+        (wd["thai_word"], int(wd["rank"]), int(wd.get("corpus_count", 0)), max_variants)
+        for wd in words
+    ]
+
     entries: list[dict] = []
     failed: list[dict] = []
 
-    word_iter = enumerate(words)
-    if tqdm is not None:
-        word_iter = tqdm(list(word_iter), desc="  Generating", unit="word")
+    if num_workers > 1:
+        # --- Parallel path ---
+        from concurrent.futures import ProcessPoolExecutor
 
-    for i, word_data in word_iter:
-        thai_word = word_data["thai_word"]
-        rank = int(word_data["rank"])
+        # Use fork context: child processes inherit the parent's loaded TLTK
+        # and modules. Avoids pickling issues with spawn (this script's
+        # directory name contains a hyphen, making it non-importable).
+        # TLTK process safety confirmed via experiments/test_tltk_multiprocessing.py.
+        ctx = multiprocessing.get_context("fork")
+        print(f"  Using {num_workers} parallel workers (fork)")
 
-        # Get TLTK base romanization
-        try:
-            base_roman = _clean_tltk_output(tltk.nlp.th2roman(thai_word))
-        except Exception:
-            base_roman = ""
+        with ProcessPoolExecutor(max_workers=num_workers, mp_context=ctx) as pool:
+            futures = pool.map(_process_single_word, *zip(*work_items), chunksize=100)
+            results_iter = futures
+            if tqdm is not None:
+                results_iter = tqdm(results_iter, total=len(work_items), desc="  Generating", unit="word")
 
-        if not base_roman:
-            failed.append({"thai_word": thai_word, "rank": rank, "reason": "TLTK empty"})
-            continue
+            for result in results_iter:
+                if result["status"] == "ok":
+                    result.pop("status")
+                    entries.append(result)
+                else:
+                    result.pop("status")
+                    failed.append(result)
+    else:
+        # --- Sequential path (original behavior) ---
+        print("  Using sequential processing (--workers 1)")
 
-        # Analyze syllables via g2p
-        syllable_components = analyze_word(thai_word)
-        syllable_count = max(1, len(syllable_components))
+        item_iter = work_items
+        if tqdm is not None:
+            item_iter = tqdm(item_iter, desc="  Generating", unit="word")
 
-        # Generate variants — pass pre-computed base_roman and syllables
-        # to avoid redundant TLTK calls inside generate_word_variants()
-        variants = generate_word_variants(
-            thai_word,
-            max_variants,
-            _base_roman=base_roman,
-            _syllables=syllable_components,
-        )
+        for i, (thai_word, rank, corpus_count, mv) in enumerate(item_iter):
+            result = _process_single_word(thai_word, rank, corpus_count, mv)
+            if result["status"] == "ok":
+                result.pop("status")
+                entries.append(result)
+            else:
+                result.pop("status")
+                failed.append(result)
 
-        # Build component-level decomposition for the review CLI
-        components: list[dict] = []
-        for comp in syllable_components:
-            onset_variants = dictionary["onsets"].get(comp.onset, None)
-            if onset_variants is None:
-                onset_variants = [""] if comp.onset in ("?", "") else [comp.onset]
-            vowel_variants = dictionary["vowels"].get(comp.vowel, None)
-            if vowel_variants is None:
-                vowel_variants = [comp.vowel] if comp.vowel else [""]
-            coda_variants = dictionary["codas"].get(comp.coda, None)
-            if coda_variants is None:
-                coda_variants = [comp.coda] if comp.coda else [""]
-            components.append({
-                "thai_segment": comp.thai_segment,
-                "onset": comp.onset,
-                "vowel": comp.vowel,
-                "coda": comp.coda,
-                "tone": comp.tone,
-                "onset_variants": onset_variants,
-                "vowel_variants": vowel_variants,
-                "coda_variants": coda_variants,
-            })
-
-        # Classify
-        category, difficulty = classify_word(
-            thai_word=thai_word,
-            romanization=base_roman,
-            variant_count=len(variants),
-            merged_rank=rank,
-            syllable_count=syllable_count,
-        )
-
-        entry = {
-            "thai_word": thai_word,
-            "rtgs_romanization": base_roman,
-            "variants": variants,
-            "variant_count": len(variants),
-            "components": components,
-            "category": category,
-            "difficulty": difficulty,
-            "syllable_count": syllable_count,
-            "frequency_rank": rank,
-            "corpus_count": int(word_data.get("corpus_count", 0)),
-            "notes": "",
-            "review_status": "pending",  # pending | approved | edited | discarded
-        }
-        entries.append(entry)
-
-        if tqdm is None and (i + 1) % 50 == 0:
-            print(f"  Processed {i + 1}/{len(words)} words...")
+            if tqdm is None and (i + 1) % 50 == 0:
+                print(f"  Processed {i + 1}/{len(words)} words...")
 
     print(f"\n  Successfully processed: {len(entries)}")
     print(f"  Failed (TLTK errors): {len(failed)}")

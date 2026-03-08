@@ -1,0 +1,327 @@
+thai_word,expected_count,hit_count,miss_count,variant_count,hit_rate,missed_latins,sample_variants
+กก,4,4,0,8,100%,,gog; gohg; gohk; gok; kog; kohg; kohk; kok
+กฎหมาย,8,8,0,64,100%,,godmaai; godmahi; godmai; godmari; godmhaai; godmhahi; godmhai; godmhari; gohdmaai; gohdmahi
+กรณี,6,6,0,48,100%,,gawrahnee; gawrahni; gawrahnii; gawranee; gawrani; gawranii; gohrahnee; gohrahni; gohrahnii; gohranee
+กรอบ,2,2,0,16,100%,,grawb; grawp; grob; grohb; grohp; grop; grorb; grorp; krawb; krawp
+กลับ,3,3,0,12,100%,,glab; glahb; glahp; glap; glub; glup; klab; klahb; klahp; klap
+กลุ่ม,4,4,0,4,100%,,gloom; glum; kloom; klum
+กว่า,4,4,0,8,100%,,gwa; gwaa; gwah; gwar; kwa; kwaa; kwah; kwar
+กัน,4,4,0,6,100%,,gahn; gan; gun; kahn; kan; kun
+กับ,4,4,0,12,100%,,gab; gahb; gahp; gap; gub; gup; kab; kahb; kahp; kap
+การ,6,6,0,8,100%,,gaan; gahn; gan; garn; kaan; kahn; kan; karn
+กาแฟ,9,8,1,16,89%,coffee,gaafaae; gaafae; gafaae; gafae; gahfaae; gahfae; garfaae; garfae; kaafaae; kaafae
+กำลัง,8,8,0,18,100%,,gahmlahng; gahmlang; gahmlung; gamlahng; gamlang; gamlung; gumlahng; gumlang; gumlung; kahmlahng
+กิน,2,2,0,2,100%,,gin; kin
+กุ้ง,4,4,0,4,100%,,goong; gung; koong; kung
+กู,6,6,0,8,100%,,goo; gou; gu; guu; koo; kou; ku; kuu
+ก็,8,6,2,8,75%,goo; koo,gaw; go; goh; gor; kaw; ko; koh; kor
+ก็ได้,8,8,0,32,100%,,gawdaai; gawdahi; gawdai; gawdari; godaai; godahi; godai; godari; gohdaai; gohdahi
+ก่อน,4,4,0,8,100%,,gawn; gohn; gon; gorn; kawn; kohn; kon; korn
+ก้อน,4,2,2,8,50%,goon; koon,gawn; gohn; gon; gorn; kawn; kohn; kon; korn
+ก๋วยเตี๋ยว,8,2,6,30,25%,guaitiaow; guaytiao; guaytiaow; kuaitiaow; kuaytiao; kuaytiaow,guaideao; guaideaw; guaidiao; guaidiaw; guaidiew; guaidteao; guaidteaw; guaidtiao; guaidtiaw; guaidtiew
+ขนาด,4,4,0,32,100%,,kahnaad; kahnaat; kahnad; kahnahd; kahnaht; kahnard; kahnart; kahnat; kanaad; kanaat
+ขวด,8,8,0,8,100%,,khuaad; khuaat; khuad; khuat; kuaad; kuaat; kuad; kuat
+ขอ,6,6,0,8,100%,,kaw; khaw; kho; khoh; khor; ko; koh; kor
+ของ,2,2,0,8,100%,,kawng; khawng; khohng; khong; khorng; kohng; kong; korng
+ขับ,8,8,0,12,100%,,kab; kahb; kahp; kap; khab; khahb; khahp; khap; khub; khup
+ขาย,4,4,0,8,100%,,kaai; kahi; kai; kari; khaai; khahi; khai; khari
+ขึ้น,4,4,0,6,100%,,keun; kheun; khuen; khuhn; kuen; kuhn
+ข้อมูล,18,12,6,32,67%,khoomoon; khoomun; khoomuun; koomoon; koomun; koomuun,kawmoon; kawmoun; kawmun; kawmuun; khawmoon; khawmoun; khawmun; khawmuun; khohmoon; khohmoun
+ข้าว,4,4,0,24,100%,,kaao; kaau; kaaw; kaho; kahu; kahw; kao; karo; karu; karw
+คง,2,2,0,4,100%,,khohng; khong; kohng; kong
+คน,2,2,0,4,100%,,khohn; khon; kohn; kon
+ครับ,13,7,6,12,54%,kab; kap; khab; khap; kub; kup,khrab; khrahb; khrahp; khrap; khrub; khrup; krab; krahb; krahp; krap
+ครั้ง,4,4,0,6,100%,,khrahng; khrang; khrung; krahng; krang; krung
+ควร,4,4,0,4,100%,,khuaan; khuan; kuaan; kuan
+ความ,2,2,0,8,100%,,khwaam; khwahm; khwam; khwarm; kwaam; kwahm; kwam; kwarm
+คะ,2,2,0,4,100%,,ka; kah; kha; khah
+คับ,8,8,0,12,100%,,kab; kahb; kahp; kap; khab; khahb; khahp; khap; khub; khup
+คำ,3,3,0,6,100%,,kahm; kam; khahm; kham; khum; kum
+คิด,4,4,0,4,100%,,khid; khit; kid; kit
+คือ,4,4,0,10,100%,,keu; kheu; khue; khuee; khuh; khur; kue; kuee; kuh; kur
+คุณ,2,2,0,4,100%,,khoon; khun; koon; kun
+ค่อนข้าง,8,8,0,64,100%,,kawnkaang; kawnkahng; kawnkang; kawnkarng; kawnkhaang; kawnkhahng; kawnkhang; kawnkharng; khawnkaang; khawnkahng
+ค่ะ,2,2,0,4,100%,,ka; kah; kha; khah
+ค่า,4,4,0,8,100%,,ka; kaa; kah; kar; kha; khaa; khah; khar
+งาน,2,2,0,4,100%,,ngaan; ngahn; ngan; ngarn
+จน,2,2,0,4,100%,,chohn; chon; john; jon
+จริง,2,2,0,2,100%,,ching; jing
+จริงๆ,4,1,3,3,25%,chingching; jing jing; jingjing,ching; ching ching; jing
+จะ,2,2,0,4,100%,,cha; chah; ja; jah
+จังหวัด,12,12,0,72,100%,,chahngvad; chahngvahd; chahngvaht; chahngvat; chahngvud; chahngvut; chahngwad; chahngwahd; chahngwaht; chahngwat
+จัด,4,4,0,12,100%,,chad; chahd; chaht; chat; chud; chut; jad; jahd; jaht; jat
+จาก,8,8,0,16,100%,,chaag; chaak; chag; chahg; chahk; chak; charg; chark; jaag; jaak
+จาน,4,4,0,8,100%,,chaan; chahn; chan; charn; jaan; jahn; jan; jarn
+จำนวน,4,4,0,12,100%,,chahmnuaan; chahmnuan; chamnuaan; chamnuan; chumnuaan; chumnuan; jahmnuaan; jahmnuan; jamnuaan; jamnuan
+จึง,4,4,0,6,100%,,cheung; chueng; chuhng; jeung; jueng; juhng
+ชอบ,4,4,0,16,100%,,chawb; chawp; chob; chohb; chohp; chop; chorb; chorp; shawb; shawp
+ชั้น,4,4,0,6,100%,,chahn; chan; chun; shahn; shan; shun
+ชา,2,2,0,8,100%,,cha; chaa; chah; char; sha; shaa; shah; shar
+ชิม,1,1,0,2,100%,,chim; shim
+ชิ้น,2,2,0,2,100%,,chin; shin
+ชื่อ,3,3,0,10,100%,,cheu; chue; chuee; chuh; chur; sheu; shue; shuee; shuh; shur
+ชุด,8,8,0,8,100%,,chood; choot; chud; chut; shood; shoot; shud; shut
+ช่วง,2,2,0,4,100%,,chuaang; chuang; shuaang; shuang
+ช่วย,2,2,0,2,100%,,chuai; shuai
+ช้าง,4,4,0,8,100%,,chaang; chahng; chang; charng; shaang; shahng; shang; sharng
+ซึ่ง,2,2,0,3,100%,,seung; sueng; suhng
+ซื้อ,2,2,0,5,100%,,seu; sue; suee; suh; sur
+ซุป,6,4,2,4,67%,soub; soup,soob; soop; sub; sup
+ญี่ปุ่น,7,6,1,18,86%,japan,yeeboon; yeebpoon; yeebpun; yeebun; yeepoon; yeepun; yiboon; yibpoon; yibpun; yibun
+ดังกล่าว,4,4,0,72,100%,,dahngglaao; dahngglaau; dahngglaaw; dahngglaho; dahngglahu; dahngglahw; dahngglao; dahngglaro; dahngglaru; dahngglarw
+ดี,3,3,0,3,100%,,dee; di; dii
+ดีกว่า,6,6,0,24,100%,,deegwa; deegwaa; deegwah; deegwar; deekwa; deekwaa; deekwah; deekwar; digwa; digwaa
+ดู,3,3,0,4,100%,,doo; dou; du; duu
+ด้วย,2,1,1,1,50%,duay,duai
+ด้าน,2,2,0,4,100%,,daan; dahn; dan; darn
+ตรง,2,2,0,4,100%,,drohng; drong; trohng; trong
+ตอน,4,4,0,12,100%,,dawn; dohn; don; dorn; dtawn; dtohn; dton; dtorn; tawn; tohn
+ตอนนี้,4,4,0,36,100%,,dawnnee; dawnni; dawnnii; dohnnee; dohnni; dohnnii; donnee; donni; donnii; dornnee
+ตัว,2,2,0,6,100%,,dtua; dtuaa; dua; duaa; tua; tuaa
+ตั้งแต่,5,5,0,54,100%,,dahngdaae; dahngdae; dahngdtaae; dahngdtae; dahngtaae; dahngtae; dangdaae; dangdae; dangdtaae; dangdtae
+ตาม,4,4,0,12,100%,,daam; dahm; dam; darm; dtaam; dtahm; dtam; dtarm; taam; tahm
+ติด,3,3,0,6,100%,,did; dit; dtid; dtit; tid; tit
+ต่อ,3,3,0,12,100%,,daw; do; doh; dor; dtaw; dto; dtoh; dtor; taw; to
+ต่างๆ,2,1,1,13,50%,tangtang,daang; dahng; dang; darng; dtaang; dtahng; dtang; dtarng; taang; tahng
+ต้อง,2,1,1,12,50%,toong,dawng; dohng; dong; dorng; dtawng; dtohng; dtong; dtorng; tawng; tohng
+ถนน,2,2,0,8,100%,,tahnohn; tahnon; tanohn; tanon; thahnohn; thahnon; thanohn; thanon
+ถาม,4,4,0,8,100%,,taam; tahm; tam; tarm; thaam; thahm; tham; tharm
+ถึง,4,4,0,6,100%,,teung; theung; thueng; thuhng; tueng; tuhng
+ถือว่า,4,4,0,80,100%,,teuva; teuvaa; teuvah; teuvar; teuwa; teuwaa; teuwah; teuwar; theuva; theuvaa
+ถูก,12,12,0,16,100%,,thoog; thook; thoug; thouk; thug; thuk; thuug; thuuk; toog; took
+ถ้า,4,4,0,8,100%,,ta; taa; tah; tar; tha; thaa; thah; thar
+ทอด,4,4,0,16,100%,,tawd; tawt; thawd; thawt; thod; thohd; thoht; thord; thort; thot
+ทั้ง,4,4,0,6,100%,,tahng; tang; thahng; thang; thung; tung
+ทาง,4,4,0,8,100%,,taang; tahng; tang; tarng; thaang; thahng; thang; tharng
+ทาน,4,4,0,8,100%,,taan; tahn; tan; tarn; thaan; thahn; than; tharn
+ทำ,4,4,0,6,100%,,tahm; tam; thahm; tham; thum; tum
+ทำให้,4,4,0,18,100%,,tahmhaai; tahmhai; tahmhaii; tamhaai; tamhai; tamhaii; thahmhaai; thahmhai; thahmhaii; thamhaai
+ทำไม,4,4,0,18,100%,,tahmmaai; tahmmai; tahmmaii; tammaai; tammai; tammaii; thahmmaai; thahmmai; thahmmaii; thammaai
+ที่,6,6,0,6,100%,,tee; thee; thi; thii; ti; tii
+ที่จะ,12,12,0,24,100%,,teecha; teechah; teeja; teejah; theecha; theechah; theeja; theejah; thicha; thichah
+ที่นี่,18,18,0,18,100%,,teenee; teeni; teenii; theenee; theeni; theenii; thiinee; thiini; thiinii; thinee
+ที่สุด,18,18,0,24,100%,,teesood; teesoot; teesud; teesut; theesood; theesoot; theesud; theesut; thiisood; thiisoot
+ทุก,4,4,0,8,100%,,thoog; thook; thug; thuk; toog; took; tug; tuk
+ท่าน,4,4,0,6,100%,,tahn; tan; thahn; than; thun; tun
+นะ,1,1,0,2,100%,,na; nah
+นะคะ,2,2,0,8,100%,,nahka; nahkah; nahkha; nahkhah; naka; nakah; nakha; nakhah
+นั่ง,2,2,0,3,100%,,nahng; nang; nung
+นั้น,2,2,0,3,100%,,nahn; nan; nun
+นาน,2,2,0,4,100%,,naan; nahn; nan; narn
+นาย,2,2,0,4,100%,,naai; nahi; nai; nari
+นำ,2,2,0,3,100%,,nahm; nam; num
+นี่,3,3,0,3,100%,,nee; ni; nii
+นี้,3,3,0,3,100%,,nee; ni; nii
+นุ่ม,2,2,0,2,100%,,noom; num
+น่า,2,2,0,4,100%,,na; naa; nah; nar
+น่าจะ,4,4,0,16,100%,,naacha; naachah; naaja; naajah; nacha; nachah; nahcha; nahchah; nahja; nahjah
+น้อง,2,1,1,4,50%,noong,nawng; nohng; nong; norng
+น้อย,2,1,1,2,50%,noy,noi; noii
+น้ำ,4,3,1,4,75%,num,naam; nahm; nam; narm
+น้ำจิ้ม,6,4,2,8,67%,numchim; numjim,naamchim; naamjim; nahmchim; nahmjim; namchim; namjim; narmchim; narmjim
+บน,1,1,0,2,100%,,bohn; bon
+บรรยากาศ,16,16,0,192,100%,,bahnyaagaad; bahnyaagaat; bahnyaagad; bahnyaagahd; bahnyaagaht; bahnyaagard; bahnyaagart; bahnyaagat; bahnyaakaad; bahnyaakaat
+บริการ,6,6,0,32,100%,,bawrigaan; bawrigahn; bawrigan; bawrigarn; bawrikaan; bawrikahn; bawrikan; bawrikarn; bohrigaan; bohrigahn
+บริษัท,4,4,0,24,100%,,bawrisad; bawrisahd; bawrisaht; bawrisat; bawrisud; bawrisut; bohrisad; bohrisahd; bohrisaht; bohrisat
+บอ,3,2,1,4,67%,boo,baw; bo; boh; bor
+บอก,4,4,0,8,100%,,bawg; bawk; bog; bohg; bohk; bok; borg; bork
+บัตร,3,3,0,6,100%,,bad; bahd; baht; bat; bud; but
+บาง,2,2,0,4,100%,,baang; bahng; bang; barng
+บาท,5,5,0,8,100%,,baad; baat; bad; bahd; baht; bard; bart; bat
+บ้าง,2,2,0,4,100%,,baang; bahng; bang; barng
+บ้าน,2,2,0,4,100%,,baan; bahn; ban; barn
+ปกติ,2,2,0,144,100%,,boggadi; boggadti; boggahdi; boggahdti; boggahti; boggati; bogkadi; bogkadti; bogkahdi; bogkahdti
+ประชาชน,4,4,0,128,100%,,brachaachohn; brachaachon; brachaashohn; brachaashon; brachachohn; brachachon; brachahchohn; brachahchon; brachahshohn; brachahshon
+ประมาณ,2,2,0,16,100%,,brahmaan; brahmahn; brahman; brahmarn; bramaan; bramahn; braman; bramarn; prahmaan; prahmahn
+ประเทศ,16,8,8,80,50%,pated; pateed; pateet; patet; pathed; patheed; patheet; pathet,brahtaed; brahtaet; brahtayd; brahtayt; brahted; brahteed; brahteet; brahtehd; brahteht; brahtet
+ปลา,2,2,0,8,100%,,bla; blaa; blah; blar; pla; plaa; plah; plar
+ปัญหา,2,2,0,36,100%,,bahnha; bahnhaa; bahnhah; bahnhar; banha; banhaa; banhah; banhar; bpahnha; bpahnhaa
+ปี,3,3,0,9,100%,,bee; bi; bii; bpee; bpi; bpii; pee; pi; pii
+ผม,2,2,0,4,100%,,phohm; phom; pohm; pom
+ผัก,4,4,0,12,100%,,pag; pahg; pahk; pak; phag; phahg; phahk; phak; phug; phuk
+ผัด,6,6,0,12,100%,,pad; pahd; paht; pat; phad; phahd; phaht; phat; phud; phut
+ผิว,6,6,0,6,100%,,phio; phiu; phiw; pio; piu; piw
+ผู้,6,6,0,8,100%,,phoo; phou; phu; phuu; poo; pou; pu; puu
+ผ่าน,4,4,0,8,100%,,paan; pahn; pan; parn; phaan; phahn; phan; pharn
+พนักงาน,8,8,0,96,100%,,pahnagngaan; pahnagngahn; pahnagngan; pahnagngarn; pahnahgngaan; pahnahgngahn; pahnahgngan; pahnahgngarn; pahnahkngaan; pahnahkngahn
+พบ,4,4,0,8,100%,,phob; phohb; phohp; phop; pob; pohb; pohp; pop
+พร้อม,2,2,0,8,100%,,phrawm; phrohm; phrom; phrorm; prawm; prohm; prom; prorm
+พวก,8,8,0,8,100%,,phuaag; phuaak; phuag; phuak; puaag; puaak; puag; puak
+พอ,5,4,1,8,80%,phoo,paw; phaw; pho; phoh; phor; po; poh; por
+พา,4,4,0,8,100%,,pa; paa; pah; par; pha; phaa; phah; phar
+พิเศษ,8,8,0,20,100%,,phisaed; phisaet; phisayd; phisayt; phised; phiseed; phiseet; phisehd; phiseht; phiset
+พี่,6,6,0,6,100%,,pee; phee; phi; phii; pi; pii
+พื้นที่,12,12,0,60,100%,,peuntee; peunthee; peunthi; peunthii; peunti; peuntii; pheuntee; pheunthee; pheunthi; pheunthii
+ฟรี,3,3,0,3,100%,,free; fri; frii
+ภายใน,4,4,0,24,100%,,paainaai; paainai; paainaii; pahinaai; pahinai; pahinaii; painaai; painai; painaii; parinaai
+มัน,2,2,0,3,100%,,mahn; man; mun
+มั้ย,2,2,0,4,100%,,maai; mahi; mai; mari
+มา,2,2,0,4,100%,,ma; maa; mah; mar
+มาก,4,4,0,8,100%,,maag; maak; mag; mahg; mahk; mak; marg; mark
+มากกว่า,12,12,0,64,100%,,maaggwa; maaggwaa; maaggwah; maaggwar; maagkwa; maagkwaa; maagkwah; maagkwar; maakgwa; maakgwaa
+มาจาก,12,12,0,64,100%,,maachaag; maachaak; maachag; maachahg; maachahk; maachak; maacharg; maachark; maajaag; maajaak
+มี,4,3,1,3,75%,me,mee; mi; mii
+ยัง,3,2,1,3,67%,young,yahng; yang; yung
+ยังมี,3,3,0,9,100%,,yahngmee; yahngmi; yahngmii; yangmee; yangmi; yangmii; yungmee; yungmi; yungmii
+ยา,2,2,0,4,100%,,ya; yaa; yah; yar
+ย่าง,2,2,0,4,100%,,yaang; yahng; yang; yarng
+รถ,2,2,0,4,100%,,rod; rohd; roht; rot
+รวม,2,2,0,2,100%,,ruaam; ruam
+รส,3,2,1,4,67%,ros,rod; rohd; roht; rot
+รสชาติ,16,8,8,64,50%,rodjaad; rodjaat; rodjad; rodjat; rotjaad; rotjaat; rotjad; rotjat,rodchaad; rodchaat; rodchad; rodchahd; rodchaht; rodchard; rodchart; rodchat; rodshaad; rodshaat
+รอ,3,3,0,4,100%,,raw; ro; roh; ror
+รอบ,4,4,0,8,100%,,rawb; rawp; rob; rohb; rohp; rop; rorb; rorp
+ระบบ,2,2,0,8,100%,,rabob; rabohb; rabohp; rabop; rahbob; rahbohb; rahbohp; rahbop
+ระหว่าง,2,2,0,16,100%,,rahvaang; rahvahng; rahvang; rahvarng; rahwaang; rahwahng; rahwang; rahwarng; ravaang; ravahng
+รักษา,4,4,0,24,100%,,ragsa; ragsaa; ragsah; ragsar; rahgsa; rahgsaa; rahgsah; rahgsar; rahksa; rahksaa
+รัฐ,4,4,0,6,100%,,rad; rahd; raht; rat; rud; rut
+รัฐบาล,2,2,0,96,100%,,radtabaan; radtabahn; radtaban; radtabarn; radtahbaan; radtahbahn; radtahban; radtahbarn; radthabaan; radthabahn
+รับ,4,4,0,6,100%,,rab; rahb; rahp; rap; rub; rup
+ราคา,8,8,0,32,100%,,raaka; raakaa; raakah; raakar; raakha; raakhaa; raakhah; raakhar; rahka; rahkaa
+ริ,1,1,0,1,100%,,ri
+รุ่น,2,2,0,2,100%,,roon; run
+รู้,3,3,0,4,100%,,roo; rou; ru; ruu
+รู้สึก,12,12,0,24,100%,,rooseug; rooseuk; roosueg; roosuek; roosuhg; roosuhk; rouseug; rouseuk; rousueg; rousuek
+ร่วม,2,2,0,2,100%,,ruaam; ruam
+ร้อน,2,2,0,4,100%,,rawn; rohn; ron; rorn
+ร้าน,2,2,0,4,100%,,raan; rahn; ran; rarn
+ลง,1,1,0,2,100%,,lohng; long
+ลด,2,2,0,4,100%,,lod; lohd; loht; lot
+ลอง,2,1,1,4,50%,rong,lawng; lohng; long; lorng
+ละ,1,1,0,2,100%,,la; lah
+ลูกค้า,20,20,0,64,100%,,loogka; loogkaa; loogkah; loogkar; loogkha; loogkhaa; loogkhah; loogkhar; lookka; lookkaa
+ล้าน,2,2,0,4,100%,,laan; lahn; lan; larn
+วัน,3,2,1,6,67%,one,vahn; van; vun; wahn; wan; wun
+วันที่,8,8,0,36,100%,,vahntee; vahnthee; vahnthi; vahnthii; vahnti; vahntii; vantee; vanthee; vanthi; vanthii
+วันนี้,3,3,0,18,100%,,vahnnee; vahnni; vahnnii; vannee; vanni; vannii; vunnee; vunni; vunnii; wahnnee
+ว่า,2,2,0,8,100%,,va; vaa; vah; var; wa; waa; wah; war
+สด,2,2,0,4,100%,,sod; sohd; soht; sot
+สบาย,1,1,0,8,100%,,sabaai; sabahi; sabai; sabari; sahbaai; sahbahi; sahbai; sahbari
+สร้าง,3,3,0,4,100%,,saang; sahng; sang; sarng
+สวย,1,1,0,1,100%,,suai
+สอง,1,1,0,4,100%,,sawng; sohng; song; sorng
+สังคม,4,4,0,12,100%,,sahngkhohm; sahngkhom; sahngkohm; sahngkom; sangkhohm; sangkhom; sangkohm; sangkom; sungkhohm; sungkhom
+สั่ง,2,2,0,3,100%,,sahng; sang; sung
+สาขา,8,8,0,32,100%,,saaka; saakaa; saakah; saakar; saakha; saakhaa; saakhah; saakhar; sahka; sahkaa
+สามารถ,8,8,0,32,100%,,saamaad; saamaat; saamad; saamahd; saamaht; saamard; saamart; saamat; sahmaad; sahmaat
+สำคัญ,6,6,0,18,100%,,sahmkahn; sahmkan; sahmkhahn; sahmkhan; sahmkhun; sahmkun; samkahn; samkan; samkhahn; samkhan
+สำหรับ,6,6,0,18,100%,,sahmrab; sahmrahb; sahmrahp; sahmrap; sahmrub; sahmrup; samrab; samrahb; samrahp; samrap
+สิทธิ,4,4,0,4,100%,,sidthi; sidti; sitthi; sitti
+สิ่ง,1,1,0,1,100%,,sing
+สี,3,3,0,3,100%,,see; si; sii
+สุด,4,4,0,4,100%,,sood; soot; sud; sut
+สูง,3,3,0,4,100%,,soong; soung; sung; suung
+ส่ง,1,1,0,2,100%,,sohng; song
+ส่วน,2,2,0,2,100%,,suaan; suan
+หนึ่ง,2,2,0,6,100%,,neung; nheung; nhueng; nhuhng; nueng; nuhng
+หน่อย,3,2,1,4,67%,noy,nhoi; nhoii; noi; noii
+หน้า,4,4,0,8,100%,,na; naa; nah; nar; nha; nhaa; nhah; nhar
+หมด,4,4,0,8,100%,,mhod; mhohd; mhoht; mhot; mod; mohd; moht; mot
+หมู,5,5,0,8,100%,,mhoo; mhou; mhu; mhuu; moo; mou; mu; muu
+หรือ,2,2,0,5,100%,,reu; rue; ruee; ruh; rur
+หลัง,2,2,0,3,100%,,lahng; lang; lung
+หลาย,2,2,0,4,100%,,laai; lahi; lai; lari
+หวาน,2,2,0,8,100%,,vaan; vahn; van; varn; waan; wahn; wan; warn
+หอม,2,2,0,4,100%,,hawm; hohm; hom; horm
+หา,2,2,0,4,100%,,ha; haa; hah; har
+หาก,4,4,0,8,100%,,haag; haak; hag; hahg; hahk; hak; harg; hark
+อยาก,6,6,0,8,100%,,yaag; yaak; yag; yahg; yahk; yak; yarg; yark
+อยู่,4,4,0,4,100%,,yoo; you; yu; yuu
+อย่า,2,2,0,4,100%,,ya; yaa; yah; yar
+อย่าง,2,2,0,4,100%,,yaang; yahng; yang; yarng
+อร่อย,2,1,1,4,50%,aroy,ahroi; ahroii; aroi; aroii
+ออก,6,4,2,8,67%,oog; ook,awg; awk; og; ohg; ohk; ok; org; ork
+ออกมา,6,4,2,32,67%,oogma; ookma,awgma; awgmaa; awgmah; awgmar; awkma; awkmaa; awkmah; awkmar; ogma; ogmaa
+อะ,2,2,0,2,100%,,a; ah
+อะไร,4,1,3,6,25%,alai; alay; aray,ahraai; ahrai; ahraii; araai; arai; araii
+อาจ,6,6,0,12,100%,,aad; aaj; aat; ad; ahd; ahj; aht; aj; ard; arj
+อาจจะ,9,9,0,48,100%,,aadcha; aadchah; aadja; aadjah; aajcha; aajchah; aajja; aajjah; aatcha; aatchah
+อาหาร,9,9,0,16,100%,,aahaan; aahahn; aahan; aaharn; ahaan; ahahn; ahan; aharn; ahhaan; ahhahn
+อี,4,3,1,3,75%,e,ee; i; ii
+อีก,6,6,0,6,100%,,eeg; eek; ig; iig; iik; ik
+อื่น,2,2,0,5,100%,,eun; ueen; uen; uhn; urn
+เกิด,6,6,0,20,100%,,geod; geot; gerd; gert; goed; goet; guhd; guht; gurd; gurt
+เขา,2,2,0,12,100%,,kaao; kao; kaow; kau; kaw; khaao; khao; khaow; khau; khaw
+เข้า,2,2,0,12,100%,,kaao; kao; kaow; kau; kaw; khaao; khao; khaow; khau; khaw
+เข้ามา,2,2,0,48,100%,,kaaoma; kaaomaa; kaaomah; kaaomar; kaoma; kaomaa; kaomah; kaomar; kaowma; kaowmaa
+เข้าไป,2,2,0,108,100%,,kaaobaai; kaaobai; kaaobaii; kaaobpaai; kaaobpai; kaaobpaii; kaaopaai; kaaopai; kaaopaii; kaobaai
+เคย,2,2,0,10,100%,,keoi; keri; kheoi; kheri; khoei; khuhi; khuri; koei; kuhi; kuri
+เครื่อง,4,4,0,8,100%,,khreuang; khruang; khrueaang; khrueang; kreuang; kruang; krueaang; krueang
+เครื่องดื่ม,16,8,8,40,50%,khueaangdueem; khueaangduem; khueangdueem; khueangduem; kueaangdueem; kueaangduem; kueangdueem; kueangduem,khreuangdeum; khreuangdueem; khreuangduem; khreuangduhm; khreuangdurm; khruangdeum; khruangdueem; khruangduem; khruangduhm; khruangdurm
+เค้ก,9,8,1,20,89%,cake,kaeg; kaek; kayg; kayk; keeg; keek; keg; kehg; kehk; kek
+เค้า,2,2,0,12,100%,,kaao; kao; kaow; kau; kaw; khaao; khao; khaow; khau; khaw
+เงิน,2,2,0,3,100%,,ngeon; ngern; ngoen
+เจอ,3,3,0,10,100%,,cheo; cher; choe; chuh; chur; jeo; jer; joe; juh; jur
+เช่น,2,2,0,10,100%,,chaen; chayn; cheen; chehn; chen; shaen; shayn; sheen; shehn; shen
+เดิน,3,3,0,5,100%,,deon; dern; doen; duhn; durn
+เดียว,3,3,0,5,100%,,deao; deaw; diao; diaw; diew
+เดือน,2,2,0,4,100%,,deuan; duan; dueaan; duean
+เด็ก,2,2,0,2,100%,,deg; dek
+เต็ม,2,2,0,3,100%,,dem; dtem; tem
+เท่านั้น,4,4,0,36,100%,,taaonahn; taaonan; taaonun; taonahn; taonan; taonun; taownahn; taownan; taownun; taunahn
+เนื้อ,2,2,0,4,100%,,neua; nua; nuea; nueaa
+เบียร์,5,3,2,3,60%,beea; beer,bea; bia; biia
+เปิด,4,4,0,30,100%,,beod; beot; berd; bert; boed; boet; bpeod; bpeot; bperd; bpert
+เป็น,1,1,0,3,100%,,ben; bpen; pen
+เพราะ,4,4,0,6,100%,,phro; phroa; phror; pro; proa; pror
+เพิ่ม,5,5,0,10,100%,,peom; perm; pheom; pherm; phoem; phuhm; phurm; poem; puhm; purm
+เพียง,6,4,2,6,67%,phyang; pyang,peang; pheang; phiang; phiiang; piang; piiang
+เพื่อ,4,4,0,8,100%,,peua; pheua; phua; phuea; phueaa; pua; puea; pueaa
+เพื่อน,4,4,0,8,100%,,peuan; pheuan; phuan; phueaan; phuean; puan; pueaan; puean
+เมนู,9,9,0,20,100%,,maenoo; maenou; maenu; maenuu; maynoo; maynou; maynu; maynuu; meenoo; meenou
+เมือง,2,2,0,4,100%,,meuang; muang; mueaang; mueang
+เมื่อ,2,2,0,4,100%,,meua; mua; muea; mueaa
+เยอะ,3,2,1,3,67%,yoer,yeo; yer; yoe
+เย็น,1,1,0,1,100%,,yen
+เรา,3,3,0,6,100%,,raao; rao; raow; rau; raw; row
+เริ่ม,3,2,1,5,67%,ream,reom; rerm; roem; ruhm; rurm
+เรียก,6,6,0,6,100%,,reag; reak; riag; riak; riiag; riiak
+เรื่อง,4,2,2,4,50%,leuang; lueang,reuang; ruang; rueaang; rueang
+เลย,2,1,1,5,50%,loey,leoi; leri; loei; luhi; luri
+เลือก,4,4,0,8,100%,,leuag; leuak; luag; luak; lueaag; lueaak; lueag; lueak
+เล็ก,2,2,0,2,100%,,leg; lek
+เวลา,6,6,0,40,100%,,vaela; vaelaa; vaelah; vaelar; vayla; vaylaa; vaylah; vaylar; veela; veelaa
+เส้น,1,1,0,5,100%,,saen; sayn; seen; sehn; sen
+เหมือน,2,2,0,8,100%,,meuan; mheuan; mhuan; mhueaan; mhuean; muan; mueaan; muean
+เห็น,1,1,0,1,100%,,hen
+เอง,3,3,0,5,100%,,aeng; ayng; eeng; ehng; eng
+เอา,4,4,0,6,100%,,aao; ao; aow; au; aw; ow
+แค่,4,4,0,4,100%,,kaae; kae; khaae; khae
+แต่,4,4,0,6,100%,,daae; dae; dtaae; dtae; taae; tae
+แถม,4,4,0,4,100%,,taaem; taem; thaaem; thaem
+แนะนำ,2,2,0,3,100%,,naenahm; naenam; naenum
+แบบ,4,4,0,4,100%,,baaeb; baaep; baeb; baep
+แบบนี้,4,4,0,12,100%,,baaebnee; baaebni; baaebnii; baaepnee; baaepni; baaepnii; baebnee; baebni; baebnii; baepnee
+แป้ง,1,1,0,6,100%,,baaeng; baeng; bpaaeng; bpaeng; paaeng; paeng
+แพง,2,2,0,4,100%,,paaeng; paeng; phaaeng; phaeng
+แม่,2,2,0,2,100%,,maae; mae
+แรก,4,4,0,4,100%,,raaeg; raaek; raeg; raek
+แรงงาน,1,1,0,8,100%,,raaengngaan; raaengngahn; raaengngan; raaengngarn; raengngaan; raengngahn; raengngan; raengngarn
+และ,1,1,0,1,100%,,lae
+แล้ว,2,2,0,6,100%,,laaeo; laaeu; laaew; laeo; laeu; laew
+แวะ,1,1,0,2,100%,,vae; wae
+แห่ง,1,1,0,2,100%,,haaeng; haeng
+โครงการ,12,12,0,32,100%,,khrohnggaan; khrohnggahn; khrohnggan; khrohnggarn; khrohngkaan; khrohngkahn; khrohngkan; khrohngkarn; khronggaan; khronggahn
+โดย,2,1,1,2,50%,doy,dohi; doi
+โต๊ะ,4,4,0,6,100%,,do; doh; dto; dtoh; to; toh
+โอเค,7,6,1,20,86%,ok,ohkae; ohkay; ohke; ohkee; ohkeh; ohkhae; ohkhay; ohkhe; ohkhee; ohkheh
+ใคร,3,2,1,6,67%,khai,khraai; khrai; khraii; kraai; krai; kraii
+ใช่,2,2,0,6,100%,,chaai; chai; chaii; shaai; shai; shaii
+ใช้,2,2,0,6,100%,,chaai; chai; chaii; shaai; shai; shaii
+ใช้ได้,2,2,0,24,100%,,chaaidaai; chaaidahi; chaaidai; chaaidari; chaidaai; chaidahi; chaidai; chaidari; chaiidaai; chaiidahi
+ใน,1,1,0,3,100%,,naai; nai; naii
+ใส่,2,1,1,3,50%,say,saai; sai; saii
+ใหญ่,1,1,0,3,100%,,yaai; yai; yaii
+ใหม่,2,2,0,6,100%,,maai; mai; maii; mhaai; mhai; mhaii
+ให้,1,1,0,3,100%,,haai; hai; haii
+ไก่,2,2,0,6,100%,,gaai; gai; gaii; kaai; kai; kaii
+ได้,2,2,0,4,100%,,daai; dahi; dai; dari
+ได้รับ,6,6,0,24,100%,,daairab; daairahb; daairahp; daairap; daairub; daairup; dahirab; dahirahb; dahirahp; dahirap
+ไทย,2,2,0,6,100%,,taai; tai; taii; thaai; thai; thaii
+ไป,1,1,0,9,100%,,baai; bai; baii; bpaai; bpai; bpaii; paai; pai; paii
+ไม่,1,1,0,3,100%,,maai; mai; maii
+ไม่ค่อย,2,2,0,12,100%,,maaikhoi; maaikhoii; maaikoi; maaikoii; maiikhoi; maiikhoii; maiikoi; maiikoii; maikhoi; maikhoii
+ไม่ต้อง,2,2,0,36,100%,,maaidawng; maaidohng; maaidong; maaidorng; maaidtawng; maaidtohng; maaidtong; maaidtorng; maaitawng; maaitohng
+ไว้,3,2,1,6,67%,way,vaai; vai; vaii; waai; wai; waii
+ไหน,1,1,0,6,100%,,naai; nai; naii; nhaai; nhai; nhaii
+ไหม,1,1,0,6,100%,,maai; mai; maii; mhaai; mhai; mhaii

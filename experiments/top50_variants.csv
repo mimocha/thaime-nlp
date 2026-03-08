@@ -1,0 +1,51 @@
+rank,thai_word,decomposition,variant_count,variants
+1,ที่,[th/ii/],6,tee; thee; thi; thii; ti; tii
+2,ไม่,[m/aj/],3,maai; mai; maii
+3,มี,[m/ii/],3,mee; mi; mii
+4,และ,[l/x/],1,lae
+5,ได้,[d/aa/j],4,daai; dahi; dai; dari
+6,ใน,[n/aj/],3,naai; nai; naii
+7,มา,[m/aa/],4,ma; maa; mah; mar
+8,ไป,[p/aj/],9,baai; bai; baii; bpaai; bpai; bpaii; paai; pai; paii
+9,ก็,[k/OO/],8,gaw; go; goh; gor; kaw; ko; koh; kor
+10,จะ,[c/a/],4,cha; chah; ja; jah
+11,เป็น,[p/e/n],3,ben; bpen; pen
+12,ของ,[kh/OO/N],8,kawng; khawng; khohng; khong; khorng; kohng; kong; korng
+13,ให้,[h/aj/],3,haai; hai; haii
+14,ว่า,[w/aa/],8,va; vaa; vah; var; wa; waa; wah; war
+15,ร้าน,[r/aa/n],4,raan; rahn; ran; rarn
+16,การ,[k/aa/n],8,gaan; gahn; gan; garn; kaan; kahn; kan; karn
+17,เลย,[l/@@/j],5,leoi; leri; loei; luhi; luri
+18,แต่,[t/xx/],6,daae; dae; dtaae; dtae; taae; tae
+19,นี้,[n/ii/],3,nee; ni; nii
+20,ค่ะ,[kh/a/],4,ka; kah; kha; khah
+21,กับ,[k/a/p],12,gab; gahb; gahp; gap; gub; gup; kab; kahb; kahp; kap; kub; kup
+22,แล้ว,[l/xx/w],6,laaeo; laaeu; laaew; laeo; laeu; laew
+23,มาก,[m/aa/k],8,maag; maak; mag; mahg; mahk; mak; marg; mark
+24,ครับ,[khr/a/p],12,khrab; khrahb; khrahp; khrap; khrub; khrup; krab; krahb; krahp; krap; krub; krup
+25,คน,[kh/o/n],4,khohn; khon; kohn; kon
+26,ดี,[d/ii/],3,dee; di; dii
+27,ต้อง,[t/OO/N],12,dawng; dohng; dong; dorng; dtawng; dtohng; dtong; dtorng; tawng; tohng; tong; torng
+28,กิน,[k/i/n],2,gin; kin
+29,ด้วย,[d/uaj/],1,duai
+30,อยู่,[j/uu/],4,yoo; you; yu; yuu
+31,อร่อย,[?/a/] | [r/Oj/],4,ahroi; ahroii; aroi; aroii
+32,เรา,[r/aw/],6,raao; rao; raow; rau; raw; row
+33,คือ,[kh/UU/],10,keu; kheu; khue; khuee; khuh; khur; kue; kuee; kuh; kur
+34,จาก,[c/aa/k],16,chaag; chaak; chag; chahg; chahk; chak; charg; chark; jaag; jaak; jag; jahg; jahk; jak; jarg; jark
+35,กัน,[k/a/n],6,gahn; gan; gun; kahn; kan; kun
+36,นะ,[n/a/],2,na; nah
+37,มัน,[m/a/n],3,mahn; man; mun
+38,หรือ,[r/UU/],5,reu; rue; ruee; ruh; rur
+39,อย่าง,[j/aa/N],4,yaang; yahng; yang; yarng
+40,เพราะ,[phr/O/],6,phro; phroa; phror; pro; proa; pror
+41,ใช้,[ch/aj/],6,chaai; chai; chaii; shaai; shai; shaii
+42,ยัง,[j/a/N],3,yahng; yang; yung
+43,ทาน,[th/aa/n],8,taan; tahn; tan; tarn; thaan; thahn; than; tharn
+44,แบบ,[b/xx/p],4,baaeb; baaep; baeb; baep
+45,บาท,[b/aa/t],8,baad; baat; bad; bahd; baht; bard; bart; bat
+46,ราคา,[r/aa/] | [kh/aa/],32,raaka; raakaa; raakah; raakar; raakha; raakhaa; raakhah; raakhar; rahka; rahkaa; rahkah; rahkar; rahkha; rahkhaa; rahkhah; rahkhar; raka; rakaa; rakah; rakar; rakha; rakhaa; rakhah; rakhar; rarka; rarkaa; rarkah; rarkar; rarkha; rarkhaa; rarkhah; rarkhar
+47,อีก,[?/ii/k],6,eeg; eek; ig; iig; iik; ik
+48,ถ้า,[th/aa/],8,ta; taa; tah; tar; tha; thaa; thah; thar
+49,สั่ง,[s/a/N],3,sahng; sang; sung
+50,ไทย,[th/aj/],6,taai; tai; taii; thaai; thai; thaii

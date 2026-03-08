@@ -25,6 +25,7 @@ python -m pipelines.benchmark-wordconv.01_extract_frequencies --top-k 500
 
 ```bash
 python -m pipelines.benchmark-wordconv.02_generate_romanizations --top-k 500
+python -m pipelines.benchmark-wordconv.02_generate_romanizations --top-k 10000 --workers 4
 ```
 
 - Reads the word frequency list from Step 1
@@ -32,6 +33,16 @@ python -m pipelines.benchmark-wordconv.02_generate_romanizations --top-k 500
 - Runs the variant generator (`src/variant_generator.py`) for informal variants
 - Auto-assigns category (`common`, `ambiguous`, `variant`, `compound`, `edge`) and difficulty (`easy`, `medium`, `hard`) heuristically
 - Outputs draft entries to JSON
+
+**Parallel processing:** Use `--workers N` to process words in parallel using
+`ProcessPoolExecutor` (fork context). Recommended for large runs (10K+ words).
+Default is `--workers 1` (sequential). TLTK process safety has been verified.
+
+| Scale | Workers | Approx. time |
+|-------|---------|-------------|
+| 1K | 1 | ~4 min |
+| 10K | 4 | ~7 min |
+| 10K | 1 | ~37 min |
 
 **Output:** `output/draft_benchmark.json`
 
@@ -85,8 +96,9 @@ python -m src.data.download wisesight wongnai prachathai
 
 ## Configuration
 
-- **Top-K words:** Default 500, adjustable via `--top-k` in Steps 1 and 2
-- **Max variants per word:** Default 20, adjustable via `--max-variants` in Step 2
+- **Top-K words:** Default 1000, adjustable via `--top-k` in Steps 1 and 2
+- **Max variants per word:** Default 100, adjustable via `--max-variants` in Step 2
+- **Parallel workers:** Default 1 (sequential), adjustable via `--workers` in Step 2
 - **Corpus weighting:** Equal (1/3 each), hardcoded in Step 1
 - **Target benchmark size:** ~300 approved entries after manual review
 
