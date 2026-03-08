@@ -1,0 +1,501 @@
+# Component-Level Thai Romanization Dictionary
+#
+# Maps phonological components (onsets, vowels, codas) to their valid
+# informal Latin romanization variants. Used to generate whole-word
+# romanizations via Cartesian product of component variants.
+#
+# Produced by Research 003 (component-romanization).
+# Source vocabulary: top 1000 words from wisesight+wongnai+prachathai.
+# Expanded via 10K validation (Change Plan 04, commit 5).
+#
+# Convention:
+#   - "rtgs" is the base RTGS romanization for the component
+#   - "variants" is the full set of valid romanizations (always includes rtgs)
+#   - Variants are ordered: rtgs form first, then alternatives
+#
+# Design decisions:
+#   - Keys use TLTK g2p phoneme strings where they differ from RTGS.
+#     This enables จ/ช and ออ/โอ distinctions that RTGS merges.
+#   - Vowel+glide diphthongs (aeo, io, eo, ui, oei) are decomposed into
+#     vowel + coda (ae+w, i+w, e+w, u+y, oe+y) rather than atomic vowels
+#   - Onset clusters (e.g., kr, khr) are separate entries, not composed.
+#     Future work: clusters could potentially be decomposed via Cartesian
+#     product {base} x {h/0} x {r/l}, e.g. khr = {k,g} x {h,0} x {r,l}.
+#     Kept atomic for now because (a) not all combinations are valid,
+#     (b) the inventory is small (~7 entries), and (c) manual curation is
+#     manageable at this scale. Revisit if the inventory grows significantly.
+#
+# Known limitations (see data/dictionaries/README.md for details):
+#   - TLTK g2p maps ทร → /s/ unconditionally, including loanwords (ทรู, ทริม)
+#     where the correct pronunciation is /tr/. These words get "s" variants
+#     instead of "tr"/"thr". Not fixable at the dictionary level.
+#   - The "thr" onset entry covers ธร clusters only (not ทร).
+
+metadata:
+  version: "0.3.1"
+  description: "Component-level Thai informal romanization mappings (g2p-keyed)"
+  source_vocabulary: "top 10K words from wisesight+wongnai+prachathai"
+  inventory_date: "2026-03-09"
+  total_entries: 71
+  changelog: |
+    v0.3.1 (2026-03-09): Replaced "dr" onset variant with "dtr" (ตร cluster).
+      - "dtr" added to match Paiboon-like systems
+        "dr" was a holdover from an earlier iteration and was removed to match ต onset
+    v0.3.0 (2026-03-09): 10K scale-up validation (Change Plan 04, commit 5).
+      - Added 4 onset clusters found in 10K vocabulary: khl (ขล/คล), phl (พล/ผล),
+        bl (บล), thr (ธร). Covers 130 previously-unknown onset occurrences.
+      - Removed "d" from ต onset (produces noise at scale; "dt" kept for disambiguation).
+      - Dictionary coverage on 10K vocabulary: 99.1% → ~99.9% after additions.
+    v0.2.3 (2026-03-08): Second review-driven cleanup (Change Plan 04, commit 4 iteration).
+      - Added "uay" to uaj (อวย) diphthong (ด้วย->duay natural).
+      - Removed "ur" from UU (อื) vowel (produces unnatural forms: kur, rur, purntii).
+    v0.2.2 (2026-03-08): Review-driven cleanup (Change Plan 04, commit 4 iteration).
+      - Removed "ua" from UUa (เอือ) vowel variants (ambiguous with อัว, produces nonsense).
+      - Removed "b" from ป onset, "bl" from ปล, "br" from ปร (produces nonsense romanizations).
+    v0.2.1 (2026-03-07): Validation-driven variant refinements (Change Plan 04, commit 3).
+      - Added "oo" variant to short u vowel.
+      - Added "oh" to short o, "oa" to short O, "ou" to long uu.
+      - Added "ae" to long ee, "ow"/"aow"/"au" to ao diphthong.
+      - Added "iia" to ia, "ueaa" to uea, "eao"/"eaw" to iao diphthongs.
+      - Removed "aa"→"u" (invalid for long vowel; only valid for short a in closed syllables).
+      - Removed all j→y coda/diphthong variants (ai→ay, oi→oy, uai→uay, coda j→y).
+      - Removed "j" from ch onset (ช/ฉ; only valid for จ).
+      - Removed "gr" from khr onset (no benchmark evidence).
+      - Fixed hor-nam (หน/หม) detection to skip leading vowels.
+      - Fixed จ-as-coda detection (TLTK maps to 't'; now correctly uses 'c' coda entry).
+    v0.2.0 (2026-03-07): Re-keyed from RTGS to TLTK g2p strings.
+      - Split RTGS "ch" into g2p "c" (จ) and "ch" (ช/ฉ/ฌ) with distinct variants.
+      - Split RTGS "o" vowel into g2p "O" (ออ) and "o" (โอ) with distinct variants.
+      - Added "c" coda entry for จ-as-coda (distinct from "t" coda).
+      - Added "nh" and "mh" onset entries for หน/หม words.
+    v0.1.0 (2026-03-06): Initial version with RTGS keys (from Research 003).
+
+# ===========================================================================
+# ONSETS (36 entries)
+# ===========================================================================
+# Initial consonants and clusters. Keys are TLTK g2p phoneme strings.
+#
+# Variant rationale codes:
+#   voice  = voicing (k->g common for ก in informal Thai)
+#   deaspir = de-aspiration (kh->k, th->t, ph->p dropping the 'h')
+#   simplif = cluster simplification
+#   paiboon = Paiboon-like system convention (dt for ต, bp for ป)
+
+onsets:
+  k:
+    rtgs: "k"
+    g2p: "k"
+    thai: "ก"
+    variants: ["k", "g"]
+    notes: "ก -- g voicing very common in informal Thai"
+  kh:
+    rtgs: "kh"
+    g2p: "kh"
+    thai: "ข/ค"
+    variants: ["kh", "k"]
+    notes: "ข/ค -- aspiration often dropped"
+  kr:
+    rtgs: "kr"
+    g2p: "kr"
+    thai: "กร"
+    variants: ["kr", "gr"]
+    notes: "กร -- voiced variant"
+  khr:
+    rtgs: "khr"
+    g2p: "khr"
+    thai: "ขร/คร"
+    variants: ["khr", "kr"]
+    notes: "ขร/คร -- de-aspiration and/or voicing"
+  khl:
+    rtgs: "khl"
+    g2p: "khl"
+    thai: "ขล/คล"
+    variants: ["khl", "kl"]
+    notes: "ขล/คล -- de-aspiration"
+  kl:
+    rtgs: "kl"
+    g2p: "kl"
+    thai: "กล"
+    variants: ["kl", "gl"]
+    notes: "กล -- voiced variant"
+  ng:
+    rtgs: "ng"
+    g2p: "N"
+    thai: "ง"
+    variants: ["ng"]
+    notes: "ง -- no common informal variants"
+  c:
+    rtgs: "ch"
+    g2p: "c"
+    thai: "จ"
+    variants: ["j", "ch"]
+    notes: "จ (/c/) -- j is primary, ch in medial contexts"
+  ch:
+    rtgs: "ch"
+    g2p: "ch"
+    thai: "ช/ฉ/ฌ"
+    variants: ["ch", "sh"]
+    notes: "ช/ฉ/ฌ (/ch/) -- ch/sh primary. Removed j (only valid for จ, not ช/ฉ)."
+  d:
+    rtgs: "d"
+    g2p: "d"
+    thai: "ด"
+    variants: ["d"]
+    notes: "ด -- no common informal variants"
+  t:
+    rtgs: "t"
+    g2p: "t"
+    thai: "ต"
+    variants: ["t", "dt"]
+    notes: "ต -- dt from Paiboon-like systems; d removed (produces noise at scale)"
+  th:
+    rtgs: "th"
+    g2p: "th"
+    thai: "ท/ถ"
+    variants: ["th", "t"]
+    notes: "ท/ถ -- aspiration often dropped"
+  tr:
+    rtgs: "tr"
+    g2p: "tr"
+    thai: "ตร"
+    variants: ["tr", "dtr"]
+    notes: "ตร -- voiced variant"
+  thr:
+    rtgs: "thr"
+    g2p: "thr"
+    thai: "ธร"
+    variants: ["thr", "tr"]
+    notes: "ธร -- de-aspiration. Covers ธร only; ทร maps to /s/ in TLTK g2p (see README)."
+  n:
+    rtgs: "n"
+    g2p: "n"
+    thai: "น"
+    variants: ["n"]
+    notes: "น -- no common informal variants"
+  nh:
+    rtgs: "n"
+    g2p: "nh"
+    thai: "หน"
+    variants: ["n", "nh"]
+    notes: "หน -- nh spelling for หน words (e.g. หน้า->nha, หนึ่ง->nhueng)"
+  b:
+    rtgs: "b"
+    g2p: "b"
+    thai: "บ"
+    variants: ["b"]
+    notes: "บ -- no common informal variants"
+  p:
+    rtgs: "p"
+    g2p: "p"
+    thai: "ป"
+    variants: ["p", "bp"]
+    notes: "ป -- bp from Paiboon-like systems. Removed b (produces nonsense romanizations)."
+  ph:
+    rtgs: "ph"
+    g2p: "ph"
+    thai: "พ/ผ"
+    variants: ["ph", "p"]
+    notes: "พ/ผ -- aspiration often dropped"
+  phr:
+    rtgs: "phr"
+    g2p: "phr"
+    thai: "พร"
+    variants: ["phr", "pr"]
+    notes: "พร -- de-aspiration"
+  phl:
+    rtgs: "phl"
+    g2p: "phl"
+    thai: "พล/ผล"
+    variants: ["phl", "pl"]
+    notes: "พล/ผล -- de-aspiration"
+  pr:
+    rtgs: "pr"
+    g2p: "pr"
+    thai: "ปร"
+    variants: ["pr"]
+    notes: "ปร -- Removed br (ป→b produces nonsense)."
+  pl:
+    rtgs: "pl"
+    g2p: "pl"
+    thai: "ปล"
+    variants: ["pl"]
+    notes: "ปล -- Removed bl (ป→b produces nonsense)."
+  bl:
+    rtgs: "bl"
+    g2p: "bl"
+    thai: "บล"
+    variants: ["bl"]
+    notes: "บล -- mostly loanwords (บล็อก, บลูเบอร์รี่)"
+  f:
+    rtgs: "f"
+    g2p: "f"
+    thai: "ฟ/ฝ"
+    variants: ["f"]
+    notes: "ฟ/ฝ -- no common informal variants"
+  fr:
+    rtgs: "fr"
+    g2p: "fr"
+    thai: "ฟร"
+    variants: ["fr"]
+    notes: "ฟร -- no common informal variants (mostly loanwords)"
+  m:
+    rtgs: "m"
+    g2p: "m"
+    thai: "ม"
+    variants: ["m"]
+    notes: "ม -- no common informal variants"
+  mh:
+    rtgs: "m"
+    g2p: "mh"
+    thai: "หม"
+    variants: ["m", "mh"]
+    notes: "หม -- mh spelling for หม words (e.g. หมด->mhod, หมู->mhu)"
+  y:
+    rtgs: "y"
+    g2p: "j"
+    thai: "ย/อย"
+    variants: ["y"]
+    notes: "ย/อย -- TLTK g2p uses 'j' for ย onset"
+  r:
+    rtgs: "r"
+    g2p: "r"
+    thai: "ร"
+    variants: ["r"]
+    notes: "ร -- enforce correct spelling (no r/l swap)"
+  l:
+    rtgs: "l"
+    g2p: "l"
+    thai: "ล"
+    variants: ["l"]
+    notes: "ล -- enforce correct spelling (no r/l swap)"
+  kw:
+    rtgs: "kw"
+    g2p: "kw"
+    thai: "กว"
+    variants: ["kw", "gw"]
+    notes: "กว -- voiced variant"
+  khw:
+    rtgs: "khw"
+    g2p: "khw"
+    thai: "ขว/คว"
+    variants: ["khw", "kw"]
+    notes: "ขว/คว -- de-aspiration"
+  w:
+    rtgs: "w"
+    g2p: "w"
+    thai: "ว"
+    variants: ["w", "v"]
+    notes: "ว -- v variant common in informal Thai"
+  h:
+    rtgs: "h"
+    g2p: "h"
+    thai: "ห"
+    variants: ["h"]
+    notes: "ห -- no common informal variants"
+  s:
+    rtgs: "s"
+    g2p: "s"
+    thai: "ส/ศ/ซ"
+    variants: ["s"]
+    notes: "ส/ศ/ซ -- no common informal variants"
+
+# ===========================================================================
+# VOWELS (26 entries)
+# ===========================================================================
+# Vowel nuclei. Keys are TLTK g2p phoneme strings.
+#
+# TLTK g2p distinguishes ออ (O/OO, uppercase) from โอ (o/oo, lowercase).
+# Short vowels use single letter, long vowels use doubled letter in g2p.
+#
+# Variant rationale codes:
+#   lengthen = doubled spelling for long vowels (i->ee, u->oo)
+#   alt-spell = alternative common spelling
+#
+# Note: vowel+glide diphthongs (aeo, io, eo, ui, oei) are NOT listed here.
+# They are decomposed as vowel + coda (ae+w, i+w, e+w, u+y, oe+y).
+
+vowels:
+  a:
+    rtgs: "a"
+    g2p: "a"
+    variants: ["a", "u", "ah"]
+    notes: "อะ (short) -- u in some contexts (อำ/อั), ah from TYT"
+  aa:
+    rtgs: "a"
+    g2p: "aa"
+    variants: ["a", "aa", "ar", "ah"]
+    notes: "อา (long) -- aa/ar/ah for long vowel. No u variant (only valid for short a in closed syllables)."
+  e:
+    rtgs: "e"
+    g2p: "e"
+    variants: ["e"]
+    notes: "เอะ (short)"
+  ee:
+    rtgs: "e"
+    g2p: "ee"
+    variants: ["e", "ee", "eh", "ay", "ae"]
+    notes: "เอ (long) -- ee for long, eh/ay for open syllables, ae crossover with แอ"
+  i:
+    rtgs: "i"
+    g2p: "i"
+    variants: ["i"]
+    notes: "อิ (short)"
+  ii:
+    rtgs: "i"
+    g2p: "ii"
+    variants: ["i", "ee", "ii"]
+    notes: "อี (long) -- ee/ii for long vowel"
+  o:
+    rtgs: "o"
+    g2p: "o"
+    variants: ["o", "oh"]
+    notes: "โอะ (short) -- oh in open syllable contexts"
+  oo:
+    rtgs: "o"
+    g2p: "oo"
+    variants: ["o", "oh"]
+    notes: "โอ (long) -- oh for open syllables. No or/aw variants (those belong to ออ)."
+  O:
+    rtgs: "o"
+    g2p: "O"
+    variants: ["o", "or", "oa"]
+    notes: "ออ (short, /ɔ/) -- or/oa informal variants. Distinct from โอะ."
+  OO:
+    rtgs: "o"
+    g2p: "OO"
+    variants: ["o", "oh", "or", "aw"]
+    notes: "ออ (long, /ɔː/) -- or/aw informal variants. Distinct from โอ."
+  u:
+    rtgs: "u"
+    g2p: "u"
+    variants: ["u", "oo"]
+    notes: "อุ (short) -- oo common informal spelling (e.g. sood, koong)"
+  uu:
+    rtgs: "u"
+    g2p: "uu"
+    variants: ["u", "oo", "uu", "ou"]
+    notes: "อู (long) -- oo/uu for long vowel, ou for Anglicized contexts"
+  ae:
+    rtgs: "ae"
+    g2p: "x"
+    variants: ["ae"]
+    notes: "แอะ (short) -- g2p uses 'x' for แ vowel"
+  aae:
+    rtgs: "ae"
+    g2p: "xx"
+    variants: ["ae", "aae"]
+    notes: "แอ (long) -- aae for long vowel"
+  ue:
+    rtgs: "ue"
+    g2p: "U"
+    variants: ["ue", "eu", "uh"]
+    notes: "อึ (short) -- eu/uh alternatives"
+  uee:
+    rtgs: "ue"
+    g2p: "UU"
+    variants: ["ue", "eu", "uh", "uee"]
+    notes: "อื (long) -- uee for long. Removed ur (produces unnatural forms like kur, rur)."
+  oe:
+    rtgs: "oe"
+    g2p: "@"
+    variants: ["oe", "eo", "er"]
+    notes: "เออะ (short) -- g2p uses '@' for เออ vowel"
+  oee:
+    rtgs: "oe"
+    g2p: "@@"
+    variants: ["oe", "eo", "er", "uh", "ur"]
+    notes: "เออ (long) -- uh from TLC/T2E, ur from McFarland"
+
+  # Diphthongs (compound vowels handled as single units)
+  ai:
+    rtgs: "ai"
+    g2p: "aj"
+    variants: ["ai", "aai", "aii"]
+    notes: "ไอ/ใอ -- g2p uses 'aj'. aai/aii length variants. Removed ay (looks like English)."
+  ao:
+    rtgs: "ao"
+    g2p: "aw"
+    variants: ["ao", "aw", "aao", "ow", "aow", "au"]
+    notes: "เอา -- g2p uses 'aw'. aw/ow common informal, au alternative"
+  ua:
+    rtgs: "ua"
+    g2p: "ua"
+    variants: ["ua", "uaa"]
+    notes: "อัว -- uaa extra length variant"
+  uea:
+    rtgs: "uea"
+    g2p: "UUa"
+    variants: ["uea", "eua", "ueaa"]
+    notes: "เอือ -- eua reordering, ueaa length variant. Removed ua (ambiguous with อัว; produces nonsense)."
+  ia:
+    rtgs: "ia"
+    g2p: "iia"
+    variants: ["ia", "ea", "iia"]
+    notes: "เอีย -- ea common informal, iia length doubling"
+  oi:
+    rtgs: "oi"
+    g2p: "Oj"
+    variants: ["oi", "oii"]
+    notes: "โอย -- oii length variant. Removed oy (j->y pattern looks wrong in context)."
+  iao:
+    rtgs: "iao"
+    g2p: "iiaw"
+    variants: ["iao", "iaw", "iew", "eao", "eaw"]
+    notes: "เอียว -- iaw/iew common informal, eao/eaw ea-spelling variant"
+  uai:
+    rtgs: "uai"
+    g2p: "uaj"
+    variants: ["uai", "uay"]
+    notes: "อวย -- restored uay (natural for this diphthong; ด้วย->duay common)."
+
+# ===========================================================================
+# CODAS (9 entries)
+# ===========================================================================
+# Final consonants. Keys are TLTK g2p phoneme strings.
+
+codas:
+  n:
+    rtgs: "n"
+    g2p: "n"
+    variants: ["n"]
+    notes: "no common informal variants"
+  ng:
+    rtgs: "ng"
+    g2p: "N"
+    variants: ["ng"]
+    notes: "no common informal variants"
+  m:
+    rtgs: "m"
+    g2p: "m"
+    variants: ["m"]
+    notes: "no common informal variants"
+  t:
+    rtgs: "t"
+    g2p: "t"
+    variants: ["t", "d"]
+    notes: "voicing common -- sawat->sawad"
+  c:
+    rtgs: "t"
+    g2p: "c"
+    variants: ["t", "d", "j"]
+    notes: "จ-as-coda (/c/ in final position) -- j informal (อาจ->aj), also t/d from RTGS mapping"
+  k:
+    rtgs: "k"
+    g2p: "k"
+    variants: ["k", "g"]
+    notes: "voicing common -- mak->mag"
+  p:
+    rtgs: "p"
+    g2p: "p"
+    variants: ["p", "b"]
+    notes: "voicing common -- khrap->khrab"
+  w:
+    rtgs: "w"
+    g2p: "w"
+    variants: ["w", "o", "u"]
+    notes: "glide coda -- w (Haas), o (RTGS), u (Paiboon, after i: /iw/ -> iu)"
+  y:
+    rtgs: "y"
+    g2p: "j"
+    variants: ["i"]
+    notes: "glide coda -- g2p uses 'j' for ย coda. Removed y (looks like English in context)."

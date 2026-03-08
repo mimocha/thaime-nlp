@@ -1,31 +1,22 @@
-"""Informal Thai Romanization Variant Generator.
+"""Dictionary-driven Thai Romanization Variant Generator (v2).
 
-Takes TLTK's formal RTGS-like romanization output and generates plausible
-informal romanization variants using rule-based transformations.
+Takes a Thai word and generates all plausible informal romanization
+variants using a component-level dictionary that maps phonological
+components (onsets, vowels, codas) to their valid Latin spellings.
 
-The generator is:
-- **Deterministic:** same input + config produces the same output
-- **Configurable:** each transformation rule can be toggled independently
-- **Syllable-aware:** uses TLTK's IPA and g2p output to determine vowel length
+The generator:
+- Uses TLTK g2p output to decompose words into onset/vowel/coda triples
+- Looks up each component in the dictionary for valid variants
+- Produces whole-word variants via Cartesian product of component variants
+- Is deterministic: same input produces the same output
 
-Design:
-    1. Parse TLTK's g2p output to get per-syllable phonetic info
-    2. Align TLTK's th2roman output with syllable boundaries
-    3. Apply syllable-level transformations based on phonetic properties
-    4. Combine syllable variants via Cartesian product
-    5. Deduplicate and return sorted list
-
-Five transformation rules:
-    - **Vowel lengthening:** long vowels get doubled spellings (di → dee/dii)
-    - **Final consonant softening:** voiceless stops become voiced (sawat → sawad)
-    - **Cluster simplification:** aspirated clusters simplified (kh → k, th → t)
-    - **R-dropping:** r removed from clusters (kr → k, khr → kh)
-    - **Initial voicing:** k → g for ก-initial words (kin → gin)
+No hardcoded transformation rules — the dictionary is the single source
+of truth.
 
 Usage:
     >>> from src.variant_generator import generate_word_variants
     >>> generate_word_variants("สวัสดี")
-    ['sawaddee', 'sawatdee', 'sawatdii', ...]
+    ['sawaddee', 'sawatdee', ...]
 
     CLI:
     $ python -m src.variant_generator สวัสดี ครับ
@@ -36,9 +27,12 @@ from __future__ import annotations
 import logging
 import re
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from itertools import product
+from pathlib import Path
 from typing import Optional
+
+import yaml
 
 logger = logging.getLogger(__name__)
 
@@ -52,71 +46,118 @@ except ImportError as e:
 
 
 # ---------------------------------------------------------------------------
-# Configuration
+# Dictionary loading
 # ---------------------------------------------------------------------------
+
+# Path to the component romanization dictionary
+_DICT_PATH = (
+    Path(__file__).parent.parent / "data" / "dictionaries"
+    / "component-romanization.yaml"
+)
+
+# Module-level cache for the loaded dictionary
+_cached_dictionary: Optional[dict] = None
+
+
+def load_component_dictionary(path: Optional[Path] = None) -> dict:
+    """Load the component romanization dictionary from YAML.
+
+    Returns a dict with keys ``"onsets"``, ``"vowels"``, ``"codas"``.
+    Each maps g2p phoneme strings to lists of variant romanizations.
+
+    Example::
+
+        {
+            "onsets": {"k": ["k", "g"], "kh": ["kh", "k"], ...},
+            "vowels": {"a": ["a", "u", "ah"], "aa": ["a", "aa", "ar", "ah"], ...},
+            "codas": {"n": ["n"], "t": ["t", "d"], ...},
+        }
+    """
+    global _cached_dictionary
+    if _cached_dictionary is not None and path is None:
+        return _cached_dictionary
+
+    dict_path = path or _DICT_PATH
+    with open(dict_path) as f:
+        raw = yaml.safe_load(f)
+
+    result: dict[str, dict[str, list[str]]] = {
+        "onsets": {},
+        "vowels": {},
+        "codas": {},
+    }
+
+    for _key, entry in raw.get("onsets", {}).items():
+        g2p_key = entry["g2p"]
+        result["onsets"][g2p_key] = entry["variants"]
+
+    for _key, entry in raw.get("vowels", {}).items():
+        g2p_key = entry["g2p"]
+        result["vowels"][g2p_key] = entry["variants"]
+
+    for _key, entry in raw.get("codas", {}).items():
+        g2p_key = entry["g2p"]
+        result["codas"][g2p_key] = entry["variants"]
+
+    if path is None:
+        _cached_dictionary = result
+
+    return result
+
+
+def _get_dictionary() -> dict:
+    """Get the cached component dictionary, loading if needed."""
+    return load_component_dictionary()
+
+
+# ---------------------------------------------------------------------------
+# G2P parsing
+# ---------------------------------------------------------------------------
+
+# All possible g2p onset strings, ordered longest-first for greedy matching.
+# This list covers all Thai initial consonants and clusters as represented
+# by TLTK's g2p output.
+_G2P_ONSETS = [
+    # 3-char clusters
+    "khr", "khw", "khl", "phr", "phl", "thr",
+    # 2-char clusters and digraphs
+    "kh", "kr", "kl", "kw", "ch", "th", "tr",
+    "ph", "pr", "pl", "bl", "fr", "fl",
+    # 1-char consonants
+    "k", "N", "c", "d", "t", "n", "b", "p", "f", "m",
+    "j", "r", "l", "w", "h", "s", "?",
+]
+
+# All possible g2p coda consonants
+_G2P_CODAS = ["N", "ng", "n", "m", "t", "c", "k", "p", "w", "j"]
+
+# Aliases for vowel g2p patterns that TLTK produces but differ from
+# our dictionary keys. Maps TLTK long-form diphthongs -> dictionary key.
+_VOWEL_ALIASES: dict[str, str] = {
+    "uua": "ua",      # อัว — TLTK doubles the u for long form
+    "OOj": "Oj",      # โอย — TLTK doubles the O for long form
+    "uuaj": "uaj",    # อวย — TLTK doubles the u for long form
+}
 
 
 @dataclass
-class VariantConfig:
-    """Configuration for which transformation rules are active.
+class SyllableComponents:
+    """Decomposed phonological syllable from g2p parsing.
 
     Attributes:
-        vowel_lengthening: Generate doubled-vowel variants for long Thai vowels
-            (e.g., di → dee/dii). Affects ~56% of words.
-        final_consonant_softening: Soften voiceless final stops to voiced
-            (e.g., sawat → sawad, khrap → khrab). Affects ~35% of words.
-        cluster_simplification: Simplify aspirated initial clusters
-            (e.g., kh → k, th → t, ph → p). Affects ~44% of words.
-        r_dropping: Drop 'r' from initial consonant clusters
-            (e.g., kr → k, khr → kh). Affects ~10% of words.
-        initial_voicing: Voice initial 'k' to 'g' for ก-initial words
-            (e.g., kin → gin). Affects ~15% of words.
-        max_variants_per_word: Maximum number of variants to return per word.
-            The base TLTK romanization is always included. Defaults to 20
-            per Research 002 recommendation for production use.
+        onset: g2p onset string (e.g., "kh", "c", "?", "")
+        vowel: g2p vowel string, resolved to dictionary key
+            (e.g., "aa", "aj", "OO")
+        coda: g2p coda string (e.g., "n", "t", "", "w")
+        tone: tone number string (e.g., "0", "1", "2")
+        thai_segment: Thai text of the parent syllable segment
     """
 
-    vowel_lengthening: bool = True
-    final_consonant_softening: bool = True
-    cluster_simplification: bool = True
-    r_dropping: bool = True
-    initial_voicing: bool = True
-    max_variants_per_word: int = 20
-
-
-DEFAULT_CONFIG = VariantConfig()
-
-
-# ---------------------------------------------------------------------------
-# Phonetic analysis helpers
-# ---------------------------------------------------------------------------
-
-
-@dataclass
-class SyllableInfo:
-    """Phonetic information about a single syllable.
-
-    Attributes:
-        thai_text: Thai text of this syllable (e.g., "สวัส").
-        romanization: RTGS-like romanization from th2roman (e.g., "sawat").
-        ipa: IPA transcription from th2ipa (e.g., "sa2.wat2").
-        g2p_group: Full g2p group string (e.g., "sa1'wat1").
-        has_long_vowel: True if IPA/g2p indicates a long vowel.
-        is_open_syllable: True if no final consonant.
-        final_consonant: Final consonant string (e.g., "t", "ng", or "").
-        initial_cluster: Initial consonant cluster (e.g., "kh", "kr", "k").
-        vowel_nucleus: Vowel part between initial and final (e.g., "a", "oo").
-    """
-
-    thai_text: str
-    romanization: str
-    ipa: str = ""
-    g2p_group: str = ""
-    has_long_vowel: bool = False
-    is_open_syllable: bool = False
-    final_consonant: str = ""
-    initial_cluster: str = ""
-    vowel_nucleus: str = ""
+    onset: str
+    vowel: str
+    coda: str
+    tone: str = ""
+    thai_segment: str = ""
 
 
 def _clean_tltk_output(s: str) -> str:
@@ -124,456 +165,439 @@ def _clean_tltk_output(s: str) -> str:
     return re.sub(r"<[^>]+>", "", s).strip()
 
 
-def _parse_g2p_groups(g2p_raw: str) -> list[str]:
-    """Parse raw g2p output into per-syllable group strings.
+def _extract_g2p_transliteration(g2p_raw: str) -> str:
+    """Extract the transliteration string from raw g2p output.
 
-    TLTK g2p format example::
+    TLTK g2p format: ``Thai~text<tr/>g2p_data|<s/>``
 
-        สวัส~ดี<tr/>sa1'wat1~dii0|<s/>
-
-    Returns:
-        List of per-syllable g2p groups, e.g. ``["sa1'wat1", "dii0"]``.
+    Returns the g2p_data part, e.g. ``"sa1'wat1~dii0"``.
     """
-    match = re.search(r"<tr/>([^<]+)", g2p_raw)
+    match = re.search(r"<tr/>([^<|]+)", g2p_raw)
     if not match:
-        return []
-    rom_part = match.group(1).split("|")[0]
-    return [g for g in rom_part.split("~") if g]
+        return ""
+    return match.group(1).strip()
 
 
-def _g2p_group_has_long_vowel(group: str) -> bool:
-    """Check if a g2p group contains a long vowel."""
-    cleaned = re.sub(r"\d", "", group).replace("'", "")
-    long_patterns = [
-        "aa", "ee", "ii", "oo", "uu",
-        "OO", "UU", "xx", "@@",
-        "iia", "uua", "UUa",
-    ]
-    return any(p in cleaned for p in long_patterns)
+def _split_g2p_into_syllables(g2p_trans: str) -> list[str]:
+    """Split g2p transliteration into individual syllable strings.
 
+    Both ``~`` (Thai syllable boundary) and ``'`` (sub-syllable boundary)
+    are treated as separators.
 
-def _g2p_group_to_approx_roman(group: str) -> str:
-    """Convert a g2p group to approximate RTGS romanization length.
+    Example::
 
-    Used to estimate per-syllable character counts for splitting
-    the whole-word romanization into syllable-level pieces.
+        "sa1'wat1~dii0" -> ["sa1", "wat1", "dii0"]
     """
-    cleaned = re.sub(r"\d", "", group).replace("'", "")
-    replacements = [
-        ("iiaw", "iao"), ("iia", "ia"), ("uua", "ua"), ("UUa", "uea"),
-        ("aa", "a"), ("ee", "e"), ("ii", "i"), ("oo", "o"), ("uu", "u"),
-        ("OO", "o"), ("UU", "ue"), ("xx", "ae"), ("@@", "oe"),
-        ("aj", "ai"), ("aw", "ao"),
-        ("N", "ng"), ("?", ""),
-        ("c", "ch"), ("j", "y"),
-    ]
-    result = cleaned
-    for g2p_v, rtgs_v in replacements:
-        result = result.replace(g2p_v, rtgs_v)
-    return result
+    return [s for s in re.split(r"[~']", g2p_trans) if s]
 
 
-def _split_romanization_by_g2p(
-    romanization: str,
-    g2p_groups: list[str],
-) -> list[str]:
-    """Split the whole-word romanization into per-syllable pieces.
+def _parse_g2p_syllable(g2p_syl: str, dictionary: dict) -> SyllableComponents:
+    """Parse a single g2p syllable string into onset/vowel/coda components.
 
-    Strategy: Convert each g2p group to an approximate RTGS romanization
-    to estimate the character length of each syllable. Then split the
-    romanization string at those boundaries, using a heuristic to prefer
-    split points where the next character is a consonant (syllable onset).
-    The last syllable always gets whatever remains.
+    Strategy:
+        1. Strip tone number (last character if digit)
+        2. Greedy longest-prefix match for onset
+        3. Try each possible coda suffix; accept when remainder is a known vowel
+        4. Vowel aliases handle TLTK's long-form diphthong representations
 
     Args:
-        romanization: Full romanized word string.
-        g2p_groups: Per-syllable g2p group strings from TLTK.
+        g2p_syl: Single g2p syllable string (e.g., ``"khaaw2"``, ``"dii0"``).
+        dictionary: Component dictionary with ``"vowels"`` key for validation.
 
     Returns:
-        List of romanization strings, one per syllable.
+        SyllableComponents with parsed onset, vowel, coda, and tone.
     """
-    if len(g2p_groups) <= 1:
-        return [romanization]
+    # 1. Strip tone number
+    tone = ""
+    s = g2p_syl
+    if s and s[-1].isdigit():
+        tone = s[-1]
+        s = s[:-1]
 
-    result: list[str] = []
-    remaining = romanization
+    if not s:
+        return SyllableComponents(onset="", vowel="", coda="", tone=tone)
 
-    for i, group in enumerate(g2p_groups):
-        if i == len(g2p_groups) - 1:
-            result.append(remaining)
+    # 2. Greedy onset match (longest first)
+    onset = ""
+    for candidate in _G2P_ONSETS:
+        if s.startswith(candidate):
+            onset = candidate
             break
 
-        approx = _g2p_group_to_approx_roman(group)
-        approx_len = len(approx)
+    remainder = s[len(onset):]
 
-        if 0 < approx_len <= len(remaining):
-            best_len = _find_syllable_boundary(remaining, approx_len)
-            result.append(remaining[:best_len])
-            remaining = remaining[best_len:]
+    if not remainder:
+        # Edge case: syllable is just an onset (shouldn't normally happen)
+        return SyllableComponents(onset=onset, vowel="", coda="", tone=tone)
+
+    # 3. Try coda suffixes to find a valid vowel
+    known_vowels = set(dictionary.get("vowels", {}).keys())
+
+    # Try: no coda first (favors diphthongs), then each possible coda
+    coda_candidates = [""] + _G2P_CODAS
+
+    for coda in coda_candidates:
+        if coda and not remainder.endswith(coda):
+            continue
+
+        if coda:
+            vowel_part = remainder[: -len(coda)]
         else:
-            split_len = max(1, approx_len if approx_len > 0 else len(remaining) // 2)
-            split_len = min(split_len, len(remaining))
-            result.append(remaining[:split_len])
-            remaining = remaining[split_len:]
+            vowel_part = remainder
 
-    while len(result) < len(g2p_groups):
-        result.append("")
+        if not vowel_part:
+            continue
 
-    return result
+        # Check if vowel_part is a known vowel or alias
+        resolved_vowel = _VOWEL_ALIASES.get(vowel_part, vowel_part)
+        if resolved_vowel in known_vowels:
+            return SyllableComponents(
+                onset=onset, vowel=resolved_vowel, coda=coda, tone=tone,
+            )
+
+    # 4. Fallback: treat entire remainder as vowel (unrecognized)
+    logger.debug(
+        "Unrecognized vowel pattern %r in g2p syllable %r",
+        remainder, g2p_syl,
+    )
+    return SyllableComponents(onset=onset, vowel=remainder, coda="", tone=tone)
 
 
-def _find_syllable_boundary(remaining: str, approx_len: int) -> int:
-    """Find the best character position to split a syllable boundary.
+# ---------------------------------------------------------------------------
+# Thai text inspection
+# ---------------------------------------------------------------------------
 
-    Tries the approximate length first, then offsets of ±1 and ±2 characters.
-    Prefers split points where the next character is a consonant (indicating
-    the start of the next syllable). Falls back to the approximate length.
+
+def _detect_hor_nam(thai_segment: str) -> Optional[str]:
+    """Detect หน (hor-nam) or หม (hor-nam) onset in Thai text.
+
+    TLTK g2p doesn't distinguish หน/หม from น/ม — both produce ``n``/``m``.
+    We detect these from the Thai text to use the ``nh``/``mh`` dictionary
+    entries, which carry additional spelling variants (e.g., nha, mhoo).
+
+    Returns:
+        ``"nh"`` if หน detected, ``"mh"`` if หม detected, ``None`` otherwise.
     """
-    for delta in [0, 1, -1, 2, -2]:
-        test_len = approx_len + delta
-        if 0 < test_len < len(remaining):
-            next_char = remaining[test_len]
-            if next_char not in "aeiou":
-                return test_len
-    return approx_len
+    if not thai_segment:
+        return None
+
+    # Extract base consonants only (skip Thai combining marks and leading vowels).
+    # Thai combining characters: U+0E31..U+0E3A (above/below vowels)
+    # and U+0E47..U+0E4E (tone marks, thanthakhat, etc.)
+    # Thai leading vowels (written before consonant): เ แ โ ใ ไ
+    _leading_vowels = {0x0E40, 0x0E41, 0x0E42, 0x0E43, 0x0E44}
+    base_chars: list[str] = []
+    for ch in thai_segment:
+        cp = ord(ch)
+        if cp in _leading_vowels:
+            continue  # Skip leading vowels
+        if not (0x0E31 <= cp <= 0x0E3A or 0x0E47 <= cp <= 0x0E4E):
+            base_chars.append(ch)
+        if len(base_chars) >= 2:
+            break
+
+    if len(base_chars) >= 2 and base_chars[0] == "\u0e2b":  # ห
+        if base_chars[1] == "\u0e19":  # น
+            return "nh"
+        if base_chars[1] == "\u0e21":  # ม
+            return "mh"
+
+    return None
 
 
-def _detect_final_consonant(roman_syllable: str) -> str:
-    """Detect the final consonant of a romanized syllable."""
-    if not roman_syllable:
-        return ""
-    s = roman_syllable.lower()
-    if s.endswith("ng"):
-        return "ng"
-    vowels = set("aeiou")
-    if s[-1] not in vowels:
-        return s[-1]
-    return ""
+def _detect_jor_coda(thai_segment: str) -> bool:
+    """Detect if the syllable's coda consonant is จ (U+0E08).
+
+    TLTK g2p maps จ-as-coda to ``t``, but we have a separate ``c`` coda
+    entry with additional variants (j, d). This function detects จ from
+    the Thai text so we can use the correct dictionary key.
+
+    Returns:
+        ``True`` if the last Thai consonant in the segment is จ.
+    """
+    if not thai_segment:
+        return False
+
+    # Find the last Thai consonant (ก U+0E01 through ฮ U+0E2E)
+    last_consonant = None
+    for ch in thai_segment:
+        if 0x0E01 <= ord(ch) <= 0x0E2E:
+            last_consonant = ch
+
+    return last_consonant == "\u0e08"  # จ
 
 
-def _detect_initial_cluster(roman_syllable: str) -> str:
-    """Detect the initial consonant cluster of a romanized syllable."""
-    if not roman_syllable:
-        return ""
-    s = roman_syllable.lower()
-    clusters = [
-        "khr", "thr", "phr",
-        "kh", "th", "ph", "ch",
-        "kr", "tr", "pr", "kl", "pl", "bl", "fr", "fl",
-        "ng",
-    ]
-    for cluster in clusters:
-        if s.startswith(cluster):
-            return cluster
-    vowels = set("aeiou")
-    if s and s[0] not in vowels:
-        return s[0]
-    return ""
+# ---------------------------------------------------------------------------
+# Word analysis
+# ---------------------------------------------------------------------------
 
 
-def _detect_vowel_nucleus(
-    roman_syllable: str,
-    initial_cluster: str,
-    final_consonant: str,
-) -> str:
-    """Extract the vowel nucleus from a romanized syllable."""
-    if not roman_syllable:
-        return ""
-    s = roman_syllable.lower()
-    if initial_cluster and s.startswith(initial_cluster):
-        s = s[len(initial_cluster):]
-    if final_consonant and s.endswith(final_consonant):
-        s = s[: -len(final_consonant)]
-    return s
+def analyze_word(thai_word: str) -> list[SyllableComponents]:
+    """Analyze a Thai word into syllable components using TLTK g2p.
 
-
-def analyze_word(thai_word: str) -> list[SyllableInfo]:
-    """Analyze a Thai word using TLTK to get syllable-level phonetic info.
-
-    Calls TLTK's romanization, IPA, g2p, and syllable segmentation APIs,
-    then aligns the outputs to produce per-syllable phonetic information.
+    Calls TLTK's g2p and syl_segment APIs, parses the g2p output into
+    onset/vowel/coda triples per phonological syllable, and applies
+    Thai-text-based corrections (e.g., หน/หม detection).
 
     Args:
         thai_word: A Thai word string.
 
     Returns:
-        List of :class:`SyllableInfo` objects, one per syllable.
+        List of :class:`SyllableComponents`, one per phonological syllable.
         Returns an empty list if TLTK produces no usable output.
     """
     try:
-        roman_raw = tltk.nlp.th2roman(thai_word)
-        ipa_raw = tltk.nlp.th2ipa(thai_word)
         g2p_raw = tltk.nlp.g2p(thai_word)
         syl_raw = tltk.nlp.syl_segment(thai_word)
     except Exception:
         logger.warning("TLTK failed to process word: %s", thai_word)
         return []
 
-    roman = _clean_tltk_output(roman_raw)
-    ipa = _clean_tltk_output(ipa_raw)
-
-    if not roman:
-        logger.warning("TLTK returned empty romanization for: %s", thai_word)
+    g2p_trans = _extract_g2p_transliteration(g2p_raw)
+    if not g2p_trans:
+        logger.warning("TLTK returned empty g2p for: %s", thai_word)
         return []
 
-    thai_syllables = [s for s in _clean_tltk_output(syl_raw).split("~") if s]
-    ipa_syllables = [s.strip() for s in ipa.split(".") if s.strip()]
-    g2p_groups = _parse_g2p_groups(g2p_raw)
-    syl_romans = _split_romanization_by_g2p(roman, g2p_groups)
+    dictionary = _get_dictionary()
 
-    syllable_infos: list[SyllableInfo] = []
-    for i in range(len(thai_syllables)):
-        syl_thai = thai_syllables[i]
-        syl_roman = syl_romans[i] if i < len(syl_romans) else ""
-        syl_ipa = ipa_syllables[i] if i < len(ipa_syllables) else ""
-        g2p_group = g2p_groups[i] if i < len(g2p_groups) else ""
+    # Parse Thai syllable segments (~ separated)
+    thai_segments = [
+        s for s in _clean_tltk_output(syl_raw).split("~") if s
+    ]
 
-        has_long = ("ː" in syl_ipa) or _g2p_group_has_long_vowel(g2p_group)
-        final_cons = _detect_final_consonant(syl_roman)
-        initial_cluster = _detect_initial_cluster(syl_roman)
-        vowel = _detect_vowel_nucleus(syl_roman, initial_cluster, final_cons)
-        is_open = (final_cons == "")
+    # Parse g2p: first split by ~ to align with Thai segments
+    g2p_segment_groups = [g for g in g2p_trans.split("~") if g]
 
-        syllable_infos.append(SyllableInfo(
-            thai_text=syl_thai,
-            romanization=syl_roman,
-            ipa=syl_ipa,
-            g2p_group=g2p_group,
-            has_long_vowel=has_long,
-            is_open_syllable=is_open,
-            final_consonant=final_cons,
-            initial_cluster=initial_cluster,
-            vowel_nucleus=vowel,
-        ))
+    syllables: list[SyllableComponents] = []
 
-    return syllable_infos
+    for seg_idx, g2p_group in enumerate(g2p_segment_groups):
+        thai_seg = (
+            thai_segments[seg_idx] if seg_idx < len(thai_segments) else ""
+        )
 
+        # Split sub-syllables within this group (separated by ')
+        sub_syllables = [s for s in g2p_group.split("'") if s]
 
-# ---------------------------------------------------------------------------
-# Transformation rules (component-level)
-# ---------------------------------------------------------------------------
+        for sub_idx, g2p_syl in enumerate(sub_syllables):
+            comp = _parse_g2p_syllable(g2p_syl, dictionary)
+            comp.thai_segment = thai_seg
 
+            # Apply หน/หม correction for the first sub-syllable
+            if sub_idx == 0:
+                hor_nam = _detect_hor_nam(thai_seg)
+                if hor_nam and comp.onset in ("n", "m"):
+                    comp.onset = hor_nam
 
-def _get_initial_variants(
-    syl: SyllableInfo,
-    config: VariantConfig,
-) -> list[str]:
-    """Get all initial-cluster variants for a syllable.
+            # Apply จ-as-coda correction (TLTK maps จ coda to 't')
+            if comp.coda == "t" and _detect_jor_coda(thai_seg):
+                comp.coda = "c"
 
-    Returns a sorted list of possible initial clusters including the original.
-    """
-    cluster = syl.initial_cluster
-    if not cluster:
-        return [""]
+            syllables.append(comp)
 
-    variants: set[str] = {cluster}
-
-    if config.cluster_simplification:
-        simplification: dict[str, list[str]] = {
-            "kh": ["k"], "th": ["t"], "ph": ["p"], "ch": ["j", "c"],
-        }
-        if cluster in simplification:
-            variants.update(simplification[cluster])
-
-        three_char: dict[str, list[str]] = {
-            "khr": ["kr"], "thr": ["tr"], "phr": ["pr"],
-        }
-        if cluster in three_char:
-            variants.update(three_char[cluster])
-
-    if config.r_dropping:
-        r_drop: dict[str, list[str]] = {
-            "kr": ["k"], "khr": ["kh", "k"],
-            "pr": ["p"], "phr": ["ph", "p"],
-            "tr": ["t"], "thr": ["th", "t"],
-            "fr": ["f"],
-        }
-        if cluster in r_drop:
-            variants.update(r_drop[cluster])
-
-    if config.initial_voicing:
-        voicing: dict[str, list[str]] = {"k": ["g"]}
-        if cluster in voicing:
-            variants.update(voicing[cluster])
-
-    return sorted(variants)
-
-
-def _get_vowel_variants(
-    syl: SyllableInfo,
-    config: VariantConfig,
-) -> list[str]:
-    """Get all vowel-nucleus variants for a syllable.
-
-    Returns a sorted list of possible vowel nuclei including the original.
-    """
-    vowel = syl.vowel_nucleus
-    if not vowel:
-        return [""]
-
-    variants: set[str] = {vowel}
-
-    if config.vowel_lengthening and syl.has_long_vowel:
-        # (always_variants, open_syllable_only_variants)
-        lengthening: dict[str, tuple[list[str], list[str]]] = {
-            "i":   (["ee", "ii"], []),
-            "u":   (["oo", "uu"], []),
-            "a":   (["aa"],       []),
-            "e":   (["ee"],       ["eh"]),
-            "o":   (["oo"],       ["oh"]),
-            "ue":  (["uee"],      []),
-            "ae":  (["aae"],      []),
-            "ia":  (["iia"],      []),
-            "ua":  (["uaa"],      []),
-            "uea": (["ueaa"],     []),
-            "ao":  (["aao"],      []),
-            "ai":  (["aai"],      []),
-            "io":  (["iow", "ew"], []),
-        }
-        if vowel in lengthening:
-            always_v, open_v = lengthening[vowel]
-            variants.update(always_v)
-            if syl.is_open_syllable:
-                variants.update(open_v)
-
-    return sorted(variants)
-
-
-def _get_final_variants(
-    syl: SyllableInfo,
-    config: VariantConfig,
-) -> list[str]:
-    """Get all final-consonant variants for a syllable.
-
-    Returns a sorted list of possible final consonants including the original.
-    """
-    fc = syl.final_consonant
-    if not fc:
-        return [""]
-
-    variants: set[str] = {fc}
-
-    if config.final_consonant_softening:
-        softening: dict[str, str] = {"t": "d", "p": "b", "k": "g"}
-        if fc in softening:
-            variants.add(softening[fc])
-
-    return sorted(variants)
+    return syllables
 
 
 # ---------------------------------------------------------------------------
-# Main generator
+# Variant generation
 # ---------------------------------------------------------------------------
 
 
-def generate_syllable_variants(
-    syl: SyllableInfo,
-    config: VariantConfig = DEFAULT_CONFIG,
-) -> list[str]:
-    """Generate all informal variants for a single syllable.
+def generate_syllable_variants(comp: SyllableComponents) -> list[str]:
+    """Generate all romanization variants for a single syllable.
 
-    Uses component-level Cartesian product: each combination of
-    (initial variant x vowel variant x final variant) produces one syllable
-    variant.
+    Looks up each component (onset, vowel, coda) in the dictionary and
+    returns the Cartesian product of all variant combinations.
 
     Args:
-        syl: Syllable phonetic information.
-        config: Variant generation configuration.
+        comp: Parsed syllable components.
 
     Returns:
-        Sorted list of variant romanizations (excluding the base form).
+        Sorted, deduplicated list of variant romanizations for this syllable.
     """
-    initials = _get_initial_variants(syl, config)
-    vowels = _get_vowel_variants(syl, config)
-    finals = _get_final_variants(syl, config)
+    dictionary = _get_dictionary()
 
+    # Look up onset variants
+    onset_variants = dictionary["onsets"].get(comp.onset, None)
+    if onset_variants is None:
+        if comp.onset in ("?", ""):
+            onset_variants = [""]  # Zero onset
+        else:
+            logger.debug("Unknown onset %r, using as-is", comp.onset)
+            onset_variants = [comp.onset]
+
+    # Look up vowel variants
+    vowel_variants = dictionary["vowels"].get(comp.vowel, None)
+    if vowel_variants is None:
+        if comp.vowel:
+            logger.debug("Unknown vowel %r, using as-is", comp.vowel)
+            vowel_variants = [comp.vowel]
+        else:
+            vowel_variants = [""]
+
+    # Guard: short "a" → "u" only valid in closed syllables (with coda).
+    # In open syllables (จะ, นะ, ค่ะ), "u" produces implausible forms.
+    if comp.vowel == "a" and not comp.coda and "u" in vowel_variants:
+        vowel_variants = [v for v in vowel_variants if v != "u"]
+
+    # Guard: suppress consonant-ending vowel variants before glide coda "j".
+    # Coda j maps to "i", so vowel variants ending in r/h (e.g., ar, ah, er,
+    # uh, ur) produce implausible concatenations like "ari", "uhi", "eri".
+    # Examples: ราย aa+j → rai/aai (not rahi/rari), เลย @@+j → loei (not luri).
+    if comp.coda == "j":
+        vowel_variants = [
+            v for v in vowel_variants
+            if not (v and v[-1] in ("r", "h"))
+        ]
+
+    # Guard: suppress consonant-ending vowel variants before glide coda "w".
+    # Coda w maps to "w"/"o"/"u", so vowel variants ending in r/h (e.g., ar,
+    # ah) produce implausible concatenations like "karo", "kahu".
+    # Example: ข้าว aa+w → khao/khaaw/khaw (not kharo/khahu).
+    if comp.coda == "w":
+        vowel_variants = [
+            v for v in vowel_variants
+            if not (v and v[-1] in ("r", "h"))
+        ]
+
+    # Look up coda variants
+    coda_variants = dictionary["codas"].get(comp.coda, None)
+    if coda_variants is None:
+        if comp.coda:
+            logger.debug("Unknown coda %r, using as-is", comp.coda)
+            coda_variants = [comp.coda]
+        else:
+            coda_variants = [""]
+
+    # Guard: suppress coda w → "o" after vowels ending in "i".
+    # Combinations like "io", "iio" look like separate syllables rather than
+    # natural diphthongs. Natural forms use w/u (iw, iu, iiw, iiu).
+    # Example: รีวิว [i]+[w] → iw/iu (not io), ผิว → phiw/phiu (not phio)
+    if comp.coda == "w" and any(v and v[-1] == "i" for v in vowel_variants):
+        coda_variants = [c for c in coda_variants if c != "o"]
+
+    # Cartesian product
     all_variants: set[str] = set()
-    for init, vow, fin in product(initials, vowels, finals):
-        all_variants.add(init + vow + fin)
-
-    # Remove the base form — it's added separately by generate_word_variants
-    all_variants.discard(syl.romanization)
+    for o, v, c in product(onset_variants, vowel_variants, coda_variants):
+        all_variants.add(o + v + c)
 
     return sorted(all_variants)
 
 
 def generate_word_variants(
     thai_word: str,
-    config: VariantConfig = DEFAULT_CONFIG,
+    max_variants: int = 20,
+    *,
+    _base_roman: str | None = None,
+    _syllables: list[SyllableComponents] | None = None,
 ) -> list[str]:
     """Generate informal romanization variants for a Thai word.
 
-    This is the primary public API. Takes a Thai word string and returns
-    all plausible informal romanization variants, including the base TLTK
-    romanization.
+    Primary public API. Takes a Thai word and returns all plausible
+    informal romanization variants using the component dictionary.
 
     Args:
         thai_word: A Thai word string (e.g., "สวัสดี").
-        config: Variant generation configuration. Uses :data:`DEFAULT_CONFIG`
-            if not specified.
+        max_variants: Maximum number of variants to return (default: 20).
+        _base_roman: Pre-computed TLTK base romanization. When provided,
+            skips the internal ``tltk.th2roman()`` call. Useful when the
+            caller already has this value.
+        _syllables: Pre-computed syllable decomposition from
+            :func:`analyze_word`. When provided, skips the internal
+            ``analyze_word()`` call (which invokes ``tltk.g2p()`` and
+            ``tltk.syl_segment()``). Useful when the caller already has
+            this value.
 
     Returns:
         A sorted, deduplicated list of romanization variants. The base TLTK
         romanization is always included. Returns an empty list if TLTK
-        cannot romanize the word.
+        cannot process the word.
 
     Examples:
         >>> variants = generate_word_variants("ดี")
-        >>> "di" in variants  # base form
+        >>> "di" in variants
         True
-        >>> "dee" in variants  # vowel lengthening
+        >>> "dee" in variants
         True
     """
-    try:
-        base_roman = _clean_tltk_output(tltk.nlp.th2roman(thai_word))
-    except Exception:
-        logger.warning("TLTK failed to romanize word: %s", thai_word)
-        return []
+    # Get the base TLTK romanization (skip if pre-computed)
+    if _base_roman is not None:
+        base_roman = _base_roman
+    else:
+        try:
+            base_roman = _clean_tltk_output(tltk.nlp.th2roman(thai_word))
+        except Exception:
+            logger.warning("TLTK failed to romanize: %s", thai_word)
+            return []
 
     if not base_roman:
-        logger.warning("TLTK returned empty romanization for: %s", thai_word)
         return []
 
-    syllables = analyze_word(thai_word)
+    # Strip dashes from RTGS romanization.  TLTK inserts hyphens at
+    # syllable boundaries when a vowel follows a vowel (e.g., ตัวเอง →
+    # "tua-eng").  Informal romanization never uses dashes.
+    base_roman = base_roman.replace("-", "")
+
+    # Strip ๆ (mai yamok / repeater symbol).  Repetition is handled at
+    # the candidate-selection level, not the romanization level.
+    # e.g. จริงๆ → generate variants for จริง only.
+    stripped_word = thai_word.rstrip("\u0e46").rstrip()
+    if stripped_word != thai_word:
+        # Re-compute base romanization for the stripped word
+        try:
+            base_roman = _clean_tltk_output(tltk.nlp.th2roman(stripped_word))
+            base_roman = base_roman.replace("-", "")
+        except Exception:
+            pass  # keep original base_roman as fallback
+        thai_word = stripped_word
+
+    # Analyze syllables (skip if pre-computed)
+    syllables = _syllables if _syllables is not None else analyze_word(thai_word)
     if not syllables:
         return [base_roman]
 
+    # Generate per-syllable variant lists
     syllable_options: list[list[str]] = []
-    for syl in syllables:
-        options = [syl.romanization]
-        options.extend(generate_syllable_variants(syl, config))
-        syllable_options.append(options)
+    for comp in syllables:
+        syllable_options.append(generate_syllable_variants(comp))
 
+    # Cartesian product across syllables
     all_variants: set[str] = set()
     for combo in product(*syllable_options):
         all_variants.add("".join(combo))
-    all_variants.add(base_roman)
+
+    # Include TLTK base romanization as fallback only when the Cartesian
+    # product is empty (shouldn't normally happen). Previously the base was
+    # always force-included, but this could re-introduce forms that the
+    # component guards intentionally suppress (e.g., "io" from i+w).
+    if not all_variants:
+        all_variants.add(base_roman)
 
     result = sorted(all_variants)
-    if len(result) > config.max_variants_per_word:
-        # Always keep the base form; trim the rest
-        result = [base_roman] + [
-            v for v in result if v != base_roman
-        ][: config.max_variants_per_word - 1]
-        result.sort()
+
+    # Trim to max_variants
+    if len(result) > max_variants:
+        result = result[:max_variants]
 
     return result
 
 
 def generate_variants_for_wordlist(
     thai_words: list[str],
-    config: VariantConfig = DEFAULT_CONFIG,
+    max_variants: int = 20,
 ) -> dict[str, list[str]]:
     """Generate variants for a list of Thai words.
 
     Args:
         thai_words: List of Thai word strings.
-        config: Variant generation configuration.
+        max_variants: Maximum variants per word.
 
     Returns:
         Dictionary mapping each Thai word to its list of romanization variants.
     """
-    return {word: generate_word_variants(word, config) for word in thai_words}
+    return {
+        word: generate_word_variants(word, max_variants)
+        for word in thai_words
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -588,46 +612,31 @@ def main(argv: Optional[list[str]] = None) -> None:
 
         python -m src.variant_generator สวัสดี ครับ หมู
         python -m src.variant_generator --max-variants 10 สวัสดี
+        python -m src.variant_generator --analyze สวัสดี
     """
     args = argv if argv is not None else sys.argv[1:]
 
-    # Simple argument parsing
-    config = VariantConfig()
+    max_variants = 20
+    show_analysis = False
     words: list[str] = []
 
     i = 0
     while i < len(args):
         if args[i] == "--max-variants" and i + 1 < len(args):
-            config.max_variants_per_word = int(args[i + 1])
+            max_variants = int(args[i + 1])
             i += 2
-        elif args[i] == "--no-vowel-lengthening":
-            config.vowel_lengthening = False
+        elif args[i] == "--analyze":
+            show_analysis = True
             i += 1
-        elif args[i] == "--no-final-softening":
-            config.final_consonant_softening = False
-            i += 1
-        elif args[i] == "--no-cluster-simplification":
-            config.cluster_simplification = False
-            i += 1
-        elif args[i] == "--no-r-dropping":
-            config.r_dropping = False
-            i += 1
-        elif args[i] == "--no-initial-voicing":
-            config.initial_voicing = False
-            i += 1
-        elif args[i] == "--help" or args[i] == "-h":
+        elif args[i] in ("--help", "-h"):
             print("Usage: python -m src.variant_generator [OPTIONS] WORD [WORD ...]")
             print()
             print("Generate informal romanization variants for Thai words.")
             print()
             print("Options:")
-            print("  --max-variants N          Max variants per word (default: 20)")
-            print("  --no-vowel-lengthening    Disable vowel lengthening rule")
-            print("  --no-final-softening      Disable final consonant softening")
-            print("  --no-cluster-simplification  Disable cluster simplification")
-            print("  --no-r-dropping           Disable r-dropping rule")
-            print("  --no-initial-voicing      Disable initial voicing rule")
-            print("  -h, --help                Show this help message")
+            print("  --max-variants N   Max variants per word (default: 20)")
+            print("  --analyze          Show g2p decomposition details")
+            print("  -h, --help         Show this help message")
             return
         else:
             words.append(args[i])
@@ -639,7 +648,17 @@ def main(argv: Optional[list[str]] = None) -> None:
         sys.exit(1)
 
     for word in words:
-        variants = generate_word_variants(word, config)
+        if show_analysis:
+            syllables = analyze_word(word)
+            print(f"{word}: {len(syllables)} syllables")
+            for j, comp in enumerate(syllables):
+                print(
+                    f"  [{j}] onset={comp.onset!r} vowel={comp.vowel!r} "
+                    f"coda={comp.coda!r} tone={comp.tone}"
+                )
+            print()
+
+        variants = generate_word_variants(word, max_variants)
         print(f"{word}: {len(variants)} variants")
         for v in variants:
             print(f"  {v}")
