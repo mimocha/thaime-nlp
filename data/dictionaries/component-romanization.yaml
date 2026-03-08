@@ -25,12 +25,18 @@
 #     manageable at this scale. Revisit if the inventory grows significantly.
 
 metadata:
-  version: "0.2.1"
+  version: "0.2.3"
   description: "Component-level Thai informal romanization mappings (g2p-keyed)"
   source_vocabulary: "top 1000 words from wisesight+wongnai+prachathai"
-  inventory_date: "2026-03-07"
+  inventory_date: "2026-03-08"
   total_entries: 67
   changelog: |
+    v0.2.3 (2026-03-08): Second review-driven cleanup (Change Plan 04, commit 4 iteration).
+      - Added "uay" to uaj (อวย) diphthong (ด้วย->duay natural).
+      - Removed "ur" from UU (อื) vowel (produces unnatural forms: kur, rur, purntii).
+    v0.2.2 (2026-03-08): Review-driven cleanup (Change Plan 04, commit 4 iteration).
+      - Removed "ua" from UUa (เอือ) vowel variants (ambiguous with อัว, produces nonsense).
+      - Removed "b" from ป onset, "bl" from ปล, "br" from ปร (produces nonsense romanizations).
     v0.2.1 (2026-03-07): Validation-driven variant refinements (Change Plan 04, commit 3).
       - Added "oo" variant to short u vowel.
       - Added "oh" to short o, "oa" to short O, "ou" to long uu.
@@ -155,8 +161,8 @@ onsets:
     rtgs: "p"
     g2p: "p"
     thai: "ป"
-    variants: ["p", "b", "bp"]
-    notes: "ป -- voicing common; bp from Paiboon-like systems"
+    variants: ["p", "bp"]
+    notes: "ป -- bp from Paiboon-like systems. Removed b (produces nonsense romanizations)."
   ph:
     rtgs: "ph"
     g2p: "ph"
@@ -173,14 +179,14 @@ onsets:
     rtgs: "pr"
     g2p: "pr"
     thai: "ปร"
-    variants: ["pr", "br"]
-    notes: "ปร -- voiced variant"
+    variants: ["pr"]
+    notes: "ปร -- Removed br (ป→b produces nonsense)."
   pl:
     rtgs: "pl"
     g2p: "pl"
     thai: "ปล"
-    variants: ["pl", "bl"]
-    notes: "ปล -- voiced variant"
+    variants: ["pl"]
+    notes: "ปล -- Removed bl (ป→b produces nonsense)."
   f:
     rtgs: "f"
     g2p: "f"
@@ -348,8 +354,8 @@ vowels:
   uee:
     rtgs: "ue"
     g2p: "UU"
-    variants: ["ue", "eu", "uh", "uee", "ur"]
-    notes: "อื (long) -- uee for long, ur from McFarland"
+    variants: ["ue", "eu", "uh", "uee"]
+    notes: "อื (long) -- uee for long. Removed ur (produces unnatural forms like kur, rur)."
   oe:
     rtgs: "oe"
     g2p: "@"
@@ -380,8 +386,8 @@ vowels:
   uea:
     rtgs: "uea"
     g2p: "UUa"
-    variants: ["uea", "ua", "eua", "ueaa"]
-    notes: "เอือ -- ua simplification, eua reordering, ueaa length variant"
+    variants: ["uea", "eua", "ueaa"]
+    notes: "เอือ -- eua reordering, ueaa length variant. Removed ua (ambiguous with อัว; produces nonsense)."
   ia:
     rtgs: "ia"
     g2p: "iia"
@@ -400,8 +406,8 @@ vowels:
   uai:
     rtgs: "uai"
     g2p: "uaj"
-    variants: ["uai"]
-    notes: "อวย -- removed uay (j->y pattern). Single variant only."
+    variants: ["uai", "uay"]
+    notes: "อวย -- restored uay (natural for this diphthong; ด้วย->duay common)."
 
 # ===========================================================================
 # CODAS (9 entries)

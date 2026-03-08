@@ -439,6 +439,26 @@ def generate_syllable_variants(comp: SyllableComponents) -> list[str]:
     if comp.vowel == "a" and not comp.coda and "u" in vowel_variants:
         vowel_variants = [v for v in vowel_variants if v != "u"]
 
+    # Guard: suppress consonant-ending vowel variants before glide coda "j".
+    # Coda j maps to "i", so vowel variants ending in r/h (e.g., ar, ah, er,
+    # uh, ur) produce implausible concatenations like "ari", "uhi", "eri".
+    # Examples: ราย aa+j → rai/aai (not rahi/rari), เลย @@+j → loei (not luri).
+    if comp.coda == "j":
+        vowel_variants = [
+            v for v in vowel_variants
+            if not (v and v[-1] in ("r", "h"))
+        ]
+
+    # Guard: suppress consonant-ending vowel variants before glide coda "w".
+    # Coda w maps to "w"/"o"/"u", so vowel variants ending in r/h (e.g., ar,
+    # ah) produce implausible concatenations like "karo", "kahu".
+    # Example: ข้าว aa+w → khao/khaaw/khaw (not kharo/khahu).
+    if comp.coda == "w":
+        vowel_variants = [
+            v for v in vowel_variants
+            if not (v and v[-1] in ("r", "h"))
+        ]
+
     # Look up coda variants
     coda_variants = dictionary["codas"].get(comp.coda, None)
     if coda_variants is None:
@@ -447,6 +467,13 @@ def generate_syllable_variants(comp: SyllableComponents) -> list[str]:
             coda_variants = [comp.coda]
         else:
             coda_variants = [""]
+
+    # Guard: suppress coda w → "o" after vowels ending in "i".
+    # Combinations like "io", "iio" look like separate syllables rather than
+    # natural diphthongs. Natural forms use w/u (iw, iu, iiw, iiu).
+    # Example: รีวิว [i]+[w] → iw/iu (not io), ผิว → phiw/phiu (not phio)
+    if comp.coda == "w" and any(v and v[-1] == "i" for v in vowel_variants):
+        coda_variants = [c for c in coda_variants if c != "o"]
 
     # Cartesian product
     all_variants: set[str] = set()
@@ -459,6 +486,9 @@ def generate_syllable_variants(comp: SyllableComponents) -> list[str]:
 def generate_word_variants(
     thai_word: str,
     max_variants: int = 20,
+    *,
+    _base_roman: str | None = None,
+    _syllables: list[SyllableComponents] | None = None,
 ) -> list[str]:
     """Generate informal romanization variants for a Thai word.
 
@@ -468,6 +498,14 @@ def generate_word_variants(
     Args:
         thai_word: A Thai word string (e.g., "สวัสดี").
         max_variants: Maximum number of variants to return (default: 20).
+        _base_roman: Pre-computed TLTK base romanization. When provided,
+            skips the internal ``tltk.th2roman()`` call. Useful when the
+            caller already has this value.
+        _syllables: Pre-computed syllable decomposition from
+            :func:`analyze_word`. When provided, skips the internal
+            ``analyze_word()`` call (which invokes ``tltk.g2p()`` and
+            ``tltk.syl_segment()``). Useful when the caller already has
+            this value.
 
     Returns:
         A sorted, deduplicated list of romanization variants. The base TLTK
@@ -481,17 +519,39 @@ def generate_word_variants(
         >>> "dee" in variants
         True
     """
-    # Get the base TLTK romanization as fallback
-    try:
-        base_roman = _clean_tltk_output(tltk.nlp.th2roman(thai_word))
-    except Exception:
-        logger.warning("TLTK failed to romanize: %s", thai_word)
-        return []
+    # Get the base TLTK romanization (skip if pre-computed)
+    if _base_roman is not None:
+        base_roman = _base_roman
+    else:
+        try:
+            base_roman = _clean_tltk_output(tltk.nlp.th2roman(thai_word))
+        except Exception:
+            logger.warning("TLTK failed to romanize: %s", thai_word)
+            return []
 
     if not base_roman:
         return []
 
-    syllables = analyze_word(thai_word)
+    # Strip dashes from RTGS romanization.  TLTK inserts hyphens at
+    # syllable boundaries when a vowel follows a vowel (e.g., ตัวเอง →
+    # "tua-eng").  Informal romanization never uses dashes.
+    base_roman = base_roman.replace("-", "")
+
+    # Strip ๆ (mai yamok / repeater symbol).  Repetition is handled at
+    # the candidate-selection level, not the romanization level.
+    # e.g. จริงๆ → generate variants for จริง only.
+    stripped_word = thai_word.rstrip("\u0e46").rstrip()
+    if stripped_word != thai_word:
+        # Re-compute base romanization for the stripped word
+        try:
+            base_roman = _clean_tltk_output(tltk.nlp.th2roman(stripped_word))
+            base_roman = base_roman.replace("-", "")
+        except Exception:
+            pass  # keep original base_roman as fallback
+        thai_word = stripped_word
+
+    # Analyze syllables (skip if pre-computed)
+    syllables = _syllables if _syllables is not None else analyze_word(thai_word)
     if not syllables:
         return [base_roman]
 
@@ -505,17 +565,18 @@ def generate_word_variants(
     for combo in product(*syllable_options):
         all_variants.add("".join(combo))
 
-    # Always include the TLTK base romanization
-    all_variants.add(base_roman)
+    # Include TLTK base romanization as fallback only when the Cartesian
+    # product is empty (shouldn't normally happen). Previously the base was
+    # always force-included, but this could re-introduce forms that the
+    # component guards intentionally suppress (e.g., "io" from i+w).
+    if not all_variants:
+        all_variants.add(base_roman)
 
     result = sorted(all_variants)
 
-    # Trim to max_variants, always keeping base form
+    # Trim to max_variants
     if len(result) > max_variants:
-        result = [base_roman] + [
-            v for v in result if v != base_roman
-        ][: max_variants - 1]
-        result.sort()
+        result = result[:max_variants]
 
     return result
 

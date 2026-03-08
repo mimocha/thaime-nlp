@@ -234,3 +234,108 @@ class TestAnalyzeWord:
         syllables = analyze_word("อาจ")
         assert len(syllables) >= 1
         assert syllables[0].onset == "?"
+
+
+# ---------------------------------------------------------------------------
+# Pre-computed arguments (performance optimization path)
+# ---------------------------------------------------------------------------
+
+
+class TestPrecomputedArgs:
+    """Verify that passing pre-computed _base_roman and _syllables produces
+    identical output to the default code path."""
+
+    @pytest.mark.parametrize(
+        "word",
+        ["ดี", "กิน", "หมู", "ข้าว", "สวัสดี", "กรุงเทพ", "ไทย", "ภูเก็ต"],
+    )
+    def test_precomputed_matches_default(self, word):
+        """Output with pre-computed args must match the default path."""
+        from src.variant_generator import _clean_tltk_output
+        import tltk
+
+        # Default path
+        default_variants = generate_word_variants(word, max_variants=200)
+
+        # Pre-computed path
+        base_roman = _clean_tltk_output(tltk.nlp.th2roman(word))
+        syllables = analyze_word(word)
+        precomputed_variants = generate_word_variants(
+            word,
+            max_variants=200,
+            _base_roman=base_roman,
+            _syllables=syllables,
+        )
+
+        assert precomputed_variants == default_variants
+
+    def test_precomputed_base_roman_only(self):
+        """Passing only _base_roman should still work (syllables computed internally)."""
+        from src.variant_generator import _clean_tltk_output
+        import tltk
+
+        word = "ดี"
+        default = generate_word_variants(word)
+        base_roman = _clean_tltk_output(tltk.nlp.th2roman(word))
+        result = generate_word_variants(word, _base_roman=base_roman)
+        assert result == default
+
+    def test_precomputed_syllables_only(self):
+        """Passing only _syllables should still work (base_roman computed internally)."""
+        word = "กิน"
+        default = generate_word_variants(word)
+        syllables = analyze_word(word)
+        result = generate_word_variants(word, _syllables=syllables)
+        assert result == default
+
+
+# ---------------------------------------------------------------------------
+# Glide-coda guards
+# ---------------------------------------------------------------------------
+
+
+class TestGlideCodaGuards:
+    """Verify guards that suppress implausible vowel+coda combinations."""
+
+    def test_no_io_for_i_plus_w(self):
+        """Vowel i + coda w should NOT produce 'io' combinations.
+
+        The 'o' coda variant after 'i' reads as separate syllables.
+        E.g., ผิว → phiw/phiu (not phio).
+        """
+        variants = generate_word_variants("ผิว", max_variants=100)
+        for v in variants:
+            # No variant should end in "io" from the i+w decomposition
+            assert not v.endswith("io"), f"'{v}' contains 'io' from i+w"
+            assert not v.endswith("iio"), f"'{v}' contains 'iio' from ii+w"
+
+    def test_review_no_io(self):
+        """รีวิว should not produce any variant containing 'io'."""
+        variants = generate_word_variants("รีวิว", max_variants=200)
+        io_variants = [v for v in variants if "io" in v]
+        assert io_variants == [], f"Found 'io' variants: {io_variants}"
+
+
+# ---------------------------------------------------------------------------
+# Dash stripping
+# ---------------------------------------------------------------------------
+
+
+class TestDashStripping:
+    """Verify that RTGS dashes are stripped from romanization output."""
+
+    def test_no_dashes_in_variants(self):
+        """Variants should never contain dashes (RTGS syllable separators).
+
+        E.g., ตัวเอง → tuaeng (not tua-eng).
+        """
+        # ตัวเอง produces "tua-eng" in TLTK RTGS
+        variants = generate_word_variants("ตัวเอง", max_variants=200)
+        for v in variants:
+            assert "-" not in v, f"'{v}' contains a dash"
+
+    def test_kao_i_no_dash(self):
+        """เก้าอี้ → kaoi (not kao-i)."""
+        variants = generate_word_variants("เก้าอี้", max_variants=200)
+        for v in variants:
+            assert "-" not in v, f"'{v}' contains a dash"

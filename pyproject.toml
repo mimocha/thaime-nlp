@@ -19,6 +19,8 @@ dependencies = [
     # Notebooks
     "jupyter>=1.0",
     "ipykernel>=6.0",
+    # Progress bars
+    "tqdm>=4.60",
     # Testing
     "pytest>=7.0",
 ]

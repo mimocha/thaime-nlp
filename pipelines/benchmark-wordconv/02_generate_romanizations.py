@@ -16,9 +16,13 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import re
 import sys
 from pathlib import Path
+
+try:
+    from tqdm import tqdm
+except ImportError:
+    tqdm = None
 
 # ---------------------------------------------------------------------------
 # Paths
@@ -33,7 +37,9 @@ sys.path.insert(0, str(REPO_ROOT))
 from src.variant_generator import (
     analyze_word,
     generate_word_variants,
+    generate_syllable_variants,
     _clean_tltk_output,
+    _get_dictionary,
 )
 
 import tltk
@@ -63,17 +69,6 @@ _KNOWN_AMBIGUOUS_ROMANIZATIONS = {
     "ใน", "ไหน", "นัย",  # nai
     "ชะ", "ช่ะ", "ชา", "ช่า", "ช้า", "ฉา", "ฉ่า",  # cha
 }
-
-
-def _count_syllables(thai_word: str) -> int:
-    """Estimate syllable count using TLTK."""
-    try:
-        syl_raw = tltk.nlp.syl_segment(thai_word)
-        cleaned = re.sub(r"<[^>]+>", "", syl_raw).strip()
-        syllables = [s for s in cleaned.split("~") if s]
-        return max(1, len(syllables))
-    except Exception:
-        return max(1, len(thai_word) // 3)
 
 
 def _has_cluster(romanization: str) -> bool:
@@ -150,14 +145,14 @@ def main() -> None:
     parser.add_argument(
         "--top-k",
         type=int,
-        default=500,
-        help="Number of top words to process (default: 500)",
+        default=1000,
+        help="Number of top words to process (default: 1000)",
     )
     parser.add_argument(
         "--max-variants",
         type=int,
-        default=20,
-        help="Max variants per word (default: 20)",
+        default=100,
+        help="Max variants per word (default: 100)",
     )
     parser.add_argument(
         "--output",
@@ -188,6 +183,9 @@ def main() -> None:
 
     max_variants = args.max_variants
 
+    # Pre-load dictionary once (avoid per-word function-call overhead)
+    dictionary = _get_dictionary()
+
     # Process each word
     print(f"\n{'=' * 60}")
     print("Generating romanizations and variants")
@@ -196,7 +194,11 @@ def main() -> None:
     entries: list[dict] = []
     failed: list[dict] = []
 
-    for i, word_data in enumerate(words):
+    word_iter = enumerate(words)
+    if tqdm is not None:
+        word_iter = tqdm(list(word_iter), desc="  Generating", unit="word")
+
+    for i, word_data in word_iter:
         thai_word = word_data["thai_word"]
         rank = int(word_data["rank"])
 
@@ -210,11 +212,41 @@ def main() -> None:
             failed.append({"thai_word": thai_word, "rank": rank, "reason": "TLTK empty"})
             continue
 
-        # Generate variants
-        variants = generate_word_variants(thai_word, max_variants)
+        # Analyze syllables via g2p
+        syllable_components = analyze_word(thai_word)
+        syllable_count = max(1, len(syllable_components))
 
-        # Analyze syllables
-        syllable_count = _count_syllables(thai_word)
+        # Generate variants — pass pre-computed base_roman and syllables
+        # to avoid redundant TLTK calls inside generate_word_variants()
+        variants = generate_word_variants(
+            thai_word,
+            max_variants,
+            _base_roman=base_roman,
+            _syllables=syllable_components,
+        )
+
+        # Build component-level decomposition for the review CLI
+        components: list[dict] = []
+        for comp in syllable_components:
+            onset_variants = dictionary["onsets"].get(comp.onset, None)
+            if onset_variants is None:
+                onset_variants = [""] if comp.onset in ("?", "") else [comp.onset]
+            vowel_variants = dictionary["vowels"].get(comp.vowel, None)
+            if vowel_variants is None:
+                vowel_variants = [comp.vowel] if comp.vowel else [""]
+            coda_variants = dictionary["codas"].get(comp.coda, None)
+            if coda_variants is None:
+                coda_variants = [comp.coda] if comp.coda else [""]
+            components.append({
+                "thai_segment": comp.thai_segment,
+                "onset": comp.onset,
+                "vowel": comp.vowel,
+                "coda": comp.coda,
+                "tone": comp.tone,
+                "onset_variants": onset_variants,
+                "vowel_variants": vowel_variants,
+                "coda_variants": coda_variants,
+            })
 
         # Classify
         category, difficulty = classify_word(
@@ -230,6 +262,7 @@ def main() -> None:
             "rtgs_romanization": base_roman,
             "variants": variants,
             "variant_count": len(variants),
+            "components": components,
             "category": category,
             "difficulty": difficulty,
             "syllable_count": syllable_count,
@@ -240,7 +273,7 @@ def main() -> None:
         }
         entries.append(entry)
 
-        if (i + 1) % 50 == 0:
+        if tqdm is None and (i + 1) % 50 == 0:
             print(f"  Processed {i + 1}/{len(words)} words...")
 
     print(f"\n  Successfully processed: {len(entries)}")
@@ -260,8 +293,8 @@ def main() -> None:
     # Write output
     output_data = {
         "metadata": {
-            "version": "v0.1.0-draft",
-            "source": "pipeline/benchmark-v1",
+            "version": "v0.2.0-draft",
+            "source": "pipeline/benchmark-v2",
             "corpora": ["wisesight", "wongnai", "prachathai"],
             "weighting": "equal (1/3 each)",
             "top_k_input": args.top_k,
