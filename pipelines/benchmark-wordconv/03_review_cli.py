@@ -20,6 +20,7 @@ import json
 import os
 import readline  # enables arrow keys, history in input()
 import sys
+from itertools import product
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
@@ -103,6 +104,25 @@ def display_entry(entry: dict, index: int, total: int) -> None:
     if entry.get("notes"):
         print(f"  Notes:       {_c(entry['notes'], 'dim')}")
 
+    # Component-level decomposition (if available)
+    components = entry.get("components", [])
+    if components:
+        print(f"\n  {_c('Components:', 'bold')}")
+        for i, comp in enumerate(components):
+            thai_seg = comp.get('thai_segment', '')
+            onset = comp.get('onset', '')
+            vowel = comp.get('vowel', '')
+            coda = comp.get('coda', '')
+            onset_v = comp.get('onset_variants', [])
+            vowel_v = comp.get('vowel_variants', [])
+            coda_v = comp.get('coda_variants', [])
+
+            seg_label = f"  [{i + 1}] {_c(thai_seg, 'magenta')}" if thai_seg else f"  [{i + 1}]"
+            print(f"{seg_label}  "
+                  f"{_c('O:', 'dim')}{_c(onset or '∅', 'cyan')} → {onset_v}  "
+                  f"{_c('V:', 'dim')}{_c(vowel or '∅', 'cyan')} → {vowel_v}  "
+                  f"{_c('C:', 'dim')}{_c(coda or '∅', 'cyan')} → {coda_v}")
+
     # Variants
     variants = entry.get("variants", [])
     print(f"\n  Variants ({len(variants)} total):")
@@ -133,6 +153,7 @@ def display_help() -> None:
     print(f"    {_c('s', 'yellow', 'bold')}  skip       — Leave as pending, move to next")
     print(f"    {_c('e', 'blue', 'bold')}  edit       — Edit fields interactively")
     print(f"    {_c('v', 'cyan', 'bold')}  variants   — Add/remove specific variants")
+    print(f"    {_c('x', 'cyan', 'bold')}  components — Edit component-level variants")
     print(f"    {_c('c', 'magenta', 'bold')}  category   — Change category")
     print(f"    {_c('f', 'magenta', 'bold')}  difficulty — Change difficulty")
     print(f"    {_c('n', 'white', 'bold')}  notes      — Edit notes")
@@ -203,6 +224,49 @@ _VALID_CATEGORIES = ["common", "ambiguous", "variant", "compound", "similar", "e
 _VALID_DIFFICULTIES = ["easy", "medium", "hard"]
 
 
+def _recompute_variants_from_components(
+    entry: dict, max_variants: int = 20,
+) -> list[str]:
+    """Recompute word-level variants from component-level variant lists.
+
+    Takes the Cartesian product of onset/vowel/coda variants across all
+    syllables and returns the sorted, deduplicated result.
+    """
+    components = entry.get("components", [])
+    if not components:
+        return entry.get("variants", [])
+
+    syllable_options: list[list[str]] = []
+    for comp in components:
+        onset_v = comp.get("onset_variants", [""])
+        vowel_v = comp.get("vowel_variants", [""])
+        coda_v = comp.get("coda_variants", [""])
+        if not onset_v:
+            onset_v = [""]
+        if not vowel_v:
+            vowel_v = [""]
+        if not coda_v:
+            coda_v = [""]
+        syl_variants = sorted({o + v + c for o, v, c in product(onset_v, vowel_v, coda_v)})
+        syllable_options.append(syl_variants)
+
+    all_variants: set[str] = set()
+    for combo in product(*syllable_options):
+        all_variants.add("".join(combo))
+
+    # Always include RTGS
+    rtgs = entry.get("rtgs_romanization", "")
+    if rtgs:
+        all_variants.add(rtgs)
+
+    result = sorted(all_variants)
+    if len(result) > max_variants:
+        result = [rtgs] + [v for v in result if v != rtgs][: max_variants - 1]
+        result.sort()
+
+    return result
+
+
 def edit_variants(entry: dict) -> None:
     """Interactive variant editing."""
     variants = list(entry.get("variants", []))
@@ -242,6 +306,99 @@ def edit_variants(entry: dict) -> None:
 
     entry["variants"] = variants
     entry["variant_count"] = len(variants)
+
+
+def edit_components(entry: dict) -> None:
+    """Interactive component-level variant editing.
+
+    Shows each syllable's onset/vowel/coda and their current variant lists.
+    Allows adding/removing variants per component, then recomputes the
+    full word-level variant list via Cartesian product.
+    """
+    components = entry.get("components", [])
+    if not components:
+        print(f"  {_c('No component data available for this entry.', 'yellow')}")
+        print(f"  Use {_c('v', 'cyan', 'bold')} to edit word-level variants directly.")
+        return
+
+    _COMP_FIELDS = [
+        ("onset", "onset_variants", "O"),
+        ("vowel", "vowel_variants", "V"),
+        ("coda", "coda_variants", "C"),
+    ]
+
+    while True:
+        # Display current components
+        print(f"\n  {_c('Component Editor', 'bold', 'cyan')}")
+        print(f"  {_c('─' * 60, 'dim')}")
+        for i, comp in enumerate(components):
+            thai_seg = comp.get('thai_segment', '')
+            print(f"  Syllable {_c(str(i + 1), 'bold')} "
+                  f"{_c(thai_seg, 'magenta')}:")
+            for key, var_key, label in _COMP_FIELDS:
+                g2p_val = comp.get(key, '')
+                variants = comp.get(var_key, [])
+                if g2p_val or variants:
+                    print(f"    {label}: {_c(g2p_val or '∅', 'cyan')} → "
+                          f"{_c(str(variants), 'white')}")
+
+        # Compute and show current variant count from components
+        preview = _recompute_variants_from_components(entry)
+        print(f"\n  → {len(preview)} word variants from these components")
+
+        print(f"\n  Commands: {_c('S.F +val', 'green')} add variant "
+              f"(e.g. {_c('1.O +g', 'green')}), "
+              f"{_c('S.F -val', 'red')} remove, "
+              f"{_c('done', 'white')} to finish")
+        print(f"  S=syllable#, F=O/V/C (onset/vowel/coda)")
+        cmd = input("  > ").strip()
+
+        if cmd.lower() == "done" or cmd == "":
+            break
+
+        # Parse: "1.O +g" or "2.V -aa"
+        import re as _re
+        m = _re.match(r"^(\d+)\.(O|V|C)\s+([+-])(.+)$", cmd, _re.IGNORECASE)
+        if not m:
+            print(f"  {_c('Format: S.F +val or S.F -val (e.g. 1.O +g)', 'dim')}")
+            continue
+
+        syl_num = int(m.group(1))
+        field = m.group(2).upper()
+        action = m.group(3)
+        value = m.group(4).strip()
+
+        if syl_num < 1 or syl_num > len(components):
+            print(f"  {_c(f'Syllable must be 1-{len(components)}', 'red')}")
+            continue
+
+        comp = components[syl_num - 1]
+        field_map = {"O": "onset_variants", "V": "vowel_variants", "C": "coda_variants"}
+        var_key = field_map[field]
+        variants = list(comp.get(var_key, []))
+
+        if action == "+":
+            if value not in variants:
+                variants.append(value)
+                variants.sort()
+                comp[var_key] = variants
+                print(f"  {_c('Added:', 'green')} {value} to syllable {syl_num} {field}")
+            else:
+                print(f"  {_c('Already exists', 'yellow')}")
+        elif action == "-":
+            if value in variants:
+                variants.remove(value)
+                comp[var_key] = variants
+                print(f"  {_c('Removed:', 'red')} {value} from syllable {syl_num} {field}")
+            else:
+                print(f"  {_c('Not found in variant list', 'yellow')}")
+
+    # Recompute word-level variants from the updated components
+    new_variants = _recompute_variants_from_components(entry)
+    old_count = len(entry.get("variants", []))
+    entry["variants"] = new_variants
+    entry["variant_count"] = len(new_variants)
+    print(f"  {_c('Recomputed:', 'green')} {old_count} → {len(new_variants)} word variants")
 
 
 def edit_category(entry: dict) -> None:
@@ -343,7 +500,7 @@ def review_loop(data: dict, save_path: Path) -> None:
             break
 
     _clear_screen()
-    print(_c("\n  Benchmark Review Tool v1.0", "bold", "cyan"))
+    print(_c("\n  Benchmark Review Tool v2.0", "bold", "cyan"))
     print(f"  {total} entries loaded. Press {_c('h', 'bold')} for help.\n")
     display_stats(entries)
 
@@ -397,6 +554,11 @@ def review_loop(data: dict, save_path: Path) -> None:
 
         elif cmd == "v":
             edit_variants(entry)
+            if entry["review_status"] == "pending":
+                entry["review_status"] = "edited"
+
+        elif cmd == "x":
+            edit_components(entry)
             if entry["review_status"] == "pending":
                 entry["review_status"] = "edited"
 

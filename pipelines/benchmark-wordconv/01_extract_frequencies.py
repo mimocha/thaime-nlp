@@ -23,6 +23,11 @@ from pathlib import Path
 
 from pythainlp.tokenize import word_tokenize
 
+try:
+    from tqdm import tqdm
+except ImportError:
+    tqdm = None
+
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
@@ -69,12 +74,16 @@ def read_wisesight() -> Counter:
             continue
         print(f"  Reading {fpath.name}...")
         with open(fpath, "r", encoding="utf-8") as f:
-            for i, line in enumerate(f):
-                line = line.strip()
-                if line:
-                    counter.update(_tokenize_text(line))
-                if (i + 1) % 5000 == 0:
-                    print(f"    Processed {i + 1} lines...")
+            lines = f.readlines()
+        line_iter = enumerate(lines)
+        if tqdm is not None:
+            line_iter = tqdm(list(line_iter), desc=f"    {fname}", unit="line", leave=False)
+        for i, line in line_iter:
+            line = line.strip()
+            if line:
+                counter.update(_tokenize_text(line))
+            if tqdm is None and (i + 1) % 5000 == 0:
+                print(f"    Processed {i + 1} lines...")
 
     return counter
 
@@ -90,15 +99,18 @@ def read_wongnai() -> Counter:
 
     print(f"  Reading {wongnai_file.name}...")
     with open(wongnai_file, "r", encoding="utf-8") as f:
-        reader = csv.reader(f, delimiter=";")
-        for i, row in enumerate(reader):
-            if i == 0:
-                continue  # skip header
-            if len(row) >= 1:
-                text = row[0]
-                counter.update(_tokenize_text(text))
-            if (i + 1) % 50000 == 0:
-                print(f"    Processed {i + 1} rows...")
+        reader = list(csv.reader(f, delimiter=";"))
+    row_iter = enumerate(reader)
+    if tqdm is not None:
+        row_iter = tqdm(list(row_iter), desc="    wongnai", unit="row", leave=False)
+    for i, row in row_iter:
+        if i == 0:
+            continue  # skip header
+        if len(row) >= 1:
+            text = row[0]
+            counter.update(_tokenize_text(text))
+        if tqdm is None and (i + 1) % 50000 == 0:
+            print(f"    Processed {i + 1} rows...")
 
     return counter
 
@@ -116,21 +128,25 @@ def read_prachathai() -> Counter:
             continue
         print(f"  Reading {fpath.name}...")
         with open(fpath, "r", encoding="utf-8") as f:
-            for i, line in enumerate(f):
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    data = json.loads(line)
-                    # Tokenize both title and body
-                    for field in ["title", "body_text"]:
-                        text = data.get(field, "")
-                        if text:
-                            counter.update(_tokenize_text(text))
-                except json.JSONDecodeError:
-                    continue
-                if (i + 1) % 10000 == 0:
-                    print(f"    Processed {i + 1} articles...")
+            lines = f.readlines()
+        line_iter = enumerate(lines)
+        if tqdm is not None:
+            line_iter = tqdm(list(line_iter), desc=f"    {fname}", unit="line", leave=False)
+        for i, line in line_iter:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                data = json.loads(line)
+                # Tokenize both title and body
+                for field in ["title", "body_text"]:
+                    text = data.get(field, "")
+                    if text:
+                        counter.update(_tokenize_text(text))
+            except json.JSONDecodeError:
+                continue
+            if tqdm is None and (i + 1) % 10000 == 0:
+                print(f"    Processed {i + 1} articles...")
 
     return counter
 
@@ -242,28 +258,39 @@ def main() -> None:
 
     # Step 3: Rank and output top-k
     print(f"\n  Selecting top {args.top_k} words by weighted frequency...")
-    ranked = sorted(merged.items(), key=lambda x: x[1], reverse=True)
-    top_k = ranked[: args.top_k]
 
-    # Also track which corpora each word appeared in and per-corpus rank
-    wisesight_rank = {
-        w: i + 1
-        for i, (w, _) in enumerate(
-            sorted(norm_wisesight.items(), key=lambda x: x[1], reverse=True)
-        )
-    }
-    wongnai_rank = {
-        w: i + 1
-        for i, (w, _) in enumerate(
-            sorted(norm_wongnai.items(), key=lambda x: x[1], reverse=True)
-        )
-    }
-    prachathai_rank = {
-        w: i + 1
-        for i, (w, _) in enumerate(
-            sorted(norm_prachathai.items(), key=lambda x: x[1], reverse=True)
-        )
-    }
+    # Use Counter.most_common(k) for O(n log k) top-k selection
+    # instead of a full O(n log n) sort of the entire vocabulary.
+    merged_counter = Counter(merged)
+    top_k = merged_counter.most_common(args.top_k)
+
+    # Lazy per-corpus ranks: only compute ranks for the top-k words,
+    # not the entire vocabulary. For each top-k word, its per-corpus
+    # rank is 1 + the count of corpus words with strictly higher frequency.
+    top_k_words = {word for word, _ in top_k}
+
+    def _lazy_ranks(
+        norm_freq: dict[str, float], top_words: set[str]
+    ) -> dict[str, int]:
+        """Compute per-corpus ranks only for the requested words.
+
+        For each word in top_words that exists in norm_freq, rank is
+        1 + number of words in the corpus with strictly higher frequency.
+        This avoids sorting the entire corpus vocabulary.
+        """
+        # Filter to only the top-k words present in this corpus
+        relevant = {
+            w: freq for w, freq in norm_freq.items() if w in top_words
+        }
+        if not relevant:
+            return {}
+        # Sort only the relevant subset
+        sorted_words = sorted(relevant.items(), key=lambda x: x[1], reverse=True)
+        return {w: i + 1 for i, (w, _) in enumerate(sorted_words)}
+
+    wisesight_rank = _lazy_ranks(norm_wisesight, top_k_words)
+    wongnai_rank = _lazy_ranks(norm_wongnai, top_k_words)
+    prachathai_rank = _lazy_ranks(norm_prachathai, top_k_words)
 
     # Write output
     print(f"\n  Writing to {output_path}")

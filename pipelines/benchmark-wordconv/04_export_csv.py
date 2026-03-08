@@ -50,7 +50,7 @@ def main() -> None:
         "--output",
         type=str,
         default=None,
-        help="Output CSV path (default: benchmarks/word-conversion/basic.csv)",
+        help="Output CSV path (default: benchmarks/word-conversion/v0.2.0.csv)",
     )
     parser.add_argument(
         "--include-discarded",
@@ -65,7 +65,7 @@ def main() -> None:
     args = parser.parse_args()
 
     input_path = Path(args.input) if args.input else OUTPUT_DIR / "reviewed_benchmark.json"
-    output_path = Path(args.output) if args.output else BENCHMARK_DIR / "basic.csv"
+    output_path = Path(args.output) if args.output else BENCHMARK_DIR / "v0.2.0.csv"
 
     # Load reviewed data
     if not input_path.exists():
