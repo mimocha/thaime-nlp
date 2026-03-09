@@ -94,8 +94,8 @@ MOCK_DICTIONARY: list[tuple[str, str, float, int]] = [
     ("เทศ", "thet", 0.0006, 32),
 
     # Ambiguous test case: maikan
+    # Note: ไม่ "mai" (word_id 6) already defined above in common words
     ("ไม้กั้น", "maikan", 0.0003, 40),
-    ("ไม่", "mai", 0.0090, 6),
     ("กัน", "kan", 0.0045, 41),
     ("ไม", "mai", 0.0005, 42),
     ("กั้น", "kan", 0.0004, 43),
@@ -109,7 +109,7 @@ MOCK_DICTIONARY: list[tuple[str, str, float, int]] = [
     ("เป็น", "pen", 0.0075, 53),
     ("เป็น", "ben", 0.0075, 53),
     ("ได้", "dai", 0.0068, 54),
-    ("ได้", "dai", 0.0068, 54),
+    ("ได้", "daai", 0.0068, 54),
     ("แล้ว", "laew", 0.0042, 55),
     ("แล้ว", "laeo", 0.0042, 55),
     ("กิน", "kin", 0.0032, 56),
@@ -125,8 +125,6 @@ MOCK_DICTIONARY: list[tuple[str, str, float, int]] = [
     # Additional for longer input test
     ("บ้าน", "baan", 0.0022, 60),
     ("บ้าน", "ban", 0.0022, 60),
-    ("โรง", "rong", 0.0018, 11),
-    ("เรียน", "rian", 0.0015, 12),
     ("หนังสือ", "nangsuue", 0.0010, 61),
     ("หนังสือ", "nangsue", 0.0010, 61),
 ]
