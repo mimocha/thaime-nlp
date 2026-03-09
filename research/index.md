@@ -8,6 +8,7 @@
 | 2 | Informal Romanization Variants | 2026-03-04 | Rule-based variant generator achieves 91.2% coverage with 5.0 avg variants/word | [research/002-informal-romanization-variants/summary.md](002-informal-romanization-variants/summary.md) |
 | 3 | Component Romanization | 2026-03-07 | Romanization of onset/vowel/coda components works and scales better than word-level romanization, reproducing 89% of v0.1.0 benchmark | [research/003-component-romanization/summary.md](003-component-romanization/summary.md) |
 | 4 | Trie Data Structure Selection | 2026-03-08 | Double-array trie (DARTS) is the best all-around choice; recommend `yada` Rust crate for production. MARISA-trie is 5× smaller but 2–3× slower for common prefix search. | [research/trie-selection/summary.md](004-trie-selection/summary.md) |
+| 5 | Candidate Selection Algorithm | 2026-03-09 | Viterbi DP with k-best tracking on a word lattice, scoring via -log(freq) + segmentation penalty. All surveyed IMEs (Mozc, librime, libkkc, Anthy) use this pattern. Sub-millisecond performance confirmed. | [research/005-candidate-selection/summary.md](005-candidate-selection/summary.md) |
 
 ## In Progress
 
