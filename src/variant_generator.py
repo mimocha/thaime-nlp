@@ -402,17 +402,14 @@ def analyze_word(thai_word: str) -> list[SyllableComponents]:
 # ---------------------------------------------------------------------------
 
 
-def generate_syllable_variants(comp: SyllableComponents) -> list[str]:
-    """Generate all romanization variants for a single syllable.
-
-    Looks up each component (onset, vowel, coda) in the dictionary and
-    returns the Cartesian product of all variant combinations.
-
-    Args:
-        comp: Parsed syllable components.
+def _get_component_variants(
+    comp: SyllableComponents,
+) -> tuple[list[str], list[str], list[str]]:
+    """Look up component variant lists for a syllable, with guards applied.
 
     Returns:
-        Sorted, deduplicated list of variant romanizations for this syllable.
+        Tuple of (onset_variants, vowel_variants, coda_variants) after
+        all context-dependent guards have been applied.
     """
     dictionary = _get_dictionary()
 
@@ -435,25 +432,11 @@ def generate_syllable_variants(comp: SyllableComponents) -> list[str]:
             vowel_variants = [""]
 
     # Guard: short "a" → "u" only valid in closed syllables (with coda).
-    # In open syllables (จะ, นะ, ค่ะ), "u" produces implausible forms.
     if comp.vowel == "a" and not comp.coda and "u" in vowel_variants:
         vowel_variants = [v for v in vowel_variants if v != "u"]
 
-    # Guard: suppress consonant-ending vowel variants before glide coda "j".
-    # Coda j maps to "i", so vowel variants ending in r/h (e.g., ar, ah, er,
-    # uh, ur) produce implausible concatenations like "ari", "uhi", "eri".
-    # Examples: ราย aa+j → rai/aai (not rahi/rari), เลย @@+j → loei (not luri).
-    if comp.coda == "j":
-        vowel_variants = [
-            v for v in vowel_variants
-            if not (v and v[-1] in ("r", "h"))
-        ]
-
-    # Guard: suppress consonant-ending vowel variants before glide coda "w".
-    # Coda w maps to "w"/"o"/"u", so vowel variants ending in r/h (e.g., ar,
-    # ah) produce implausible concatenations like "karo", "kahu".
-    # Example: ข้าว aa+w → khao/khaaw/khaw (not kharo/khahu).
-    if comp.coda == "w":
+    # Guard: suppress consonant-ending vowel variants before glide codas.
+    if comp.coda in ("j", "w"):
         vowel_variants = [
             v for v in vowel_variants
             if not (v and v[-1] in ("r", "h"))
@@ -469,18 +452,201 @@ def generate_syllable_variants(comp: SyllableComponents) -> list[str]:
             coda_variants = [""]
 
     # Guard: suppress coda w → "o" after vowels ending in "i".
-    # Combinations like "io", "iio" look like separate syllables rather than
-    # natural diphthongs. Natural forms use w/u (iw, iu, iiw, iiu).
-    # Example: รีวิว [i]+[w] → iw/iu (not io), ผิว → phiw/phiu (not phio)
     if comp.coda == "w" and any(v and v[-1] == "i" for v in vowel_variants):
         coda_variants = [c for c in coda_variants if c != "o"]
 
-    # Cartesian product
+    return (list(onset_variants), list(vowel_variants), list(coda_variants))
+
+
+def generate_syllable_variants(comp: SyllableComponents) -> list[str]:
+    """Generate all romanization variants for a single syllable.
+
+    Looks up each component (onset, vowel, coda) in the dictionary and
+    returns the Cartesian product of all variant combinations.
+
+    Args:
+        comp: Parsed syllable components.
+
+    Returns:
+        Sorted, deduplicated list of variant romanizations for this syllable.
+    """
+    onset_v, vowel_v, coda_v = _get_component_variants(comp)
+
     all_variants: set[str] = set()
-    for o, v, c in product(onset_variants, vowel_variants, coda_variants):
+    for o, v, c in product(onset_v, vowel_v, coda_v):
         all_variants.add(o + v + c)
 
     return sorted(all_variants)
+
+
+# ---------------------------------------------------------------------------
+# Product size estimation and cascade strategies
+# ---------------------------------------------------------------------------
+
+# When the cross-syllable Cartesian product exceeds this many combinations,
+# switch from full enumeration to consistency-based generation.
+_PRODUCT_THRESHOLD = 10_000
+
+# Words with more syllables than this get RTGS-only fallback.
+# Such long "words" are almost certainly tokenization artifacts.
+_MAX_SYLLABLES = 8
+
+
+def _estimate_product_size(syllable_options: list[list[str]]) -> int:
+    """Estimate the total Cartesian product size across syllables.
+
+    Returns early with a large sentinel if the product exceeds a safe
+    computation limit, to avoid integer overflow on huge products.
+    """
+    size = 1
+    for opts in syllable_options:
+        size *= len(opts)
+        if size > _PRODUCT_THRESHOLD * 100:
+            return size  # No need to compute exact size
+    return size
+
+
+def _generate_variants_consistent(
+    syllables: list[SyllableComponents],
+    max_variants: int,
+) -> set[str]:
+    """Generate variants with consistent component choices across syllables.
+
+    When the same phonological component (e.g., vowel "aa") appears in
+    multiple syllables, this function forces a single variant choice for
+    that component across all occurrences. This produces only linguistically
+    plausible whole-word forms and dramatically reduces the combinatorial
+    product for long words.
+
+    Algorithm:
+        1. For each syllable, extract (onset_key, vowel_key, coda_key) and
+           their guarded variant lists.
+        2. Identify unique component keys across all syllables.
+        3. For components appearing in multiple syllables, intersect the
+           per-syllable variant lists to find choices valid in all contexts.
+        4. Enumerate the Cartesian product over unique component keys
+           (not over syllables), and reconstruct word strings.
+
+    Args:
+        syllables: List of parsed syllable components.
+        max_variants: Maximum variants to generate.
+
+    Returns:
+        Set of variant strings.
+    """
+    # Step 1: Extract per-syllable component info
+    # Each entry: [(onset_key, onset_v), (vowel_key, vowel_v), (coda_key, coda_v)]
+    syllable_info: list[list[tuple[str, list[str]]]] = []
+    for comp in syllables:
+        onset_v, vowel_v, coda_v = _get_component_variants(comp)
+        # Normalize empty keys so they group correctly
+        onset_key = comp.onset if comp.onset not in ("?", "") else ""
+        vowel_key = comp.vowel or ""
+        coda_key = comp.coda or ""
+        syllable_info.append([
+            (f"o:{onset_key}", onset_v),
+            (f"v:{vowel_key}", vowel_v),
+            (f"c:{coda_key}", coda_v),
+        ])
+
+    # Step 2: Collect unique component keys and intersect variant lists
+    # key -> list of per-syllable variant lists
+    component_lists: dict[str, list[list[str]]] = {}
+    for syl in syllable_info:
+        for key, variants in syl:
+            component_lists.setdefault(key, []).append(variants)
+
+    # For each unique key, compute the unified variant list
+    unified: dict[str, list[str]] = {}
+    for key, all_lists in component_lists.items():
+        if len(all_lists) == 1:
+            # Only appears once — keep full list
+            unified[key] = all_lists[0]
+        else:
+            # Appears in multiple syllables — intersect, preserving order
+            common = set(all_lists[0])
+            for lst in all_lists[1:]:
+                common &= set(lst)
+            if common:
+                # Preserve original order from the first occurrence
+                unified[key] = [v for v in all_lists[0] if v in common]
+            else:
+                # Intersection empty (shouldn't happen) — use first list
+                logger.debug(
+                    "Empty intersection for component %r, using first list", key
+                )
+                unified[key] = all_lists[0]
+
+    # Step 3: Build the product over unique component keys
+    unique_keys = list(unified.keys())
+    unique_variant_lists = [unified[k] for k in unique_keys]
+
+    # Build a lookup: key -> chosen variant index (for reconstruction)
+    key_to_idx = {k: i for i, k in enumerate(unique_keys)}
+
+    # Step 4: Enumerate and reconstruct word strings
+    # Cap iteration to avoid runaway memory even with consistency
+    cap = max(max_variants * 10, _PRODUCT_THRESHOLD)
+    all_variants: set[str] = set()
+
+    for combo in product(*unique_variant_lists):
+        # combo[i] is the chosen variant for unique_keys[i]
+        # Reconstruct each syllable from the chosen variants
+        parts: list[str] = []
+        for syl in syllable_info:
+            syl_str = ""
+            for key, _variants in syl:
+                idx = key_to_idx[key]
+                syl_str += combo[idx]
+            parts.append(syl_str)
+        all_variants.add("".join(parts))
+
+        if len(all_variants) >= cap:
+            break
+
+    return all_variants
+
+
+def _generate_variants_limited(
+    syllables: list[SyllableComponents],
+    max_per_component: int,
+    max_variants: int,
+) -> set[str]:
+    """Generate variants with each component limited to top N variants.
+
+    Fallback when consistency-based generation still produces too many
+    combinations. Limits each component's variant list to the first N
+    entries (the most standard romanizations appear first in the dictionary).
+
+    Args:
+        syllables: List of parsed syllable components.
+        max_per_component: Maximum variants per component.
+        max_variants: Maximum total variants to generate.
+
+    Returns:
+        Set of variant strings.
+    """
+    syllable_options: list[list[str]] = []
+    for comp in syllables:
+        onset_v, vowel_v, coda_v = _get_component_variants(comp)
+        # Limit each component
+        onset_v = onset_v[:max_per_component]
+        vowel_v = vowel_v[:max_per_component]
+        coda_v = coda_v[:max_per_component]
+
+        syl_variants: set[str] = set()
+        for o, v, c in product(onset_v, vowel_v, coda_v):
+            syl_variants.add(o + v + c)
+        syllable_options.append(sorted(syl_variants))
+
+    cap = max(max_variants * 10, _PRODUCT_THRESHOLD)
+    all_variants: set[str] = set()
+    for combo in product(*syllable_options):
+        all_variants.add("".join(combo))
+        if len(all_variants) >= cap:
+            break
+
+    return all_variants
 
 
 def generate_word_variants(
@@ -555,20 +721,53 @@ def generate_word_variants(
     if not syllables:
         return [base_roman]
 
-    # Generate per-syllable variant lists
+    # Cascade strategy based on word complexity
+    strategy = "full"
+    num_syllables = len(syllables)
+
+    # Strategy 0: RTGS-only for very long words (likely tokenization artifacts)
+    if num_syllables > _MAX_SYLLABLES:
+        strategy = "rtgs_only"
+        logger.info(
+            "RTGS-only fallback: %s (%d syllables)", thai_word, num_syllables
+        )
+        return [base_roman]
+
+    # Generate per-syllable variant lists and estimate product size
     syllable_options: list[list[str]] = []
     for comp in syllables:
         syllable_options.append(generate_syllable_variants(comp))
 
-    # Cartesian product across syllables
-    all_variants: set[str] = set()
-    for combo in product(*syllable_options):
-        all_variants.add("".join(combo))
+    product_size = _estimate_product_size(syllable_options)
+
+    if product_size <= _PRODUCT_THRESHOLD:
+        # Strategy 1: Full Cartesian product (current behavior for small words)
+        all_variants: set[str] = set()
+        for combo in product(*syllable_options):
+            all_variants.add("".join(combo))
+    else:
+        # Strategy 2: Consistency-based generation
+        strategy = "consistent"
+        all_variants = _generate_variants_consistent(syllables, max_variants)
+
+        if len(all_variants) > _PRODUCT_THRESHOLD:
+            # Strategy 3: Limit each component to top 2 variants
+            strategy = "limited"
+            all_variants = _generate_variants_limited(
+                syllables, max_per_component=2, max_variants=max_variants,
+            )
+
+    if strategy != "full":
+        logger.info(
+            "Variant strategy=%s: %s (%d syllables, "
+            "unconstrained_product=%s, result=%d)",
+            strategy, thai_word, num_syllables,
+            f"{product_size:,}" if product_size <= 10**9 else f">{10**9:,}",
+            len(all_variants),
+        )
 
     # Include TLTK base romanization as fallback only when the Cartesian
-    # product is empty (shouldn't normally happen). Previously the base was
-    # always force-included, but this could re-introduce forms that the
-    # component guards intentionally suppress (e.g., "io" from i+w).
+    # product is empty (shouldn't normally happen).
     if not all_variants:
         all_variants.add(base_roman)
 
