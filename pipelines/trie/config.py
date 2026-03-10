@@ -29,6 +29,23 @@ SOURCES: dict[str, bool] = {
 OVERRIDES_PATH = Path(__file__).resolve().parent / "overrides.yaml"
 
 # ---------------------------------------------------------------------------
+# Dataset filters — applied after variant generation and overrides
+# ---------------------------------------------------------------------------
+
+# Minimum number of corpus sources a word must appear in.
+# Words from pythainlp (curated dictionary) are exempt from this rule.
+MIN_SOURCE_COUNT = 2
+
+# Minimum word frequency (after cross-source normalization).
+MIN_FREQUENCY = 5e-6
+
+# Romanization length-ratio threshold for sanity check.
+# Words where (thai_base_len / min_romanization_len) exceeds this ratio
+# are flagged as likely TLTK partial-romanization failures and removed.
+# Override words are exempt from this check.
+MAX_LENGTH_RATIO = 2.0
+
+# ---------------------------------------------------------------------------
 # Variant generator settings
 # ---------------------------------------------------------------------------
 

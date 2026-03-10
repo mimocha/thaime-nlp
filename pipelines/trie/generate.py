@@ -20,6 +20,7 @@ import argparse
 import csv
 import json
 import logging
+import re
 import sys
 import time
 from concurrent.futures import ProcessPoolExecutor
@@ -31,7 +32,10 @@ import yaml
 
 from pipelines.trie.config import (
     LOG_INTERVAL,
+    MAX_LENGTH_RATIO,
     MAX_VARIANTS_PER_WORD,
+    MIN_FREQUENCY,
+    MIN_SOURCE_COUNT,
     NUM_WORKERS,
     OUTPUT_DIR,
     OVERRIDES_PATH,
@@ -155,6 +159,100 @@ def apply_overrides(
           f"({replaced} replaced, {added} new)")
 
     return entries, variants
+
+
+# ---------------------------------------------------------------------------
+# Dataset filters
+# ---------------------------------------------------------------------------
+
+
+_THAI_BASE_CHARS = re.compile(r"[\u0E01-\u0E39\u0E40-\u0E44\u0E47\u0E33]")
+
+
+def _thai_base_len(word: str) -> int:
+    """Count Thai characters excluding tone marks and thanthakhat."""
+    return len(_THAI_BASE_CHARS.findall(word))
+
+
+def filter_dataset(
+    entries: list[WordEntry],
+    variants: dict[str, list[str]],
+    overrides: dict[str, list[str]],
+    min_source_count: int = MIN_SOURCE_COUNT,
+    min_frequency: float = MIN_FREQUENCY,
+    max_length_ratio: float = MAX_LENGTH_RATIO,
+) -> tuple[list[WordEntry], dict[str, list[str]]]:
+    """Apply quality filters to the word list after variant generation.
+
+    Filters applied in order:
+      1. Source count: words must appear in >= min_source_count corpora.
+         Words from pythainlp-only and override words are exempt.
+      2. Frequency: words must have frequency >= min_frequency.
+         Override words are exempt.
+      3. Romanization sanity: words where
+         (thai_base_len / min_romanization_len) > max_length_ratio
+         are removed as likely TLTK failures. Override words are exempt.
+
+    Returns:
+        Filtered (entries, variants) tuple.
+    """
+    override_words = set(overrides.keys())
+    before = len(entries)
+
+    filtered: list[WordEntry] = []
+    removed_source = 0
+    removed_freq = 0
+    removed_ratio = 0
+    removed_empty = 0
+
+    for entry in entries:
+        word = entry.word
+        is_override = word in override_words
+
+        # Filter 1: source count (pythainlp-only and overrides exempt)
+        if not is_override:
+            is_pythainlp_only = entry.sources == {"pythainlp"}
+            if not is_pythainlp_only and len(entry.sources) < min_source_count:
+                removed_source += 1
+                continue
+
+        # Filter 2: frequency (overrides exempt)
+        if not is_override and entry.frequency < min_frequency:
+            removed_freq += 1
+            continue
+
+        # Filter 3: romanization length ratio (overrides exempt)
+        if not is_override:
+            word_variants = variants.get(word, [])
+            if word_variants:
+                min_rom_len = min(len(r) for r in word_variants)
+                if min_rom_len > 0:
+                    base_len = _thai_base_len(word)
+                    ratio = base_len / min_rom_len
+                    if ratio > max_length_ratio:
+                        removed_ratio += 1
+                        continue
+
+        # Filter 4: remove words with zero romanization variants
+        if not variants.get(word, []):
+            removed_empty += 1
+            continue
+
+        filtered.append(entry)
+
+    # Clean up variants dict to match filtered entries
+    kept_words = {e.word for e in filtered}
+    filtered_variants = {w: v for w, v in variants.items() if w in kept_words}
+
+    print(f"\n  Dataset filtering:")
+    print(f"    Before:                {before:>8,} words")
+    print(f"    Removed (source < {min_source_count}):  {removed_source:>8,}")
+    print(f"    Removed (freq < {min_frequency:.0e}): {removed_freq:>8,}")
+    print(f"    Removed (ratio > {max_length_ratio}):  {removed_ratio:>8,}")
+    print(f"    Removed (0 variants):  {removed_empty:>8,}")
+    print(f"    After:                 {len(filtered):>8,} words")
+
+    return filtered, filtered_variants
 
 
 # Size of each chunk for chunked multiprocessing. A fresh process pool is
@@ -641,6 +739,14 @@ def main() -> None:
     overrides = load_overrides()
     if overrides:
         entries, variants = apply_overrides(entries, variants, overrides)
+
+    # -----------------------------------------------------------------------
+    # Apply dataset filters
+    # -----------------------------------------------------------------------
+    print(f"\n{'=' * 60}")
+    print("Dataset Filtering")
+    print(f"{'=' * 60}")
+    entries, variants = filter_dataset(entries, variants, overrides)
 
     # -----------------------------------------------------------------------
     # Step 3: Build and export trie dataset
