@@ -169,7 +169,11 @@ _register(CorpusInfo(
         # The HSE corpus does not have a single stable direct-download URL.
         # It may need to be obtained from web-corpora.net or academic sources.
         # This URL is a known mirror; update if it becomes unavailable.
-        "https://github.com/Wikipedia2008/Thai-Corpus/archive/refs/heads/master.zip",
+
+        # Github mirror is dead (repo removed)
+        # "https://github.com/Wikipedia2008/Thai-Corpus/archive/refs/heads/master.zip",
+
+        "https://www.kaggle.com/datasets/rtatman/hse-thai-corpus"
     ],
     size_estimate="~200 MB (compressed)",
     notes=(

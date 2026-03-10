@@ -1,0 +1,1283 @@
+# Manual romanization overrides for the trie pipeline.
+#
+# Words listed here are merged into the trie dataset after variant generation.
+# Use this for:
+#   - Legitimate words that TLTK cannot romanize (colloquial particles, slang)
+#   - Words filtered out by aggressive regex rules but still valid
+#   - Loanwords with non-standard romanization (small-scale; bulk loanwords
+#     are deferred to pipeline/trie-loanwords)
+#
+# Format:
+#   thai_word:
+#     - romanization1
+#     - romanization2
+#
+# Words here bypass both the word filter and the variant generator.
+# Keep this file small and curated -- it is maintained by hand.
+
+# --- Manual romanizations (TLTK failed or needed correction) ---
+
+กี่ทอผ้า:
+  - keetorpah
+  - kitorpa
+
+ก้:
+  - ko
+  - koh
+  - kor
+
+กุ้ง:
+  - koong
+  - kung
+
+ข่ะ:
+  - ka
+  - kah
+
+ค้ะ:
+  - ka
+  - kah
+
+คุ้ม:
+  - kum
+  - koom
+
+คํ่าๆ:
+  - kum
+  - koom
+
+ง่อกแง่ก:
+  - ngokngaek
+
+จ่ะ:
+  - ja
+
+ซั้ก:
+  - sak
+  - suk
+
+ซ่อก:
+  - sok
+
+น้ะ:
+  - na
+
+น้ะค้ะ:
+  - naka
+  - nahkah
+
+นํ้า:
+  - nam
+  - nahm
+
+ป่ะ:
+  - pa
+  - pah
+
+ปุ่น:
+  - poon
+  - pun
+
+ม้ะ:
+  - ma
+
+รัฐาธิปัตย์:
+  - ratthathipad
+
+รู้:
+  - ru
+  - ruu
+  - roo
+
+ล่อกแล่ก:
+  - loklaek
+
+ล้ะ:
+  - la
+  - lah
+
+ศรีอยุูธยา:
+  - siayutthaya
+  - sriayutthaya
+
+สัมปชญัญะ:
+  - sampachanya
+
+หง่ะ:
+  - nga
+
+หล่ะ:
+  - la
+  - lah
+
+หว่ะ:
+  - wa
+  - wah
+
+อยู่:
+  - yu
+  - yuu
+  - yoo
+
+อ่ะ:
+  - a
+  - ah
+
+เด่ะ:
+  - de
+  - dae
+
+เบคอน:
+  - bekon
+  - bakon
+  - baekon
+
+เบสิก:
+  - besik
+  - basik
+  - baesik
+
+เมจิก:
+  - mejik
+  - majik
+  - maejik
+
+เมจิค:
+  - mejik
+  - majik
+  - maejik
+
+เรซิ่น:
+  - resin
+  - raesin
+
+เริ่ด:
+  - reud
+
+เลสิก:
+  - lasik
+  - lesik
+
+แซ่ด:
+  - zaed
+  - saed
+
+แซ่บ:
+  - zaeb
+  - saeb
+
+แน่บ:
+  - naeb
+  - nab
+
+แมนฯยู:
+  - manyu
+  - maenyu
+  - maenyuu
+  - maenyoo
+
+แว่บ:
+  - wab
+  - waeb
+
+# --- Accepted generated variants (filtered by word rules but legitimate) ---
+
+กก:
+  - gog
+  - gohg
+  - gohk
+  - gok
+  - kog
+  - kohg
+  - kohk
+  - kok
+
+กี:
+  - gee
+  - gi
+  - gii
+  - kee
+  - ki
+  - kii
+
+กี่:
+  - gee
+  - gi
+  - gii
+  - kee
+  - ki
+  - kii
+
+กี้:
+  - gee
+  - gi
+  - gii
+  - kee
+  - ki
+  - kii
+
+ก็:
+  - gaw
+  - go
+  - goh
+  - gor
+  - kaw
+  - ko
+  - koh
+  - kor
+
+ขิ:
+  - khi
+  - ki
+
+ขี:
+  - kee
+  - khee
+  - khi
+  - khii
+  - ki
+  - kii
+
+ขี่:
+  - kee
+  - khee
+  - khi
+  - khii
+  - ki
+  - kii
+
+ขี้:
+  - kee
+  - khee
+  - khi
+  - khii
+  - ki
+  - kii
+
+คิ:
+  - khi
+  - ki
+
+คี:
+  - kee
+  - khee
+  - khi
+  - khii
+  - ki
+  - kii
+
+คี่:
+  - kee
+  - khee
+  - khi
+  - khii
+  - ki
+  - kii
+
+งง:
+  - ngohng
+  - ngong
+
+งิ:
+  - ngi
+
+งี:
+  - ngee
+  - ngi
+  - ngii
+
+งี้:
+  - ngee
+  - ngi
+  - ngii
+
+จิ:
+  - chi
+  - ji
+
+จี:
+  - chee
+  - chi
+  - chii
+  - jee
+  - ji
+  - jii
+
+จี่:
+  - chee
+  - chi
+  - chii
+  - jee
+  - ji
+  - jii
+
+จี้:
+  - chee
+  - chi
+  - chii
+  - jee
+  - ji
+  - jii
+
+ฉี่:
+  - chee
+  - chi
+  - chii
+  - shee
+  - shi
+  - shii
+
+ชิ:
+  - chi
+  - shi
+
+ชี:
+  - chee
+  - chi
+  - chii
+  - shee
+  - shi
+  - shii
+
+ชี่:
+  - chee
+  - chi
+  - chii
+  - shee
+  - shi
+  - shii
+
+ชี้:
+  - chee
+  - chi
+  - chii
+  - shee
+  - shi
+  - shii
+
+ซิ:
+  - si
+
+ซี:
+  - see
+  - si
+  - sii
+
+ซี่:
+  - see
+  - si
+  - sii
+
+ซึ:
+  - seu
+  - sue
+  - suh
+
+ฌี:
+  - chee
+  - chi
+  - chii
+  - shee
+  - shi
+  - shii
+
+ญิ:
+  - yi
+
+ญี:
+  - yee
+  - yi
+  - yii
+
+ฐิ:
+  - thi
+  - ti
+
+ฐี:
+  - tee
+  - thee
+  - thi
+  - thii
+  - ti
+  - tii
+
+ณิ:
+  - ni
+
+ณี:
+  - nee
+  - ni
+  - nii
+
+ดิ:
+  - di
+
+ดิ้:
+  - di
+
+ดี:
+  - dee
+  - di
+  - dii
+
+ดี่:
+  - dee
+  - di
+  - dii
+
+ดี้:
+  - dee
+  - di
+  - dii
+
+ติ:
+  - dti
+  - ti
+
+ตี:
+  - dtee
+  - dti
+  - dtii
+  - tee
+  - ti
+  - tii
+
+ตี่:
+  - dtee
+  - dti
+  - dtii
+  - tee
+  - ti
+  - tii
+
+ตี้:
+  - dtee
+  - dti
+  - dtii
+  - tee
+  - ti
+  - tii
+
+ตี้ๆ:
+  - dtee
+  - dti
+  - dtii
+  - tee
+  - ti
+  - tii
+
+ถิ:
+  - thi
+  - ti
+
+ถี่:
+  - tee
+  - thee
+  - thi
+  - thii
+  - ti
+  - tii
+
+ถี่ๆ:
+  - tee
+  - thee
+  - thi
+  - thii
+  - ti
+  - tii
+
+ทิ:
+  - thi
+  - ti
+
+ที:
+  - tee
+  - thee
+  - thi
+  - thii
+  - ti
+  - tii
+
+ที่:
+  - tee
+  - thee
+  - thi
+  - thii
+  - ti
+  - tii
+
+ธิ:
+  - thi
+  - ti
+
+ธี:
+  - tee
+  - thee
+  - thi
+  - thii
+  - ti
+  - tii
+
+ธี่:
+  - tee
+  - thee
+  - thi
+  - thii
+  - ti
+  - tii
+
+นิ:
+  - ni
+
+นิ่:
+  - ni
+
+นี:
+  - nee
+  - ni
+  - nii
+
+นี่:
+  - nee
+  - ni
+  - nii
+
+นี้:
+  - nee
+  - ni
+  - nii
+
+บี:
+  - bee
+  - bi
+  - bii
+
+บี่:
+  - bee
+  - bi
+  - bii
+
+บี้:
+  - bee
+  - bi
+  - bii
+
+บ่:
+  - baw
+  - bo
+  - boh
+  - bor
+
+ปิ:
+  - bpi
+  - pi
+
+ปี:
+  - bpee
+  - bpi
+  - bpii
+  - pee
+  - pi
+  - pii
+
+ปี่:
+  - bpee
+  - bpi
+  - bpii
+  - pee
+  - pi
+  - pii
+
+ปี้:
+  - bpee
+  - bpi
+  - bpii
+  - pee
+  - pi
+  - pii
+
+ผิ:
+  - phi
+  - pi
+
+ผี:
+  - pee
+  - phee
+  - phi
+  - phii
+  - pi
+  - pii
+
+ฝี:
+  - fee
+  - fi
+  - fii
+
+พิ:
+  - phi
+  - pi
+
+พี:
+  - pee
+  - phee
+  - phi
+  - phii
+  - pi
+  - pii
+
+พี่:
+  - pee
+  - phee
+  - phi
+  - phii
+  - pi
+  - pii
+
+พี้:
+  - pee
+  - phee
+  - phi
+  - phii
+  - pi
+  - pii
+
+ฟิ:
+  - fi
+
+ฟี:
+  - fee
+  - fi
+  - fii
+
+ฟี่:
+  - fee
+  - fi
+  - fii
+
+มิ:
+  - mi
+
+มี:
+  - mee
+  - mi
+  - mii
+
+มี่:
+  - mee
+  - mi
+  - mii
+
+มี้:
+  - mee
+  - mi
+  - mii
+
+ยิ:
+  - yi
+
+ยี:
+  - yee
+  - yi
+  - yii
+
+ยี่:
+  - yee
+  - yi
+  - yii
+
+ยี้:
+  - yee
+  - yi
+  - yii
+
+ริ:
+  - ri
+
+รี:
+  - ree
+  - ri
+  - rii
+
+รี้:
+  - ree
+  - ri
+  - rii
+
+รึ:
+  - reu
+  - rue
+  - ruh
+
+ฤๅ:
+  - reu
+  - rue
+  - ruee
+  - ruh
+
+ลิ:
+  - li
+
+ลี:
+  - lee
+  - li
+  - lii
+
+ลี่:
+  - lee
+  - li
+  - lii
+
+ลี้:
+  - lee
+  - li
+  - lii
+
+ฦๅ:
+  - leu
+  - lue
+  - luee
+  - luh
+
+วิ:
+  - vi
+  - wi
+
+วี:
+  - vee
+  - vi
+  - vii
+  - wee
+  - wi
+  - wii
+
+วี่:
+  - vee
+  - vi
+  - vii
+  - wee
+  - wi
+  - wii
+
+วี้:
+  - vee
+  - vi
+  - vii
+  - wee
+  - wi
+  - wii
+
+ศิ:
+  - si
+
+ศี:
+  - see
+  - si
+  - sii
+
+ษี:
+  - see
+  - si
+  - sii
+
+สิ:
+  - si
+
+สิ้:
+  - si
+
+สี:
+  - see
+  - si
+  - sii
+
+สี่:
+  - see
+  - si
+  - sii
+
+สี้:
+  - see
+  - si
+  - sii
+
+สึ:
+  - seu
+  - sue
+  - suh
+
+หิ:
+  - hi
+
+หี:
+  - hee
+  - hi
+  - hii
+
+หึ:
+  - heu
+  - hue
+  - huh
+
+หึๆ:
+  - heu
+  - hue
+  - huh
+
+ออ:
+  - aw
+  - o
+  - oh
+  - or
+
+อิ:
+  - i
+
+อิๆ:
+  - i
+
+อี:
+  - ee
+  - i
+  - ii
+
+อี่:
+  - ee
+  - i
+  - ii
+
+อี้:
+  - ee
+  - i
+  - ii
+
+อึ:
+  - eu
+  - ue
+  - uh
+
+ฮิ:
+  - hi
+
+ฮี:
+  - hee
+  - hi
+  - hii
+
+ฮี่ๆ:
+  - hee
+  - hi
+  - hii
+
+ฮี้:
+  - hee
+  - hi
+  - hii
+
+ฮึ:
+  - heu
+  - hue
+  - huh
+
+กทม:
+  - bkk
+  - gortormor
+  - gotomo
+  - kortormor
+  - kotomo
+
+ปชช:
+  - prachachon
+  - prashashon
+
+เบตง:
+  - betong
+  - baetong
+
+เอนไซม์:
+  - enzyme
+  - ensaim
+  - enzaim
+
+อิมแพค:
+  - impact
+  - impaek
+  - impak
+
+อุตส่าห์:
+  - ootsah
+  - ootsa
+  - utsah
+  - utsa
+
+เอนจิน:
+  - engine
+  - enjin
+
+เอวบาง:
+  - aewbang
+
+เวชศาสตร์:
+  - vaechasat
+  - vaychasat
+  - vechasat
+  - veechasat
+  - vehchasat
+  - waechasat
+  - waychasat
+  - wechasat
+  - weechasat
+  - wehchasat
+
+คอนเฟิร์ม:
+  - confirm
+  - khonferm
+  - khonfeum
+  - konferm
+  - konfeum
+
+สุรศักดิ์:
+  - soorasak
+  - surasak
+  - surasakd
+
+คอนเซ็ปต์:
+  - concept
+  - konsept
+  - khonsept
+  - konsep
+  - khonsep
+
+คอนเซปต์:
+  - concept
+  - konsept
+  - khonsept
+  - konsep
+  - khonsep
+
+โอษฐ์:
+  - ot
+  - oht
+
+จุลทรรศน์:
+  - choonlatat
+  - chulatat
+  - joonlatat
+  - julatat
+
+เรนเจอร์:
+  - ranger
+  - raenjer
+  - renjer
+  - rehnjer
+
+มิกเซอร์:
+  - mixer
+  - mikser
+
+พาวเวอร์:
+  - power
+  - pawer
+  - pauwer
+
+วินโดวส์:
+  - windows
+  - windo
+  - windoh
+  - window
+  - vindo
+  - vindoh
+  - vindow
+
+ทาวเวอร์:
+  - tower
+  - tawer
+
+สิบเอ็ด:
+  - sibaed
+  - sibaet
+  - sibed
+  - sibet
+  - sipaed
+  - sipaet
+  - siped
+  - sipet
+
+พิณพาทย์:
+  - phinpad
+  - pinpad
+  - phinpaat
+  - pinpaat
+
+นาฏศิลป์:
+  - nadtasin
+  - naadtasin
+  - nadtasilp
+
+โภคภัณฑ์:
+  - phokapant
+  - pokapant
+  - pohkapant
+
+เวนเดอร์:
+  - vendor
+  - vender
+  - wender
+
+เวชภัณฑ์:
+  - vaechapant
+  - vaychapant
+  - vechapant
+  - veechapant
+  - vehchapant
+  - waechapant
+  - waychapant
+  - wechapant
+  - weechapant
+  - wehchapant
+
+รากศัพท์:
+  - raksapt
+  - raaksapt
+  - rahksapt
+
+ลีดเดอร์:
+  - leader
+  - leeder
+  - liider
+
+วินเซนต์:
+  - vincent
+  - wincent
+
+พาร์ทไทม์:
+  - parttime
+  - pattaim
+  - paattaim
+  - parttaim
+
+อาร์:
+  - ar
+
+เมคอัพ:
+  - makeup
+  - mekup
+  - maykup
+  - mehkup
+  - mekap
+  - maykap
+  - mehkap
+
+เอะ:
+  - e
+  - eh
+
+ออร์:
+  - or
+
+โอะ:
+  - o
+  - oh
+
+ปิคอัพ:
+  - pickup
+  - pikup
+  - pikap
+
+ยูนนาน:
+  - yunnan
+  - yunan
+  - yoonan
+  - younan
+  - yuunan
+
+คอนโซล:
+  - console
+  - konsohn
+  - konsol
+
+เรนโบว์:
+  - rainbow
+  - raenbow
+  - renbow
+  - rehnbow
+  - raynbow
+
+เบงกอล:
+  - bengal
+  - bengol
+
+รอมฎอน:
+  - ramadan
+  - romdon
+
+บายพาส:
+  - bypass
+  - baipas
+  - baipass
+
+รามเทพ:
+  - rammatep
+  - rammathep
+
+ข้ามฟาก:
+  - kaamfaak
+  - kahmfahk
+  - karmfark
+  - khamfhak
+  - khaamfhaak
+
+จานชาม:
+  - jaanchaam
+  - jancham
+  - jarncharm
+
+วีลแชร์:
+  - wheelchair
+
+สาปแช่ง:
+  - sapchaeng
+  - saapchaeng
+  - sahpchaeng
+
+เนลสัน:
+  - nelson
+
+พินอิน:
+  - pinyin
+
+ลาดชัน:
+  - ladchan
+  - laadchan
+
+พิกเซล:
+  - pixel
+  - piksel
+
+ลากจูง:
+  - lakjoong
+  - laakjoong
+  - lahkjoong
+  - larkjoong
+
+มีดพับ:
+  - meedpab
+  - meedpub
+  - miidpab
+  - miidpub
+
+โหยหิว:
+  - hoihiw
+  - hoihiu
+
+บอยคอต:
+  - boycott
+  - boikot
+  - boykot
+
+ตีบตัน:
+  - dteebtan
+  - dteebtun
+  - dtiibtan
+  - dtiibtun
+  - teebtan
+  - teebtun
+  - tiibtan
+  - tiibtun
+
+สมณศักดิ์:
+  - samanasakd
+  - samanasak
+  - sumannasakd
+  - sumannasak
+
+ทันตแพทย์:
+  - tantapaet
+  - tantapet
+  - tuntapaet
+  - tuntapet
+
+เหมาะ:
+  - mho
+  - mhoa
+  - mhor
+
+เอ็กซ์:
+  - ex
+  - eks
+  - ek
+
+อินทร์:
+  - in
+  - intr
+
+มอคค่า:
+  - mocca
+  - mokka
+
+เซลฟี่:
+  - selfie
+  - selfi
+
+ปีกไก่:
+  - bpeekkai
+  - bpiikkai
+  - peekkai
+  - piikkai
+
+คุ้กกี้:
+  - cookie
+  - kookki
+  - kookkee
+  - kukki
+  - kukkee
+  - kookgi
+  - kookgee
+  - kukgi
+  - kukgee
+
+เอะอะ:
+  - ehah
+
+สิบห้า:
+  - sibha
+  - sibhaa
+
+มูฟวี่:
+  - movie
+
+วอดก้า:
+  - vodka
+  - wodka
+
+เมกกะ:
+  - mecca
+  - mekka
+
+เหยาะ:
+  - yoa
+  - yor
+
+ภูตผี:
+  - phootpee
+  - phootpii
+  - phutpee
+  - phutpii
+  - phuutpee
+  - phuutpii
+  - pootpee
+  - pootpii
+  - puutpee
+  - puutpii
+
+กรีนพีซ:
+  - greenpeace
+  - greenpees
+  - griinpiis
+
+เหอหนาน:
+  - henan
+  - henaan
+  - henahn
+  - hernan
+  - hernaan
+  - hernahn
