@@ -55,6 +55,25 @@ _REPEATED_CHAR_RE = re.compile(r"(.)\1{3,}")
 # Detects maiyamok (ๆ) repetition patterns — sequences of just ๆ
 _MAIYAMOK_ONLY_RE = re.compile(r"^[\u0e46]+$")
 
+# Tokens with no Thai consonants (only vowels, tone marks, combining marks).
+# Always tokenization artifacts (e.g. าาา, ะะ, ็็).
+_NO_CONSONANT_RE = re.compile(r"^[\u0e2f-\u0e5f]+$")
+
+# Tokens where every character is the same (e.g. ดดด, กกก).
+# Legitimate cases like กก, งง, ออ are handled via overrides.
+def _is_single_char_repeat(token: str) -> bool:
+    return len(set(token)) == 1
+
+# Single consonant + only above/below vowels and marks (no full vowel structure).
+# Catches fragments like ก้, ม่, ริ, ดี that are single-consonant tokens with
+# sara i/ii (ิ ี), sara ue/uee (ึ ื), mai han akat (ั), pinthu (ฺ),
+# and any tone marks / thanthakhat / other marks (U+0E3A-0E3F, U+0E45-0E5F).
+# Legitimate words caught by this rule are handled via overrides.
+_SINGLE_CONSONANT_FRAGMENT_RE = re.compile(
+    r"^[\u0e01-\u0e2e][\u0e31\u0e34\u0e35\u0e36\u0e37\u0e3a-\u0e3f\u0e45-\u0e5f]+$"
+)
+
+
 
 def _is_valid_thai_word(token: str) -> bool:
     """Check if a token is a valid Thai word for our vocabulary."""
@@ -77,6 +96,18 @@ def _is_valid_thai_word(token: str) -> bool:
 
     # Reject tokens with colloquial tone marks (๊, ๋) — TLTK can't handle these
     if any(c in _COLLOQUIAL_TONE_MARKS for c in token):
+        return False
+
+    # Reject tokens with no Thai consonants (pure vowel/mark sequences)
+    if _NO_CONSONANT_RE.fullmatch(token):
+        return False
+
+    # Reject single repeating character tokens (e.g. ดดด, กกก, ะะะ)
+    if _is_single_char_repeat(token):
+        return False
+
+    # Reject single-consonant + mark fragments (e.g. ก้, ม่, ดี, ริ)
+    if _SINGLE_CONSONANT_FRAGMENT_RE.fullmatch(token):
         return False
 
     return True
@@ -170,30 +201,60 @@ def read_prachathai() -> Counter:
     return counter
 
 
-def read_thwiki() -> Counter:
-    """Read Thai Wikipedia XML dump (bz2 compressed).
+def _detect_mediawiki_namespace(fileobj) -> str:
+    """Detect the MediaWiki XML namespace from the root element.
 
-    Streams the compressed XML, extracts article text from <text> elements,
+    Reads the first few elements to find the namespace URI, then returns
+    it in {uri} format. Falls back to export-0.10 if detection fails.
+    """
+    fallback = "{http://www.mediawiki.org/xml/export-0.10/}"
+    try:
+        for event, elem in ET.iterparse(fileobj, events=("start",)):
+            # The root <mediawiki> element carries the namespace
+            tag = elem.tag
+            if tag.startswith("{"):
+                ns = tag[: tag.index("}") + 1]
+                return ns
+            break
+    except ET.ParseError:
+        pass
+    return fallback
+
+
+def read_thwiki() -> Counter:
+    """Read Thai Wikipedia XML dump.
+
+    Supports both uncompressed XML (preferred, faster) and bz2-compressed
+    files. Streams the XML, extracts article text from <text> elements,
     applies lightweight wikitext cleanup, then tokenizes.
     """
-    # Look for the bz2 file
     wiki_dir = RAW_DATA_DIR / "thwiki"
+    xml_path = wiki_dir / "thwiki-latest-pages-articles.xml"
     bz2_path = wiki_dir / "thwiki-latest-pages-articles.xml.bz2"
 
-    if not bz2_path.exists():
-        print(f"    WARNING: {bz2_path} not found")
+    # Prefer uncompressed XML (faster to parse)
+    if xml_path.exists():
+        source_path = xml_path
+        open_fn = lambda: open(xml_path, "r", encoding="utf-8")  # noqa: E731
+    elif bz2_path.exists():
+        source_path = bz2_path
+        open_fn = lambda: bz2.open(bz2_path, "rt", encoding="utf-8")  # noqa: E731
+    else:
+        print(f"    WARNING: No thwiki dump found in {wiki_dir}")
+        print(f"    Expected: {xml_path.name} or {bz2_path.name}")
         print(f"    Download with: python -m src.data.download thwiki")
         return Counter()
 
     counter: Counter = Counter()
     article_count = 0
 
-    print(f"    Streaming from {bz2_path.name} (this may take a while)...")
+    print(f"    Streaming from {source_path.name} (this may take a while)...")
 
-    # MediaWiki XML namespace
-    ns = "{http://www.mediawiki.org/xml/export-0.10/}"
+    # Auto-detect MediaWiki XML namespace from the root element
+    with open_fn() as f:
+        ns = _detect_mediawiki_namespace(f)
 
-    with bz2.open(bz2_path, "rt", encoding="utf-8") as f:
+    with open_fn() as f:
         # Use iterparse to stream without loading full XML into memory
         context = ET.iterparse(f, events=("end",))
         for event, elem in context:
@@ -303,7 +364,9 @@ def _check_source_available(name: str) -> bool:
         return True  # Always available (built-in)
     corpus_dir = RAW_DATA_DIR / name
     if name == "thwiki":
-        return (corpus_dir / "thwiki-latest-pages-articles.xml.bz2").exists()
+        xml_path = corpus_dir / "thwiki-latest-pages-articles.xml"
+        bz2_path = corpus_dir / "thwiki-latest-pages-articles.xml.bz2"
+        return xml_path.exists() or bz2_path.exists()
     return corpus_dir.exists() and any(corpus_dir.iterdir())
 
 

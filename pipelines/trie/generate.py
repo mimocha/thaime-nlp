@@ -9,6 +9,9 @@ Usage:
     python -m pipelines.trie.generate --sources wisesight,wongnai,pythainlp
     python -m pipelines.trie.generate --workers 8
     python -m pipelines.trie.generate --wordlist-only
+    python -m pipelines.trie.generate --variant-only
+    python -m pipelines.trie.generate --export-only
+    python -m pipelines.trie.generate --no-cache
 """
 
 from __future__ import annotations
@@ -24,11 +27,14 @@ from datetime import datetime, timezone
 from multiprocessing import get_context
 from pathlib import Path
 
+import yaml
+
 from pipelines.trie.config import (
     LOG_INTERVAL,
     MAX_VARIANTS_PER_WORD,
     NUM_WORKERS,
     OUTPUT_DIR,
+    OVERRIDES_PATH,
     SOURCES,
 )
 from pipelines.trie.wordlist import (
@@ -83,6 +89,72 @@ def _load_variants_checkpoint(path: Path) -> dict[str, list[str]]:
     """Load variant results from a checkpoint file."""
     with open(path, encoding="utf-8") as f:
         return json.load(f)
+
+
+# ---------------------------------------------------------------------------
+# Manual overrides
+# ---------------------------------------------------------------------------
+
+
+def load_overrides(path: Path = OVERRIDES_PATH) -> dict[str, list[str]]:
+    """Load manual romanization overrides from YAML.
+
+    Returns:
+        Dict mapping thai_word -> list of romanization variants.
+        Returns empty dict if the file doesn't exist or has no entries.
+    """
+    if not path.exists():
+        return {}
+
+    with open(path, encoding="utf-8") as f:
+        raw = yaml.safe_load(f)
+
+    if not raw or not isinstance(raw, dict):
+        return {}
+
+    overrides: dict[str, list[str]] = {}
+    for word, romanizations in raw.items():
+        if isinstance(romanizations, list) and romanizations:
+            overrides[str(word)] = [str(r) for r in romanizations]
+
+    return overrides
+
+
+def apply_overrides(
+    entries: list[WordEntry],
+    variants: dict[str, list[str]],
+    overrides: dict[str, list[str]],
+) -> tuple[list[WordEntry], dict[str, list[str]]]:
+    """Merge manual overrides into the word list and variants.
+
+    Override words that already exist in entries get their variants
+    replaced. Override words NOT in entries are appended (they may
+    have been removed by word filters).
+
+    Returns:
+        Updated (entries, variants) tuple.
+    """
+    if not overrides:
+        return entries, variants
+
+    existing_words = {e.word for e in entries}
+    added = 0
+
+    for word, romanizations in overrides.items():
+        variants[word] = romanizations
+        if word not in existing_words:
+            # Append as a low-frequency entry from the "overrides" source
+            entries.append(WordEntry(
+                word=word, frequency=0.0, sources={"overrides"},
+            ))
+            existing_words.add(word)
+            added += 1
+
+    replaced = len(overrides) - added
+    print(f"  Manual overrides applied: {len(overrides)} words "
+          f"({replaced} replaced, {added} new)")
+
+    return entries, variants
 
 
 # Size of each chunk for chunked multiprocessing. A fresh process pool is
@@ -413,10 +485,27 @@ def main() -> None:
         default=MAX_VARIANTS_PER_WORD,
         help=f"Max variants per word (default: {MAX_VARIANTS_PER_WORD})",
     )
-    parser.add_argument(
+    # Mutually exclusive step flags
+    step_group = parser.add_mutually_exclusive_group()
+    step_group.add_argument(
         "--wordlist-only",
         action="store_true",
-        help="Only assemble the word list, skip variant generation",
+        help="Run step 1 only (word list assembly). Always rebuilds.",
+    )
+    step_group.add_argument(
+        "--variant-only",
+        action="store_true",
+        help="Run step 2 only (variant generation). Requires cached wordlist.csv.",
+    )
+    step_group.add_argument(
+        "--export-only",
+        action="store_true",
+        help="Run steps 3-4 only (export). Requires cached wordlist.csv and variants.json.",
+    )
+    parser.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="Ignore cached intermediate files (wordlist.csv, variants.json), forcing a full rebuild.",
     )
     parser.add_argument(
         "--output-dir",
@@ -451,43 +540,107 @@ def main() -> None:
     variant_logger.addHandler(file_handler)
     print(f"  Variant strategy log: {log_path}")
 
+    wordlist_path = output_dir / "wordlist.csv"
+    variants_path = output_dir / "variants.json"
+    checkpoint_path = output_dir / ".variants_checkpoint.json"
+
+    run_step1 = not args.variant_only and not args.export_only
+    run_step2 = not args.wordlist_only and not args.export_only
+    run_export = not args.wordlist_only and not args.variant_only
+
     # -----------------------------------------------------------------------
     # Step 1: Assemble word list
     # -----------------------------------------------------------------------
-    print("=" * 60)
-    print("Step 1: Word List Assembly")
-    print("=" * 60)
+    if run_step1:
+        print("=" * 60)
+        print("Step 1: Word List Assembly")
+        print("=" * 60)
 
-    wordlist_path = output_dir / "wordlist.csv"
-    if wordlist_path.exists() and not args.wordlist_only:
-        print(f"  Found existing word list at {wordlist_path}")
-        entries = load_wordlist_csv(wordlist_path)
-        print(f"  Loaded {len(entries):,} words from cache")
-        print("  (use --wordlist-only to regenerate)")
+        use_wordlist_cache = (
+            wordlist_path.exists()
+            and not args.wordlist_only
+            and not args.no_cache
+        )
+        if use_wordlist_cache:
+            print(f"  Found existing word list at {wordlist_path}")
+            entries = load_wordlist_csv(wordlist_path)
+            print(f"  Loaded {len(entries):,} words from cache")
+            wordlist_was_cached = True
+        else:
+            entries = assemble_wordlist(sources=sources)
+            if not entries:
+                print("ERROR: No words assembled. Check that corpora are downloaded.")
+                sys.exit(1)
+            save_wordlist_csv(entries, wordlist_path)
+            wordlist_was_cached = False
+
+        if args.wordlist_only:
+            print("\n--wordlist-only: Stopping after word list assembly.")
+            return
     else:
-        entries = assemble_wordlist(sources=sources)
-        if not entries:
-            print("ERROR: No words assembled. Check that corpora are downloaded.")
+        # --variant-only or --export-only: load cached wordlist
+        if not wordlist_path.exists():
+            print(f"ERROR: Cached word list not found at {wordlist_path}")
+            print("  Run without --variant-only/--export-only first to generate it.")
             sys.exit(1)
-        save_wordlist_csv(entries, wordlist_path)
-
-    if args.wordlist_only:
-        print("\n--wordlist-only: Stopping after word list assembly.")
-        return
+        print("=" * 60)
+        print("Loading cached word list")
+        print("=" * 60)
+        entries = load_wordlist_csv(wordlist_path)
+        print(f"  Loaded {len(entries):,} words from {wordlist_path}")
+        wordlist_was_cached = True
 
     # -----------------------------------------------------------------------
     # Step 2: Variant generation
     # -----------------------------------------------------------------------
-    print(f"\n{'=' * 60}")
-    print("Step 2: Variant Generation")
-    print(f"{'=' * 60}")
+    if run_step2:
+        print(f"\n{'=' * 60}")
+        print("Step 2: Variant Generation")
+        print(f"{'=' * 60}")
 
-    variants = run_variant_generation(
-        entries,
-        max_variants=args.max_variants,
-        num_workers=args.workers,
-        checkpoint_path=output_dir / ".variants_checkpoint.json",
-    )
+        # Check for cached variants.json (skip if --no-cache or wordlist was rebuilt)
+        use_variant_cache = (
+            variants_path.exists()
+            and not args.no_cache
+            and not args.variant_only  # --variant-only always regenerates
+            and wordlist_was_cached
+        )
+        if use_variant_cache:
+            print(f"  Found existing variants at {variants_path}")
+            variants = _load_variants_checkpoint(variants_path)
+            print(f"  Loaded {len(variants):,} word variants from cache")
+        else:
+            variants = run_variant_generation(
+                entries,
+                max_variants=args.max_variants,
+                num_workers=args.workers,
+                checkpoint_path=checkpoint_path,
+            )
+            # Save persistent variants file
+            _save_variants_checkpoint(variants, variants_path)
+            print(f"  Variants saved to {variants_path}")
+
+        if args.variant_only:
+            print("\n--variant-only: Stopping after variant generation.")
+            return
+    else:
+        # --export-only: load cached variants
+        if not variants_path.exists():
+            print(f"ERROR: Cached variants not found at {variants_path}")
+            print("  Run --variant-only or full pipeline first to generate it.")
+            sys.exit(1)
+        print(f"\n{'=' * 60}")
+        print("Loading cached variants")
+        print(f"{'=' * 60}")
+        variants = _load_variants_checkpoint(variants_path)
+        print(f"  Loaded {len(variants):,} word variants from {variants_path}")
+
+    # -----------------------------------------------------------------------
+    # Apply manual overrides
+    # -----------------------------------------------------------------------
+    overrides = load_overrides()
+    if overrides:
+        entries, variants = apply_overrides(entries, variants, overrides)
 
     # -----------------------------------------------------------------------
     # Step 3: Build and export trie dataset

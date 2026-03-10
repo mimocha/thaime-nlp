@@ -23,6 +23,12 @@ SOURCES: dict[str, bool] = {
 }
 
 # ---------------------------------------------------------------------------
+# Manual overrides — romanizations for words TLTK can't handle
+# ---------------------------------------------------------------------------
+
+OVERRIDES_PATH = Path(__file__).resolve().parent / "overrides.yaml"
+
+# ---------------------------------------------------------------------------
 # Variant generator settings
 # ---------------------------------------------------------------------------
 
@@ -35,7 +41,7 @@ MAX_VARIANTS_PER_WORD = 100  # Match benchmark generation setting
 # Number of worker processes for variant generation (0 = sequential).
 # Keep low to avoid OOM in memory-constrained environments (devcontainers).
 # Each forked worker carries a full copy of the TLTK runtime.
-NUM_WORKERS = 2
+NUM_WORKERS = 8
 
 # Progress logging interval (every N words)
 LOG_INTERVAL = 1000
