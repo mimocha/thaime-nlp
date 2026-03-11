@@ -8,6 +8,9 @@ Usage:
     python -m pipelines.trie.generate
     python -m pipelines.trie.generate --sources wisesight,wongnai,pythainlp
     python -m pipelines.trie.generate --workers 8
+    python -m pipelines.trie.generate --vocab-limit 10000 --min-sources 2
+    python -m pipelines.trie.generate --exclusion-list data/dictionaries/word_exclusions/exclusions-v1.0.0.txt
+    python -m pipelines.trie.generate --overrides data/dictionaries/word_overrides/overrides-v1.0.0.yaml
     python -m pipelines.trie.generate --wordlist-only
     python -m pipelines.trie.generate --variant-only
     python -m pipelines.trie.generate --export-only
@@ -31,6 +34,7 @@ from pathlib import Path
 import yaml
 
 from pipelines.trie.config import (
+    EXCLUSIONS_PATH,
     LOG_INTERVAL,
     MAX_LENGTH_RATIO,
     MAX_VARIANTS_PER_WORD,
@@ -40,6 +44,7 @@ from pipelines.trie.config import (
     OUTPUT_DIR,
     OVERRIDES_PATH,
     SOURCES,
+    VOCAB_LIMIT,
 )
 from pipelines.trie.wordlist import (
     WordEntry,
@@ -162,6 +167,62 @@ def apply_overrides(
 
 
 # ---------------------------------------------------------------------------
+# Word exclusion list
+# ---------------------------------------------------------------------------
+
+
+def load_exclusion_list(path: Path | None) -> set[str]:
+    """Load a word exclusion list from a plain-text file.
+
+    Each line is one Thai word. Lines starting with '#' are ignored.
+    Returns an empty set if path is None or the file doesn't exist.
+    """
+    if path is None:
+        return set()
+
+    if not path.exists():
+        print(f"  WARNING: Exclusion list not found at {path}")
+        return set()
+
+    words: set[str] = set()
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith("#"):
+                words.add(line)
+
+    return words
+
+
+def apply_exclusion_list(
+    entries: list[WordEntry],
+    exclusion_words: set[str],
+    override_words: set[str],
+) -> list[WordEntry]:
+    """Remove words on the exclusion list from entries.
+
+    Override words are exempt from exclusion.
+
+    Returns:
+        Filtered entries list.
+    """
+    if not exclusion_words:
+        return entries
+
+    before = len(entries)
+    filtered = [
+        e for e in entries
+        if e.word not in exclusion_words or e.word in override_words
+    ]
+    removed = before - len(filtered)
+
+    print(f"  Word exclusion list: {removed:,} words removed "
+          f"({len(exclusion_words):,} in list, overrides exempt)")
+
+    return filtered
+
+
+# ---------------------------------------------------------------------------
 # Dataset filters
 # ---------------------------------------------------------------------------
 
@@ -181,6 +242,7 @@ def filter_dataset(
     min_source_count: int = MIN_SOURCE_COUNT,
     min_frequency: float = MIN_FREQUENCY,
     max_length_ratio: float = MAX_LENGTH_RATIO,
+    vocab_limit: int = VOCAB_LIMIT,
 ) -> tuple[list[WordEntry], dict[str, list[str]]]:
     """Apply quality filters to the word list after variant generation.
 
@@ -192,6 +254,10 @@ def filter_dataset(
       3. Romanization sanity: words where
          (thai_base_len / min_romanization_len) > max_length_ratio
          are removed as likely TLTK failures. Override words are exempt.
+      4. Empty variants: words with zero romanization variants are removed.
+      5. Vocabulary limit: if vocab_limit > 0, keep only the top N words
+         by frequency after all other filters. Override words are always
+         kept regardless of the limit.
 
     Returns:
         Filtered (entries, variants) tuple.
@@ -240,6 +306,26 @@ def filter_dataset(
 
         filtered.append(entry)
 
+    after_filters = len(filtered)
+
+    # Filter 5: vocabulary limit — keep top N by frequency, overrides always kept
+    removed_vocab_limit = 0
+    if vocab_limit > 0 and len(filtered) > vocab_limit:
+        # Separate overrides from regular entries (overrides always kept)
+        override_entries = [e for e in filtered if e.word in override_words]
+        regular_entries = [e for e in filtered if e.word not in override_words]
+
+        # Sort regular entries by frequency (descending) and truncate
+        regular_entries.sort(key=lambda e: e.frequency, reverse=True)
+        # Account for override slots when computing how many regular words to keep
+        regular_limit = max(0, vocab_limit - len(override_entries))
+        removed_vocab_limit = max(0, len(regular_entries) - regular_limit)
+        regular_entries = regular_entries[:regular_limit]
+
+        # Re-sort the combined list by frequency (descending) for consistent ordering
+        filtered = override_entries + regular_entries
+        filtered.sort(key=lambda e: e.frequency, reverse=True)
+
     # Clean up variants dict to match filtered entries
     kept_words = {e.word for e in filtered}
     filtered_variants = {w: v for w, v in variants.items() if w in kept_words}
@@ -250,7 +336,11 @@ def filter_dataset(
     print(f"    Removed (freq < {min_frequency:.0e}): {removed_freq:>8,}")
     print(f"    Removed (ratio > {max_length_ratio}):  {removed_ratio:>8,}")
     print(f"    Removed (0 variants):  {removed_empty:>8,}")
-    print(f"    After:                 {len(filtered):>8,} words")
+    print(f"    After quality filters: {after_filters:>8,} words")
+    if vocab_limit > 0:
+        print(f"    Vocab limit:           {vocab_limit:>8,}")
+        print(f"    Removed (vocab limit): {removed_vocab_limit:>8,}")
+    print(f"    Final vocabulary:      {len(filtered):>8,} words")
 
     return filtered, filtered_variants
 
@@ -583,6 +673,35 @@ def main() -> None:
         default=MAX_VARIANTS_PER_WORD,
         help=f"Max variants per word (default: {MAX_VARIANTS_PER_WORD})",
     )
+    parser.add_argument(
+        "--vocab-limit",
+        type=int,
+        default=VOCAB_LIMIT,
+        help=f"Keep top N words by frequency after filtering (default: {VOCAB_LIMIT}, 0=no limit)",
+    )
+    parser.add_argument(
+        "--min-sources",
+        type=int,
+        default=MIN_SOURCE_COUNT,
+        help=f"Minimum corpus source count (default: {MIN_SOURCE_COUNT})",
+    )
+    parser.add_argument(
+        "--exclusion-list",
+        type=str,
+        default=str(EXCLUSIONS_PATH) if EXCLUSIONS_PATH else None,
+        help="Path to word exclusion list (default: from config, None=disabled)",
+    )
+    parser.add_argument(
+        "--no-exclusion-list",
+        action="store_true",
+        help="Disable word exclusion list even if configured",
+    )
+    parser.add_argument(
+        "--overrides",
+        type=str,
+        default=str(OVERRIDES_PATH),
+        help=f"Path to overrides YAML (default: {OVERRIDES_PATH})",
+    )
     # Mutually exclusive step flags
     step_group = parser.add_mutually_exclusive_group()
     step_group.add_argument(
@@ -736,9 +855,27 @@ def main() -> None:
     # -----------------------------------------------------------------------
     # Apply manual overrides
     # -----------------------------------------------------------------------
-    overrides = load_overrides()
+    overrides_path = Path(args.overrides)
+    overrides = load_overrides(overrides_path)
     if overrides:
         entries, variants = apply_overrides(entries, variants, overrides)
+
+    # -----------------------------------------------------------------------
+    # Apply word exclusion list
+    # -----------------------------------------------------------------------
+    exclusion_path = (
+        None if args.no_exclusion_list
+        else Path(args.exclusion_list) if args.exclusion_list
+        else None
+    )
+    exclusion_words = load_exclusion_list(exclusion_path)
+    if exclusion_words:
+        print(f"\n{'=' * 60}")
+        print("Word Exclusion List")
+        print(f"{'=' * 60}")
+        entries = apply_exclusion_list(
+            entries, exclusion_words, set(overrides.keys()),
+        )
 
     # -----------------------------------------------------------------------
     # Apply dataset filters
@@ -746,7 +883,11 @@ def main() -> None:
     print(f"\n{'=' * 60}")
     print("Dataset Filtering")
     print(f"{'=' * 60}")
-    entries, variants = filter_dataset(entries, variants, overrides)
+    entries, variants = filter_dataset(
+        entries, variants, overrides,
+        min_source_count=args.min_sources,
+        vocab_limit=args.vocab_limit,
+    )
 
     # -----------------------------------------------------------------------
     # Step 3: Build and export trie dataset

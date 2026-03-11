@@ -26,7 +26,15 @@ SOURCES: dict[str, bool] = {
 # Manual overrides — romanizations for words TLTK can't handle
 # ---------------------------------------------------------------------------
 
-OVERRIDES_PATH = Path(__file__).resolve().parent / "overrides.yaml"
+OVERRIDES_PATH = REPO_ROOT / "data" / "dictionaries" / "word_overrides" / "overrides-v0.4.2.yaml"
+
+# ---------------------------------------------------------------------------
+# Word exclusion list — LLM-generated list of words to drop
+# ---------------------------------------------------------------------------
+
+# Path to the approved exclusion list. Set to None to disable.
+# Generate with: python -m pipelines.trie.llm_filter generate
+EXCLUSIONS_PATH = REPO_ROOT / "data" / "dictionaries" / "word_exclusions" / "exclusions-v0.4.2.txt"
 
 # ---------------------------------------------------------------------------
 # Dataset filters — applied after variant generation and overrides
@@ -38,6 +46,10 @@ MIN_SOURCE_COUNT = 2
 
 # Minimum word frequency (after cross-source normalization).
 MIN_FREQUENCY = 5e-6
+
+# Vocabulary size limit — after all filters, keep the top N words by
+# frequency. 0 means no limit (keep all words that pass filters).
+VOCAB_LIMIT = 0
 
 # Romanization length-ratio threshold for sanity check.
 # Words where (thai_base_len / min_romanization_len) exceeds this ratio

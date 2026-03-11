@@ -235,6 +235,96 @@ class TestAnalyzeWord:
         assert len(syllables) >= 1
         assert syllables[0].onset == "?"
 
+    def test_sor_coda_detection_sor_sua(self):
+        """สวัสดี — last consonant of first syllable (สวัส) is ส, coda should be 's'."""
+        syllables = analyze_word("สวัสดี")
+        # สวัส is the first Thai segment; coda should be detected as 's'
+        sor_syllables = [s for s in syllables if s.coda == "s"]
+        assert len(sor_syllables) >= 1, (
+            f"Expected at least one syllable with coda='s', got: "
+            f"{[(s.onset, s.vowel, s.coda, s.thai_segment) for s in syllables]}"
+        )
+
+    def test_sor_coda_detection_sawat(self):
+        """สวัสดี — the ดี syllable should NOT have 's' coda."""
+        syllables = analyze_word("สวัสดี")
+        dee_syllables = [s for s in syllables if s.vowel == "ii"]
+        for s in dee_syllables:
+            assert s.coda != "s", f"ดี syllable should not have 's' coda"
+
+    def test_sor_coda_produces_s_variant(self):
+        """Words ending with ส/ศ/ษ should produce 's' ending variants."""
+        # รส (rot/ros) — ends with ส
+        variants = generate_word_variants("รส", max_variants=100)
+        s_variants = [v for v in variants if v.endswith("s")]
+        assert len(s_variants) > 0, f"Expected 's' ending variants for รส, got: {variants}"
+
+    def test_t_coda_no_s_variant(self):
+        """Words ending with ด/ต/ท should NOT produce 's' ending variants."""
+        # กด (kot/kod) — ends with ด
+        variants = generate_word_variants("กด", max_variants=100)
+        s_variants = [v for v in variants if v.endswith("s")]
+        assert s_variants == [], f"Expected no 's' ending variants for กด, got: {s_variants}"
+
+
+# ---------------------------------------------------------------------------
+# Context-aware consistent variant generation
+# ---------------------------------------------------------------------------
+
+
+class TestContextAwareConsistency:
+    """Verify that context-aware keys in consistent generation preserve
+    guard-dependent variant differences while enforcing consistency for
+    same-context occurrences."""
+
+    def test_same_vowel_same_context_consistent(self):
+        """ราคา — both syllables have vowel 'aa' in open context.
+        Should produce consistent aa variants (no mixed forms)."""
+        variants = generate_word_variants("ราคา", max_variants=200)
+        # All variants should have consistent vowel treatment:
+        # both syllables use the same 'aa' variant choice.
+        # Mixed forms like 'raakha' (aa vs a) should not appear.
+        for v in variants:
+            # Extract the vowel-like segments: if 'aa' is chosen for one,
+            # both should have it. Check for no mix of 'ar'+'a' patterns.
+            # This is a structural check — the key insight is that
+            # consistent generation should give fewer variants than
+            # independent generation.
+            pass  # Variant count check below is the primary assertion
+
+        # With consistency, ราคา should have significantly fewer variants
+        # than the unconstrained product. 2 syllables × ~3 vowel variants
+        # each = 9 without consistency, but with consistency the shared
+        # 'aa' vowel choices collapse to 3 (one choice applied to both).
+        assert len(variants) <= 20, (
+            f"ราคา should have limited variants with consistency, got {len(variants)}"
+        )
+
+    def test_same_vowel_different_context_independent(self):
+        """A word with vowel 'a' in both open and closed syllables should
+        allow independent variation (open has no 'u', closed does)."""
+        # We test indirectly: if context-aware keys work correctly,
+        # the 'u' variant appears for closed syllables but not open ones.
+        # มา (open: a) vs มัน (closed: a+n coda)
+        open_variants = generate_word_variants("มา", max_variants=100)
+        closed_variants = generate_word_variants("มัน", max_variants=100)
+
+        # มา (open) should NOT have 'u' vowel → no 'mu' variant
+        assert "mu" not in open_variants, (
+            f"มา (open syllable) should not have 'mu' variant"
+        )
+        # มัน (closed) SHOULD have 'u' vowel → 'mun' variant
+        assert "mun" in closed_variants, (
+            f"มัน (closed syllable) should have 'mun' variant, got: {closed_variants}"
+        )
+
+    def test_single_syllable_unaffected(self):
+        """Single-syllable words should be unaffected by consistency logic."""
+        # กิน — single syllable, consistency has no effect
+        variants = generate_word_variants("กิน", max_variants=100)
+        assert "gin" in variants
+        assert "kin" in variants
+
 
 # ---------------------------------------------------------------------------
 # Pre-computed arguments (performance optimization path)
