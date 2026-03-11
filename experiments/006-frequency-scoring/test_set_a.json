@@ -1,0 +1,576 @@
+{
+  "metadata": {
+    "description": "Common word ranking test set",
+    "source": "trie_dataset_sample_5k.json, top 2K by frequency, unambiguous inputs only",
+    "size": 70,
+    "date": "2026-03-11",
+    "frequency_bands": {
+      "top_100": 18,
+      "100_500": 18,
+      "500_1000": 18,
+      "1000_2000": 16
+    }
+  },
+  "entries": [
+    {
+      "romanization_input": "pen",
+      "expected_thai": "เป็น",
+      "word_id": 3,
+      "frequency": 0.010445947802,
+      "rank": 4,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "gab",
+      "expected_thai": "กับ",
+      "word_id": 14,
+      "frequency": 0.005081739366,
+      "rank": 15,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "jag",
+      "expected_thai": "จาก",
+      "word_id": 19,
+      "frequency": 0.003574255172,
+      "rank": 20,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "doi",
+      "expected_thai": "โดย",
+      "word_id": 24,
+      "frequency": 0.003064125578,
+      "rank": 25,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "kwam",
+      "expected_thai": "ความ",
+      "word_id": 28,
+      "frequency": 0.002823843638,
+      "rank": 29,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "aroi",
+      "expected_thai": "อร่อย",
+      "word_id": 32,
+      "frequency": 0.002508698816,
+      "rank": 33,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "eeg",
+      "expected_thai": "อีก",
+      "word_id": 44,
+      "frequency": 0.001894789871,
+      "rank": 45,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "raka",
+      "expected_thai": "ราคา",
+      "word_id": 48,
+      "frequency": 0.001762661653,
+      "rank": 49,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "toog",
+      "expected_thai": "ถูก",
+      "word_id": 53,
+      "frequency": 0.00166371047,
+      "rank": 54,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "prataes",
+      "expected_thai": "ประเทศ",
+      "word_id": 58,
+      "frequency": 0.001562616277,
+      "rank": 59,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "maenoo",
+      "expected_thai": "เมนู",
+      "word_id": 63,
+      "frequency": 0.001489053115,
+      "rank": 64,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "wantee",
+      "expected_thai": "วันที่",
+      "word_id": 69,
+      "frequency": 0.001325533436,
+      "rank": 70,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "doo",
+      "expected_thai": "ดู",
+      "word_id": 75,
+      "frequency": 0.001271483314,
+      "rank": 76,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "hen",
+      "expected_thai": "เห็น",
+      "word_id": 80,
+      "frequency": 0.001179231142,
+      "rank": 81,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "lohng",
+      "expected_thai": "ลอง",
+      "word_id": 83,
+      "frequency": 0.001128870469,
+      "rank": 84,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "arai",
+      "expected_thai": "อะไร",
+      "word_id": 86,
+      "frequency": 0.001104424461,
+      "rank": 87,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "dairab",
+      "expected_thai": "ได้รับ",
+      "word_id": 92,
+      "frequency": 0.001075933026,
+      "rank": 93,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "meuang",
+      "expected_thai": "เมือง",
+      "word_id": 97,
+      "frequency": 0.001016373014,
+      "rank": 98,
+      "frequency_band": "top_100"
+    },
+    {
+      "romanization_input": "saka",
+      "expected_thai": "สาขา",
+      "word_id": 100,
+      "frequency": 0.000990393333,
+      "rank": 101,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "jangwad",
+      "expected_thai": "จังหวัด",
+      "word_id": 129,
+      "frequency": 0.000815553825,
+      "rank": 130,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "prohm",
+      "expected_thai": "พร้อม",
+      "word_id": 152,
+      "frequency": 0.000719548068,
+      "rank": 153,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "pob",
+      "expected_thai": "พบ",
+      "word_id": 174,
+      "frequency": 0.000631327577,
+      "rank": 175,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "sidti",
+      "expected_thai": "สิทธิ",
+      "word_id": 209,
+      "frequency": 0.000547898234,
+      "rank": 210,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "bohrisad",
+      "expected_thai": "บริษัท",
+      "word_id": 237,
+      "frequency": 0.00049351835,
+      "rank": 238,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "kaoma",
+      "expected_thai": "เข้ามา",
+      "word_id": 254,
+      "frequency": 0.000464888763,
+      "rank": 255,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "samkan",
+      "expected_thai": "สำคัญ",
+      "word_id": 270,
+      "frequency": 0.00045176611,
+      "rank": 271,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "rohn",
+      "expected_thai": "ร้อน",
+      "word_id": 292,
+      "frequency": 0.00041941121,
+      "rank": 293,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "baebnee",
+      "expected_thai": "แบบนี้",
+      "word_id": 319,
+      "frequency": 0.000385238989,
+      "rank": 320,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "gaeo",
+      "expected_thai": "แก้ว",
+      "word_id": 339,
+      "frequency": 0.00036936072,
+      "rank": 340,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "loog",
+      "expected_thai": "ลูก",
+      "word_id": 361,
+      "frequency": 0.000344774476,
+      "rank": 362,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "nangsue",
+      "expected_thai": "หนังสือ",
+      "word_id": 384,
+      "frequency": 0.000325001538,
+      "rank": 385,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "prachatibpatai",
+      "expected_thai": "ประชาธิปไตย",
+      "word_id": 402,
+      "frequency": 0.000317500878,
+      "rank": 403,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "kaeg",
+      "expected_thai": "เค้ก",
+      "word_id": 422,
+      "frequency": 0.000302790818,
+      "rank": 423,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "sohs",
+      "expected_thai": "ซอส",
+      "word_id": 444,
+      "frequency": 0.000290389651,
+      "rank": 445,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "kadee",
+      "expected_thai": "คดี",
+      "word_id": 464,
+      "frequency": 0.000281674799,
+      "rank": 465,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "kian",
+      "expected_thai": "เขียน",
+      "word_id": 482,
+      "frequency": 0.00027073883,
+      "rank": 483,
+      "frequency_band": "100_500"
+    },
+    {
+      "romanization_input": "laglai",
+      "expected_thai": "หลากหลาย",
+      "word_id": 500,
+      "frequency": 0.000264000506,
+      "rank": 501,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "saedtagij",
+      "expected_thai": "เศรษฐกิจ",
+      "word_id": 527,
+      "frequency": 0.000253819781,
+      "rank": 528,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "saner",
+      "expected_thai": "เสนอ",
+      "word_id": 555,
+      "frequency": 0.000242870068,
+      "rank": 556,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "daitee",
+      "expected_thai": "ได้ที่",
+      "word_id": 588,
+      "frequency": 0.000231951157,
+      "rank": 589,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "yug",
+      "expected_thai": "ยุค",
+      "word_id": 614,
+      "frequency": 0.000222762221,
+      "rank": 615,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "pentee",
+      "expected_thai": "เป็นที่",
+      "word_id": 642,
+      "frequency": 0.000212471585,
+      "rank": 643,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "laonee",
+      "expected_thai": "เหล่านี้",
+      "word_id": 673,
+      "frequency": 0.000202037187,
+      "rank": 674,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "kanompang",
+      "expected_thai": "ขนมปัง",
+      "word_id": 699,
+      "frequency": 0.000196079619,
+      "rank": 700,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "prig",
+      "expected_thai": "พริก",
+      "word_id": 732,
+      "frequency": 0.000188222534,
+      "rank": 733,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "term",
+      "expected_thai": "เติม",
+      "word_id": 757,
+      "frequency": 0.000183141609,
+      "rank": 758,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "chaengan",
+      "expected_thai": "เช่นกัน",
+      "word_id": 788,
+      "frequency": 0.000175240072,
+      "rank": 789,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "saeng",
+      "expected_thai": "แสง",
+      "word_id": 817,
+      "frequency": 0.000167497527,
+      "rank": 818,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "fa",
+      "expected_thai": "ฟ้า",
+      "word_id": 842,
+      "frequency": 0.000160900343,
+      "rank": 843,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "rodyon",
+      "expected_thai": "รถยนต์",
+      "word_id": 870,
+      "frequency": 0.000155727673,
+      "rank": 871,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "rongraem",
+      "expected_thai": "โรงแรม",
+      "word_id": 892,
+      "frequency": 0.000151241978,
+      "rank": 893,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "kohngwan",
+      "expected_thai": "ของหวาน",
+      "word_id": 919,
+      "frequency": 0.000146592031,
+      "rank": 920,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "huajai",
+      "expected_thai": "หัวใจ",
+      "word_id": 948,
+      "frequency": 0.000142035778,
+      "rank": 949,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "fin",
+      "expected_thai": "ฟิน",
+      "word_id": 974,
+      "frequency": 0.000137434454,
+      "rank": 975,
+      "frequency_band": "500_1000"
+    },
+    {
+      "romanization_input": "plaeg",
+      "expected_thai": "แปลก",
+      "word_id": 1000,
+      "frequency": 0.000133592296,
+      "rank": 1001,
+      "frequency_band": "1000_2000"
+    },
+    {
+      "romanization_input": "tamnatee",
+      "expected_thai": "ทำหน้าที่",
+      "word_id": 1066,
+      "frequency": 0.000124368922,
+      "rank": 1067,
+      "frequency_band": "1000_2000"
+    },
+    {
+      "romanization_input": "kleuan",
+      "expected_thai": "เคลื่อน",
+      "word_id": 1130,
+      "frequency": 0.000116525905,
+      "rank": 1131,
+      "frequency_band": "1000_2000"
+    },
+    {
+      "romanization_input": "kohn",
+      "expected_thai": "คอน",
+      "word_id": 1197,
+      "frequency": 0.000110358048,
+      "rank": 1198,
+      "frequency_band": "1000_2000"
+    },
+    {
+      "romanization_input": "mamuang",
+      "expected_thai": "มะม่วง",
+      "word_id": 1254,
+      "frequency": 0.000104030604,
+      "rank": 1255,
+      "frequency_band": "1000_2000"
+    },
+    {
+      "romanization_input": "suaingam",
+      "expected_thai": "สวยงาม",
+      "word_id": 1322,
+      "frequency": 9.7393258e-05,
+      "rank": 1323,
+      "frequency_band": "1000_2000"
+    },
+    {
+      "romanization_input": "rim",
+      "expected_thai": "ริม",
+      "word_id": 1382,
+      "frequency": 9.322953e-05,
+      "rank": 1383,
+      "frequency_band": "1000_2000"
+    },
+    {
+      "romanization_input": "yaowachon",
+      "expected_thai": "เยาวชน",
+      "word_id": 1442,
+      "frequency": 8.818846e-05,
+      "rank": 1443,
+      "frequency_band": "1000_2000"
+    },
+    {
+      "romanization_input": "rodfaifa",
+      "expected_thai": "รถไฟฟ้า",
+      "word_id": 1500,
+      "frequency": 8.4014303e-05,
+      "rank": 1501,
+      "frequency_band": "1000_2000"
+    },
+    {
+      "romanization_input": "taogab",
+      "expected_thai": "เท่ากับ",
+      "word_id": 1563,
+      "frequency": 7.9863054e-05,
+      "rank": 1564,
+      "frequency_band": "1000_2000"
+    },
+    {
+      "romanization_input": "peemai",
+      "expected_thai": "ปีใหม่",
+      "word_id": 1623,
+      "frequency": 7.6852754e-05,
+      "rank": 1624,
+      "frequency_band": "1000_2000"
+    },
+    {
+      "romanization_input": "naejai",
+      "expected_thai": "แน่ใจ",
+      "word_id": 1689,
+      "frequency": 7.2256908e-05,
+      "rank": 1690,
+      "frequency_band": "1000_2000"
+    },
+    {
+      "romanization_input": "yub",
+      "expected_thai": "ยุบ",
+      "word_id": 1753,
+      "frequency": 6.863119e-05,
+      "rank": 1754,
+      "frequency_band": "1000_2000"
+    },
+    {
+      "romanization_input": "yib",
+      "expected_thai": "หยิบ",
+      "word_id": 1813,
+      "frequency": 6.6063447e-05,
+      "rank": 1814,
+      "frequency_band": "1000_2000"
+    },
+    {
+      "romanization_input": "plao",
+      "expected_thai": "เปล่า",
+      "word_id": 1877,
+      "frequency": 6.3003109e-05,
+      "rank": 1878,
+      "frequency_band": "1000_2000"
+    },
+    {
+      "romanization_input": "ganlongtun",
+      "expected_thai": "การลงทุน",
+      "word_id": 1941,
+      "frequency": 6.0426101e-05,
+      "rank": 1942,
+      "frequency_band": "1000_2000"
+    }
+  ]
+}

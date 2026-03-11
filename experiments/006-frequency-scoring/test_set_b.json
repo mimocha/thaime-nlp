@@ -1,0 +1,455 @@
+{
+  "metadata": {
+    "description": "Ambiguous input discrimination test set",
+    "source": "trie_dataset_sample_5k.json collisions",
+    "size": 25,
+    "date": "2026-03-11"
+  },
+  "entries": [
+    {
+      "romanization_input": "naka",
+      "expected_top_candidate": "นะคะ",
+      "expected_top_word_id": 116,
+      "expected_top_frequency": 0.000869021037,
+      "other_candidates": [
+        {
+          "thai": "น้ะค้ะ",
+          "word_id": 4866,
+          "frequency": 1.018479e-06
+        }
+      ],
+      "frequency_ratio": 853.25
+    },
+    {
+      "romanization_input": "chohb",
+      "expected_top_candidate": "ชอบ",
+      "expected_top_word_id": 65,
+      "expected_top_frequency": 0.001365574145,
+      "other_candidates": [
+        {
+          "thai": "ช้อป",
+          "word_id": 2712,
+          "frequency": 4.0499567e-05
+        }
+      ],
+      "frequency_ratio": 33.72
+    },
+    {
+      "romanization_input": "peuan",
+      "expected_top_candidate": "เพื่อน",
+      "expected_top_word_id": 182,
+      "expected_top_frequency": 0.000604899466,
+      "other_candidates": [
+        {
+          "thai": "เปื้อน",
+          "word_id": 3176,
+          "frequency": 3.3417019e-05
+        }
+      ],
+      "frequency_ratio": 18.1
+    },
+    {
+      "romanization_input": "roo",
+      "expected_top_candidate": "รู้",
+      "expected_top_word_id": 169,
+      "expected_top_frequency": 0.000651080352,
+      "other_candidates": [
+        {
+          "thai": "หรู",
+          "word_id": 2161,
+          "frequency": 5.3068739e-05
+        }
+      ],
+      "frequency_ratio": 12.27
+    },
+    {
+      "romanization_input": "kong",
+      "expected_top_candidate": "คง",
+      "expected_top_word_id": 239,
+      "expected_top_frequency": 0.000491381648,
+      "other_candidates": [
+        {
+          "thai": "โขง",
+          "word_id": 2072,
+          "frequency": 5.6148194e-05
+        },
+        {
+          "thai": "โค้ง",
+          "word_id": 2736,
+          "frequency": 4.0058902e-05
+        }
+      ],
+      "frequency_ratio": 8.75
+    },
+    {
+      "romanization_input": "kuen",
+      "expected_top_candidate": "ขึ้น",
+      "expected_top_word_id": 73,
+      "expected_top_frequency": 0.001293935457,
+      "other_candidates": [
+        {
+          "thai": "คืน",
+          "word_id": 749,
+          "frequency": 0.000183919741
+        }
+      ],
+      "frequency_ratio": 7.04
+    },
+    {
+      "romanization_input": "lag",
+      "expected_top_candidate": "หลัก",
+      "expected_top_word_id": 293,
+      "expected_top_frequency": 0.000416353772,
+      "other_candidates": [
+        {
+          "thai": "ลักษณ์",
+          "word_id": 1720,
+          "frequency": 7.0441029e-05
+        },
+        {
+          "thai": "ลาก",
+          "word_id": 2997,
+          "frequency": 3.5965085e-05
+        },
+        {
+          "thai": "หลาก",
+          "word_id": 3134,
+          "frequency": 3.3955514e-05
+        },
+        {
+          "thai": "ลัก",
+          "word_id": 4042,
+          "frequency": 2.4810064e-05
+        }
+      ],
+      "frequency_ratio": 5.91
+    },
+    {
+      "romanization_input": "konuen",
+      "expected_top_candidate": "คนอื่น",
+      "expected_top_word_id": 1104,
+      "expected_top_frequency": 0.000119171639,
+      "other_candidates": [
+        {
+          "thai": "คนอื่นๆ",
+          "word_id": 4002,
+          "frequency": 2.5098263e-05
+        }
+      ],
+      "frequency_ratio": 4.75
+    },
+    {
+      "romanization_input": "taen",
+      "expected_top_candidate": "แทน",
+      "expected_top_word_id": 426,
+      "expected_top_frequency": 0.000300858911,
+      "other_candidates": [
+        {
+          "thai": "เต้น",
+          "word_id": 1744,
+          "frequency": 6.9114831e-05
+        }
+      ],
+      "frequency_ratio": 4.35
+    },
+    {
+      "romanization_input": "yad",
+      "expected_top_candidate": "ญาติ",
+      "expected_top_word_id": 1490,
+      "expected_top_frequency": 8.4598632e-05,
+      "other_candidates": [
+        {
+          "thai": "ยัด",
+          "word_id": 4475,
+          "frequency": 2.1832019e-05
+        }
+      ],
+      "frequency_ratio": 3.87
+    },
+    {
+      "romanization_input": "raeng",
+      "expected_top_candidate": "แรง",
+      "expected_top_word_id": 436,
+      "expected_top_frequency": 0.000295384684,
+      "other_candidates": [
+        {
+          "thai": "เร่ง",
+          "word_id": 1446,
+          "frequency": 8.7808463e-05
+        }
+      ],
+      "frequency_ratio": 3.36
+    },
+    {
+      "romanization_input": "ha",
+      "expected_top_candidate": "หา",
+      "expected_top_word_id": 185,
+      "expected_top_frequency": 0.000590502917,
+      "other_candidates": [
+        {
+          "thai": "ฮา",
+          "word_id": 697,
+          "frequency": 0.000196273926
+        },
+        {
+          "thai": "ห้า",
+          "word_id": 1119,
+          "frequency": 0.000117819951
+        },
+        {
+          "thai": "ฮะ",
+          "word_id": 1867,
+          "frequency": 6.3739673e-05
+        },
+        {
+          "thai": "ฮ่า",
+          "word_id": 2346,
+          "frequency": 4.8372782e-05
+        },
+        {
+          "thai": "ห่า",
+          "word_id": 3315,
+          "frequency": 3.1525776e-05
+        }
+      ],
+      "frequency_ratio": 3.01
+    },
+    {
+      "romanization_input": "lui",
+      "expected_top_candidate": "ลุย",
+      "expected_top_word_id": 1825,
+      "expected_top_frequency": 6.5736677e-05,
+      "other_candidates": [
+        {
+          "thai": "หลุยส์",
+          "word_id": 4040,
+          "frequency": 2.4816041e-05
+        }
+      ],
+      "frequency_ratio": 2.65
+    },
+    {
+      "romanization_input": "yae",
+      "expected_top_candidate": "แย่",
+      "expected_top_word_id": 1106,
+      "expected_top_frequency": 0.000118998868,
+      "other_candidates": [
+        {
+          "thai": "เย่",
+          "word_id": 2260,
+          "frequency": 5.0390981e-05
+        },
+        {
+          "thai": "เย้",
+          "word_id": 4084,
+          "frequency": 2.4454127e-05
+        }
+      ],
+      "frequency_ratio": 2.36
+    },
+    {
+      "romanization_input": "hun",
+      "expected_top_candidate": "หุ้น",
+      "expected_top_word_id": 1999,
+      "expected_top_frequency": 5.8898671e-05,
+      "other_candidates": [
+        {
+          "thai": "หุ่น",
+          "word_id": 3802,
+          "frequency": 2.6718638e-05
+        }
+      ],
+      "frequency_ratio": 2.2
+    },
+    {
+      "romanization_input": "poochai",
+      "expected_top_candidate": "ผู้ใช้",
+      "expected_top_word_id": 983,
+      "expected_top_frequency": 0.00013631777,
+      "other_candidates": [
+        {
+          "thai": "ผู้ชาย",
+          "word_id": 1795,
+          "frequency": 6.6934483e-05
+        }
+      ],
+      "frequency_ratio": 2.04
+    },
+    {
+      "romanization_input": "rad",
+      "expected_top_candidate": "รัฐ",
+      "expected_top_word_id": 121,
+      "expected_top_frequency": 0.00085519049,
+      "other_candidates": [
+        {
+          "thai": "ราช",
+          "word_id": 275,
+          "frequency": 0.000444424122
+        },
+        {
+          "thai": "ราด",
+          "word_id": 537,
+          "frequency": 0.000250274826
+        },
+        {
+          "thai": "รัช",
+          "word_id": 2106,
+          "frequency": 5.5172911e-05
+        },
+        {
+          "thai": "ราษฎร์",
+          "word_id": 2856,
+          "frequency": 3.7985833e-05
+        }
+      ],
+      "frequency_ratio": 1.92
+    },
+    {
+      "romanization_input": "chae",
+      "expected_top_candidate": "แชร์",
+      "expected_top_word_id": 1588,
+      "expected_top_frequency": 7.8850509e-05,
+      "other_candidates": [
+        {
+          "thai": "แช",
+          "word_id": 2510,
+          "frequency": 4.4525059e-05
+        },
+        {
+          "thai": "แช่",
+          "word_id": 3129,
+          "frequency": 3.402921e-05
+        },
+        {
+          "thai": "แฉะ",
+          "word_id": 3813,
+          "frequency": 2.661517e-05
+        },
+        {
+          "thai": "เช",
+          "word_id": 4164,
+          "frequency": 2.3975143e-05
+        }
+      ],
+      "frequency_ratio": 1.77
+    },
+    {
+      "romanization_input": "glohng",
+      "expected_top_candidate": "กล่อง",
+      "expected_top_word_id": 1013,
+      "expected_top_frequency": 0.000131825807,
+      "other_candidates": [
+        {
+          "thai": "กล้อง",
+          "word_id": 1533,
+          "frequency": 8.1787562e-05
+        },
+        {
+          "thai": "กลอง",
+          "word_id": 3094,
+          "frequency": 3.4452787e-05
+        }
+      ],
+      "frequency_ratio": 1.61
+    },
+    {
+      "romanization_input": "puen",
+      "expected_top_candidate": "พื้น",
+      "expected_top_word_id": 1209,
+      "expected_top_frequency": 0.000109295566,
+      "other_candidates": [
+        {
+          "thai": "ปืน",
+          "word_id": 1669,
+          "frequency": 7.3772271e-05
+        }
+      ],
+      "frequency_ratio": 1.48
+    },
+    {
+      "romanization_input": "han",
+      "expected_top_candidate": "หั่น",
+      "expected_top_word_id": 1922,
+      "expected_top_frequency": 6.1203041e-05,
+      "other_candidates": [
+        {
+          "thai": "ฮัน",
+          "word_id": 2535,
+          "frequency": 4.4091203e-05
+        },
+        {
+          "thai": "หาร",
+          "word_id": 3044,
+          "frequency": 3.5161227e-05
+        },
+        {
+          "thai": "หัน",
+          "word_id": 3921,
+          "frequency": 2.5842318e-05
+        },
+        {
+          "thai": "ฮั่น",
+          "word_id": 4328,
+          "frequency": 2.2742918e-05
+        }
+      ],
+      "frequency_ratio": 1.39
+    },
+    {
+      "romanization_input": "nanlae",
+      "expected_top_candidate": "นั่นแหละ",
+      "expected_top_word_id": 3410,
+      "expected_top_frequency": 3.0493889e-05,
+      "other_candidates": [
+        {
+          "thai": "นั้นแหละ",
+          "word_id": 4210,
+          "frequency": 2.3677988e-05
+        }
+      ],
+      "frequency_ratio": 1.29
+    },
+    {
+      "romanization_input": "natee",
+      "expected_top_candidate": "หน้าที่",
+      "expected_top_word_id": 765,
+      "expected_top_frequency": 0.000181149248,
+      "other_candidates": [
+        {
+          "thai": "นาที",
+          "word_id": 906,
+          "frequency": 0.000149265018
+        }
+      ],
+      "frequency_ratio": 1.21
+    },
+    {
+      "romanization_input": "sueg",
+      "expected_top_candidate": "สึก",
+      "expected_top_word_id": 1625,
+      "expected_top_frequency": 7.674151e-05,
+      "other_candidates": [
+        {
+          "thai": "ศึก",
+          "word_id": 1817,
+          "frequency": 6.5929895e-05
+        }
+      ],
+      "frequency_ratio": 1.16
+    },
+    {
+      "romanization_input": "gong",
+      "expected_top_candidate": "โกง",
+      "expected_top_word_id": 3048,
+      "expected_top_frequency": 3.5098013e-05,
+      "other_candidates": [
+        {
+          "thai": "กง",
+          "word_id": 3197,
+          "frequency": 3.3136266e-05
+        }
+      ],
+      "frequency_ratio": 1.06
+    }
+  ]
+}

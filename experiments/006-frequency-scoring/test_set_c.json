@@ -1,0 +1,2789 @@
+{
+  "metadata": {
+    "description": "Override list recall test set",
+    "source": "overrides-v0.4.2.yaml cross-referenced with trie_dataset_sample_5k.json",
+    "size": 247,
+    "total_overrides": 247,
+    "in_trie_count": 247,
+    "date": "2026-03-11"
+  },
+  "entries": [
+    {
+      "thai": "กก",
+      "override_romanizations": [
+        "gog",
+        "gohg",
+        "gohk",
+        "gok",
+        "kog",
+        "kohg",
+        "kohk",
+        "kok"
+      ],
+      "in_trie": true,
+      "word_id": 4875,
+      "frequency": 0.0
+    },
+    {
+      "thai": "กทม",
+      "override_romanizations": [
+        "bkk",
+        "gortormor",
+        "gotomo",
+        "kortormor",
+        "kotomo"
+      ],
+      "in_trie": true,
+      "word_id": 4772,
+      "frequency": 1.5010465e-05
+    },
+    {
+      "thai": "กรีนพีซ",
+      "override_romanizations": [
+        "greenpeace",
+        "greenpees",
+        "griinpiis"
+      ],
+      "in_trie": true,
+      "word_id": 4807,
+      "frequency": 7.146988e-06
+    },
+    {
+      "thai": "กองทุนน้ำมัน",
+      "override_romanizations": [
+        "kongtunnamman",
+        "kongtunnammun",
+        "kongtunnaamman",
+        "kongtunnaammun",
+        "gongtunnamman",
+        "gongtunnammun",
+        "gongtunnaamman",
+        "gongtunnaammun"
+      ],
+      "in_trie": true,
+      "word_id": 4874,
+      "frequency": 0.0
+    },
+    {
+      "thai": "กี",
+      "override_romanizations": [
+        "gee",
+        "gi",
+        "gii",
+        "kee",
+        "ki",
+        "kii"
+      ],
+      "in_trie": true,
+      "word_id": 4876,
+      "frequency": 0.0
+    },
+    {
+      "thai": "กี่",
+      "override_romanizations": [
+        "gee",
+        "gi",
+        "gii",
+        "kee",
+        "ki",
+        "kii"
+      ],
+      "in_trie": true,
+      "word_id": 4877,
+      "frequency": 0.0
+    },
+    {
+      "thai": "กี่ทอผ้า",
+      "override_romanizations": [
+        "keetorpah",
+        "kitorpa"
+      ],
+      "in_trie": true,
+      "word_id": 4855,
+      "frequency": 3.40832e-06
+    },
+    {
+      "thai": "กี้",
+      "override_romanizations": [
+        "gee",
+        "gi",
+        "gii",
+        "kee",
+        "ki",
+        "kii"
+      ],
+      "in_trie": true,
+      "word_id": 4878,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ก็",
+      "override_romanizations": [
+        "gaw",
+        "go",
+        "goh",
+        "gor",
+        "kaw",
+        "ko",
+        "koh",
+        "kor"
+      ],
+      "in_trie": true,
+      "word_id": 4879,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ก้",
+      "override_romanizations": [
+        "ko",
+        "koh",
+        "kor"
+      ],
+      "in_trie": true,
+      "word_id": 4872,
+      "frequency": 0.0
+    },
+    {
+      "thai": "กุ้ง",
+      "override_romanizations": [
+        "koong",
+        "kung"
+      ],
+      "in_trie": true,
+      "word_id": 4865,
+      "frequency": 1.705801e-06
+    },
+    {
+      "thai": "ขิ",
+      "override_romanizations": [
+        "khi",
+        "ki"
+      ],
+      "in_trie": true,
+      "word_id": 4880,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ขี",
+      "override_romanizations": [
+        "kee",
+        "khee",
+        "khi",
+        "khii",
+        "ki",
+        "kii"
+      ],
+      "in_trie": true,
+      "word_id": 4881,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ขี่",
+      "override_romanizations": [
+        "kee",
+        "khee",
+        "khi",
+        "khii",
+        "ki",
+        "kii"
+      ],
+      "in_trie": true,
+      "word_id": 4882,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ขี้",
+      "override_romanizations": [
+        "kee",
+        "khee",
+        "khi",
+        "khii",
+        "ki",
+        "kii"
+      ],
+      "in_trie": true,
+      "word_id": 4883,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ข่ะ",
+      "override_romanizations": [
+        "ka",
+        "kah"
+      ],
+      "in_trie": true,
+      "word_id": 4863,
+      "frequency": 2.883682e-06
+    },
+    {
+      "thai": "ข้ามฟาก",
+      "override_romanizations": [
+        "kaamfaak",
+        "kahmfahk",
+        "karmfark",
+        "khamfhak",
+        "khaamfhaak"
+      ],
+      "in_trie": true,
+      "word_id": 4817,
+      "frequency": 6.225636e-06
+    },
+    {
+      "thai": "คอนเซปต์",
+      "override_romanizations": [
+        "concept",
+        "konsept",
+        "khonsept",
+        "konsep",
+        "khonsep"
+      ],
+      "in_trie": true,
+      "word_id": 4825,
+      "frequency": 5.8593e-06
+    },
+    {
+      "thai": "คอนเซ็ปต์",
+      "override_romanizations": [
+        "concept",
+        "konsept",
+        "khonsept",
+        "konsep",
+        "khonsep"
+      ],
+      "in_trie": true,
+      "word_id": 4799,
+      "frequency": 8.119707e-06
+    },
+    {
+      "thai": "คอนเฟิร์ม",
+      "override_romanizations": [
+        "confirm",
+        "khonferm",
+        "khonfeum",
+        "konferm",
+        "konfeum"
+      ],
+      "in_trie": true,
+      "word_id": 4771,
+      "frequency": 1.5021202e-05
+    },
+    {
+      "thai": "คอนโซล",
+      "override_romanizations": [
+        "console",
+        "konsohn",
+        "konsol"
+      ],
+      "in_trie": true,
+      "word_id": 4798,
+      "frequency": 8.202062e-06
+    },
+    {
+      "thai": "คิ",
+      "override_romanizations": [
+        "khi",
+        "ki"
+      ],
+      "in_trie": true,
+      "word_id": 4884,
+      "frequency": 0.0
+    },
+    {
+      "thai": "คี",
+      "override_romanizations": [
+        "kee",
+        "khee",
+        "khi",
+        "khii",
+        "ki",
+        "kii"
+      ],
+      "in_trie": true,
+      "word_id": 4885,
+      "frequency": 0.0
+    },
+    {
+      "thai": "คี่",
+      "override_romanizations": [
+        "kee",
+        "khee",
+        "khi",
+        "khii",
+        "ki",
+        "kii"
+      ],
+      "in_trie": true,
+      "word_id": 4886,
+      "frequency": 0.0
+    },
+    {
+      "thai": "คุ้กกี้",
+      "override_romanizations": [
+        "cookie",
+        "kookki",
+        "kookkee",
+        "kukki",
+        "kukkee",
+        "kookgi",
+        "kookgee",
+        "kukgi",
+        "kukgee"
+      ],
+      "in_trie": true,
+      "word_id": 4789,
+      "frequency": 9.297223e-06
+    },
+    {
+      "thai": "ค้ะ",
+      "override_romanizations": [
+        "ka",
+        "kah"
+      ],
+      "in_trie": true,
+      "word_id": 4680,
+      "frequency": 2.0451282e-05
+    },
+    {
+      "thai": "คุ้ม",
+      "override_romanizations": [
+        "kum",
+        "koom"
+      ],
+      "in_trie": true,
+      "word_id": 4864,
+      "frequency": 1.850964e-06
+    },
+    {
+      "thai": "คํ่าๆ",
+      "override_romanizations": [
+        "kum",
+        "koom"
+      ],
+      "in_trie": true,
+      "word_id": 4869,
+      "frequency": 4.68346e-07
+    },
+    {
+      "thai": "งง",
+      "override_romanizations": [
+        "ngohng",
+        "ngong"
+      ],
+      "in_trie": true,
+      "word_id": 4887,
+      "frequency": 0.0
+    },
+    {
+      "thai": "งิ",
+      "override_romanizations": [
+        "ngi"
+      ],
+      "in_trie": true,
+      "word_id": 4888,
+      "frequency": 0.0
+    },
+    {
+      "thai": "งี",
+      "override_romanizations": [
+        "ngee",
+        "ngi",
+        "ngii"
+      ],
+      "in_trie": true,
+      "word_id": 4889,
+      "frequency": 0.0
+    },
+    {
+      "thai": "งี้",
+      "override_romanizations": [
+        "ngee",
+        "ngi",
+        "ngii"
+      ],
+      "in_trie": true,
+      "word_id": 4890,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ง่อกแง่ก",
+      "override_romanizations": [
+        "ngokngaek"
+      ],
+      "in_trie": true,
+      "word_id": 4860,
+      "frequency": 3.346664e-06
+    },
+    {
+      "thai": "จานชาม",
+      "override_romanizations": [
+        "jaanchaam",
+        "jancham",
+        "jarncharm"
+      ],
+      "in_trie": true,
+      "word_id": 4819,
+      "frequency": 6.068026e-06
+    },
+    {
+      "thai": "จิ",
+      "override_romanizations": [
+        "chi",
+        "ji"
+      ],
+      "in_trie": true,
+      "word_id": 4891,
+      "frequency": 0.0
+    },
+    {
+      "thai": "จี",
+      "override_romanizations": [
+        "chee",
+        "chi",
+        "chii",
+        "jee",
+        "ji",
+        "jii"
+      ],
+      "in_trie": true,
+      "word_id": 4892,
+      "frequency": 0.0
+    },
+    {
+      "thai": "จี่",
+      "override_romanizations": [
+        "chee",
+        "chi",
+        "chii",
+        "jee",
+        "ji",
+        "jii"
+      ],
+      "in_trie": true,
+      "word_id": 4893,
+      "frequency": 0.0
+    },
+    {
+      "thai": "จี้",
+      "override_romanizations": [
+        "chee",
+        "chi",
+        "chii",
+        "jee",
+        "ji",
+        "jii"
+      ],
+      "in_trie": true,
+      "word_id": 4894,
+      "frequency": 0.0
+    },
+    {
+      "thai": "จุลทรรศน์",
+      "override_romanizations": [
+        "choonlatat",
+        "chulatat",
+        "joonlatat",
+        "julatat"
+      ],
+      "in_trie": true,
+      "word_id": 4818,
+      "frequency": 6.121444e-06
+    },
+    {
+      "thai": "จ่ะ",
+      "override_romanizations": [
+        "ja"
+      ],
+      "in_trie": true,
+      "word_id": 4779,
+      "frequency": 1.316789e-05
+    },
+    {
+      "thai": "ฉี่",
+      "override_romanizations": [
+        "chee",
+        "chi",
+        "chii",
+        "shee",
+        "shi",
+        "shii"
+      ],
+      "in_trie": true,
+      "word_id": 4895,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ชิ",
+      "override_romanizations": [
+        "chi",
+        "shi"
+      ],
+      "in_trie": true,
+      "word_id": 4896,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ชี",
+      "override_romanizations": [
+        "chee",
+        "chi",
+        "chii",
+        "shee",
+        "shi",
+        "shii"
+      ],
+      "in_trie": true,
+      "word_id": 4897,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ชี่",
+      "override_romanizations": [
+        "chee",
+        "chi",
+        "chii",
+        "shee",
+        "shi",
+        "shii"
+      ],
+      "in_trie": true,
+      "word_id": 4898,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ชี้",
+      "override_romanizations": [
+        "chee",
+        "chi",
+        "chii",
+        "shee",
+        "shi",
+        "shii"
+      ],
+      "in_trie": true,
+      "word_id": 4899,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ซั้ก",
+      "override_romanizations": [
+        "sak",
+        "suk"
+      ],
+      "in_trie": true,
+      "word_id": 4870,
+      "frequency": 4.68308e-07
+    },
+    {
+      "thai": "ซิ",
+      "override_romanizations": [
+        "si"
+      ],
+      "in_trie": true,
+      "word_id": 4900,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ซี",
+      "override_romanizations": [
+        "see",
+        "si",
+        "sii"
+      ],
+      "in_trie": true,
+      "word_id": 4901,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ซี่",
+      "override_romanizations": [
+        "see",
+        "si",
+        "sii"
+      ],
+      "in_trie": true,
+      "word_id": 4902,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ซึ",
+      "override_romanizations": [
+        "seu",
+        "sue",
+        "suh"
+      ],
+      "in_trie": true,
+      "word_id": 4903,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ซ่อก",
+      "override_romanizations": [
+        "sok"
+      ],
+      "in_trie": true,
+      "word_id": 4851,
+      "frequency": 3.821211e-06
+    },
+    {
+      "thai": "ฌี",
+      "override_romanizations": [
+        "chee",
+        "chi",
+        "chii",
+        "shee",
+        "shi",
+        "shii"
+      ],
+      "in_trie": true,
+      "word_id": 4904,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ญิ",
+      "override_romanizations": [
+        "yi"
+      ],
+      "in_trie": true,
+      "word_id": 4905,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ญี",
+      "override_romanizations": [
+        "yee",
+        "yi",
+        "yii"
+      ],
+      "in_trie": true,
+      "word_id": 4906,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ฐิ",
+      "override_romanizations": [
+        "thi",
+        "ti"
+      ],
+      "in_trie": true,
+      "word_id": 4907,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ฐี",
+      "override_romanizations": [
+        "tee",
+        "thee",
+        "thi",
+        "thii",
+        "ti",
+        "tii"
+      ],
+      "in_trie": true,
+      "word_id": 4908,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ณิ",
+      "override_romanizations": [
+        "ni"
+      ],
+      "in_trie": true,
+      "word_id": 4909,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ณี",
+      "override_romanizations": [
+        "nee",
+        "ni",
+        "nii"
+      ],
+      "in_trie": true,
+      "word_id": 4910,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ดิ",
+      "override_romanizations": [
+        "di"
+      ],
+      "in_trie": true,
+      "word_id": 4911,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ดิ้",
+      "override_romanizations": [
+        "di"
+      ],
+      "in_trie": true,
+      "word_id": 4912,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ดี",
+      "override_romanizations": [
+        "dee",
+        "di",
+        "dii"
+      ],
+      "in_trie": true,
+      "word_id": 4913,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ดี่",
+      "override_romanizations": [
+        "dee",
+        "di",
+        "dii"
+      ],
+      "in_trie": true,
+      "word_id": 4914,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ดี้",
+      "override_romanizations": [
+        "dee",
+        "di",
+        "dii"
+      ],
+      "in_trie": true,
+      "word_id": 4915,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ติ",
+      "override_romanizations": [
+        "dti",
+        "ti"
+      ],
+      "in_trie": true,
+      "word_id": 4916,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ตี",
+      "override_romanizations": [
+        "dtee",
+        "dti",
+        "dtii",
+        "tee",
+        "ti",
+        "tii"
+      ],
+      "in_trie": true,
+      "word_id": 4917,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ตีบตัน",
+      "override_romanizations": [
+        "dteebtan",
+        "dteebtun",
+        "dtiibtan",
+        "dtiibtun",
+        "teebtan",
+        "teebtun",
+        "tiibtan",
+        "tiibtun"
+      ],
+      "in_trie": true,
+      "word_id": 4842,
+      "frequency": 5.118692e-06
+    },
+    {
+      "thai": "ตี่",
+      "override_romanizations": [
+        "dtee",
+        "dti",
+        "dtii",
+        "tee",
+        "ti",
+        "tii"
+      ],
+      "in_trie": true,
+      "word_id": 4918,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ตี้",
+      "override_romanizations": [
+        "dtee",
+        "dti",
+        "dtii",
+        "tee",
+        "ti",
+        "tii"
+      ],
+      "in_trie": true,
+      "word_id": 4919,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ตี้ๆ",
+      "override_romanizations": [
+        "dtee",
+        "dti",
+        "dtii",
+        "tee",
+        "ti",
+        "tii"
+      ],
+      "in_trie": true,
+      "word_id": 4920,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ถิ",
+      "override_romanizations": [
+        "thi",
+        "ti"
+      ],
+      "in_trie": true,
+      "word_id": 4921,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ถี่",
+      "override_romanizations": [
+        "tee",
+        "thee",
+        "thi",
+        "thii",
+        "ti",
+        "tii"
+      ],
+      "in_trie": true,
+      "word_id": 4922,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ถี่ๆ",
+      "override_romanizations": [
+        "tee",
+        "thee",
+        "thi",
+        "thii",
+        "ti",
+        "tii"
+      ],
+      "in_trie": true,
+      "word_id": 4923,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ทรกรรม",
+      "override_romanizations": [
+        "toragum",
+        "torakum"
+      ],
+      "in_trie": true,
+      "word_id": 4845,
+      "frequency": 5.035458e-06
+    },
+    {
+      "thai": "ทรมาณ",
+      "override_romanizations": [
+        "toramaan",
+        "toraman"
+      ],
+      "in_trie": true,
+      "word_id": 4826,
+      "frequency": 5.846764e-06
+    },
+    {
+      "thai": "ทันตแพทย์",
+      "override_romanizations": [
+        "tantapaet",
+        "tantapet",
+        "tuntapaet",
+        "tuntapet"
+      ],
+      "in_trie": true,
+      "word_id": 4835,
+      "frequency": 5.502028e-06
+    },
+    {
+      "thai": "ทาวเวอร์",
+      "override_romanizations": [
+        "tower",
+        "tawer"
+      ],
+      "in_trie": true,
+      "word_id": 4784,
+      "frequency": 1.1239172e-05
+    },
+    {
+      "thai": "ทิ",
+      "override_romanizations": [
+        "thi",
+        "ti"
+      ],
+      "in_trie": true,
+      "word_id": 4924,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ที",
+      "override_romanizations": [
+        "tee",
+        "thee",
+        "thi",
+        "thii",
+        "ti",
+        "tii"
+      ],
+      "in_trie": true,
+      "word_id": 4925,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ที่",
+      "override_romanizations": [
+        "tee",
+        "thee",
+        "thi",
+        "thii",
+        "ti",
+        "tii"
+      ],
+      "in_trie": true,
+      "word_id": 4926,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ธิ",
+      "override_romanizations": [
+        "thi",
+        "ti"
+      ],
+      "in_trie": true,
+      "word_id": 4927,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ธี",
+      "override_romanizations": [
+        "tee",
+        "thee",
+        "thi",
+        "thii",
+        "ti",
+        "tii"
+      ],
+      "in_trie": true,
+      "word_id": 4928,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ธี่",
+      "override_romanizations": [
+        "tee",
+        "thee",
+        "thi",
+        "thii",
+        "ti",
+        "tii"
+      ],
+      "in_trie": true,
+      "word_id": 4929,
+      "frequency": 0.0
+    },
+    {
+      "thai": "นาฏศิลป์",
+      "override_romanizations": [
+        "nadtasin",
+        "naadtasin",
+        "nadtasilp"
+      ],
+      "in_trie": true,
+      "word_id": 4801,
+      "frequency": 7.79501e-06
+    },
+    {
+      "thai": "นิ",
+      "override_romanizations": [
+        "ni"
+      ],
+      "in_trie": true,
+      "word_id": 4930,
+      "frequency": 0.0
+    },
+    {
+      "thai": "นิ่",
+      "override_romanizations": [
+        "ni"
+      ],
+      "in_trie": true,
+      "word_id": 4931,
+      "frequency": 0.0
+    },
+    {
+      "thai": "นี",
+      "override_romanizations": [
+        "nee",
+        "ni",
+        "nii"
+      ],
+      "in_trie": true,
+      "word_id": 4932,
+      "frequency": 0.0
+    },
+    {
+      "thai": "นี่",
+      "override_romanizations": [
+        "nee",
+        "ni",
+        "nii"
+      ],
+      "in_trie": true,
+      "word_id": 4933,
+      "frequency": 0.0
+    },
+    {
+      "thai": "นี้",
+      "override_romanizations": [
+        "nee",
+        "ni",
+        "nii"
+      ],
+      "in_trie": true,
+      "word_id": 4934,
+      "frequency": 0.0
+    },
+    {
+      "thai": "น้ะ",
+      "override_romanizations": [
+        "na"
+      ],
+      "in_trie": true,
+      "word_id": 4783,
+      "frequency": 1.1343823e-05
+    },
+    {
+      "thai": "น้ะค้ะ",
+      "override_romanizations": [
+        "naka",
+        "nahkah"
+      ],
+      "in_trie": true,
+      "word_id": 4866,
+      "frequency": 1.018479e-06
+    },
+    {
+      "thai": "นํ้า",
+      "override_romanizations": [
+        "nam",
+        "nahm"
+      ],
+      "in_trie": true,
+      "word_id": 4777,
+      "frequency": 1.3927558e-05
+    },
+    {
+      "thai": "บอยคอต",
+      "override_romanizations": [
+        "boycott",
+        "boikot",
+        "boykot"
+      ],
+      "in_trie": true,
+      "word_id": 4841,
+      "frequency": 5.125276e-06
+    },
+    {
+      "thai": "บายพาส",
+      "override_romanizations": [
+        "bypass",
+        "baipas",
+        "baipass"
+      ],
+      "in_trie": true,
+      "word_id": 4811,
+      "frequency": 6.849789e-06
+    },
+    {
+      "thai": "บี",
+      "override_romanizations": [
+        "bee",
+        "bi",
+        "bii"
+      ],
+      "in_trie": true,
+      "word_id": 4935,
+      "frequency": 0.0
+    },
+    {
+      "thai": "บี่",
+      "override_romanizations": [
+        "bee",
+        "bi",
+        "bii"
+      ],
+      "in_trie": true,
+      "word_id": 4936,
+      "frequency": 0.0
+    },
+    {
+      "thai": "บี้",
+      "override_romanizations": [
+        "bee",
+        "bi",
+        "bii"
+      ],
+      "in_trie": true,
+      "word_id": 4937,
+      "frequency": 0.0
+    },
+    {
+      "thai": "บ่",
+      "override_romanizations": [
+        "baw",
+        "bo",
+        "boh",
+        "bor"
+      ],
+      "in_trie": true,
+      "word_id": 4938,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ปจด",
+      "override_romanizations": [
+        "pjd",
+        "prajumdeuan"
+      ],
+      "in_trie": true,
+      "word_id": 4850,
+      "frequency": 4.187215e-06
+    },
+    {
+      "thai": "ปชช",
+      "override_romanizations": [
+        "prachachon",
+        "prashashon"
+      ],
+      "in_trie": true,
+      "word_id": 4774,
+      "frequency": 1.4454292e-05
+    },
+    {
+      "thai": "ปล",
+      "override_romanizations": [
+        "pl",
+        "pohloh"
+      ],
+      "in_trie": true,
+      "word_id": 4831,
+      "frequency": 5.738675e-06
+    },
+    {
+      "thai": "ปิ",
+      "override_romanizations": [
+        "bpi",
+        "pi"
+      ],
+      "in_trie": true,
+      "word_id": 4939,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ปิคอัพ",
+      "override_romanizations": [
+        "pickup",
+        "pikup",
+        "pikap"
+      ],
+      "in_trie": true,
+      "word_id": 4770,
+      "frequency": 1.5417094e-05
+    },
+    {
+      "thai": "ปี",
+      "override_romanizations": [
+        "bpee",
+        "bpi",
+        "bpii",
+        "pee",
+        "pi",
+        "pii"
+      ],
+      "in_trie": true,
+      "word_id": 4940,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ปีกไก่",
+      "override_romanizations": [
+        "bpeekkai",
+        "bpiikkai",
+        "peekkai",
+        "piikkai"
+      ],
+      "in_trie": true,
+      "word_id": 4782,
+      "frequency": 1.140847e-05
+    },
+    {
+      "thai": "ปี่",
+      "override_romanizations": [
+        "bpee",
+        "bpi",
+        "bpii",
+        "pee",
+        "pi",
+        "pii"
+      ],
+      "in_trie": true,
+      "word_id": 4941,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ปี้",
+      "override_romanizations": [
+        "bpee",
+        "bpi",
+        "bpii",
+        "pee",
+        "pi",
+        "pii"
+      ],
+      "in_trie": true,
+      "word_id": 4942,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ป่ะ",
+      "override_romanizations": [
+        "pa",
+        "pah"
+      ],
+      "in_trie": true,
+      "word_id": 1369,
+      "frequency": 9.4275767e-05
+    },
+    {
+      "thai": "ปุ่น",
+      "override_romanizations": [
+        "poon",
+        "pun"
+      ],
+      "in_trie": true,
+      "word_id": 4868,
+      "frequency": 8.88352e-07
+    },
+    {
+      "thai": "ผิ",
+      "override_romanizations": [
+        "phi",
+        "pi"
+      ],
+      "in_trie": true,
+      "word_id": 4943,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ผี",
+      "override_romanizations": [
+        "pee",
+        "phee",
+        "phi",
+        "phii",
+        "pi",
+        "pii"
+      ],
+      "in_trie": true,
+      "word_id": 4944,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ฝี",
+      "override_romanizations": [
+        "fee",
+        "fi",
+        "fii"
+      ],
+      "in_trie": true,
+      "word_id": 4945,
+      "frequency": 0.0
+    },
+    {
+      "thai": "พาร์ทไทม์",
+      "override_romanizations": [
+        "parttime",
+        "pattaim",
+        "paattaim",
+        "parttaim"
+      ],
+      "in_trie": true,
+      "word_id": 4844,
+      "frequency": 5.037839e-06
+    },
+    {
+      "thai": "พาวเวอร์",
+      "override_romanizations": [
+        "power",
+        "pawer",
+        "pauwer"
+      ],
+      "in_trie": true,
+      "word_id": 4778,
+      "frequency": 1.3899483e-05
+    },
+    {
+      "thai": "พิ",
+      "override_romanizations": [
+        "phi",
+        "pi"
+      ],
+      "in_trie": true,
+      "word_id": 4946,
+      "frequency": 0.0
+    },
+    {
+      "thai": "พิกเซล",
+      "override_romanizations": [
+        "pixel",
+        "piksel"
+      ],
+      "in_trie": true,
+      "word_id": 4833,
+      "frequency": 5.649978e-06
+    },
+    {
+      "thai": "พิณพาทย์",
+      "override_romanizations": [
+        "phinpad",
+        "pinpad",
+        "phinpaat",
+        "pinpaat"
+      ],
+      "in_trie": true,
+      "word_id": 4792,
+      "frequency": 8.614769e-06
+    },
+    {
+      "thai": "พินอิน",
+      "override_romanizations": [
+        "pinyin"
+      ],
+      "in_trie": true,
+      "word_id": 4828,
+      "frequency": 5.789852e-06
+    },
+    {
+      "thai": "พี",
+      "override_romanizations": [
+        "pee",
+        "phee",
+        "phi",
+        "phii",
+        "pi",
+        "pii"
+      ],
+      "in_trie": true,
+      "word_id": 4947,
+      "frequency": 0.0
+    },
+    {
+      "thai": "พี่",
+      "override_romanizations": [
+        "pee",
+        "phee",
+        "phi",
+        "phii",
+        "pi",
+        "pii"
+      ],
+      "in_trie": true,
+      "word_id": 4948,
+      "frequency": 0.0
+    },
+    {
+      "thai": "พี้",
+      "override_romanizations": [
+        "pee",
+        "phee",
+        "phi",
+        "phii",
+        "pi",
+        "pii"
+      ],
+      "in_trie": true,
+      "word_id": 4949,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ฟิ",
+      "override_romanizations": [
+        "fi"
+      ],
+      "in_trie": true,
+      "word_id": 4950,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ฟี",
+      "override_romanizations": [
+        "fee",
+        "fi",
+        "fii"
+      ],
+      "in_trie": true,
+      "word_id": 4951,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ฟี่",
+      "override_romanizations": [
+        "fee",
+        "fi",
+        "fii"
+      ],
+      "in_trie": true,
+      "word_id": 4952,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ภูตผี",
+      "override_romanizations": [
+        "phootpee",
+        "phootpii",
+        "phutpee",
+        "phutpii",
+        "phuutpee",
+        "phuutpii",
+        "pootpee",
+        "pootpii",
+        "puutpee",
+        "puutpii"
+      ],
+      "in_trie": true,
+      "word_id": 4832,
+      "frequency": 5.698772e-06
+    },
+    {
+      "thai": "มอคค่า",
+      "override_romanizations": [
+        "mocca",
+        "mokka"
+      ],
+      "in_trie": true,
+      "word_id": 4773,
+      "frequency": 1.4768165e-05
+    },
+    {
+      "thai": "มิ",
+      "override_romanizations": [
+        "mi"
+      ],
+      "in_trie": true,
+      "word_id": 4953,
+      "frequency": 0.0
+    },
+    {
+      "thai": "มิกเซอร์",
+      "override_romanizations": [
+        "mixer",
+        "mikser"
+      ],
+      "in_trie": true,
+      "word_id": 4776,
+      "frequency": 1.4001603e-05
+    },
+    {
+      "thai": "มี",
+      "override_romanizations": [
+        "mee",
+        "mi",
+        "mii"
+      ],
+      "in_trie": true,
+      "word_id": 4954,
+      "frequency": 0.0
+    },
+    {
+      "thai": "มีดพับ",
+      "override_romanizations": [
+        "meedpab",
+        "meedpub",
+        "miidpab",
+        "miidpub"
+      ],
+      "in_trie": true,
+      "word_id": 4838,
+      "frequency": 5.160128e-06
+    },
+    {
+      "thai": "มี่",
+      "override_romanizations": [
+        "mee",
+        "mi",
+        "mii"
+      ],
+      "in_trie": true,
+      "word_id": 4955,
+      "frequency": 0.0
+    },
+    {
+      "thai": "มี้",
+      "override_romanizations": [
+        "mee",
+        "mi",
+        "mii"
+      ],
+      "in_trie": true,
+      "word_id": 4956,
+      "frequency": 0.0
+    },
+    {
+      "thai": "มูฟวี่",
+      "override_romanizations": [
+        "movie"
+      ],
+      "in_trie": true,
+      "word_id": 4796,
+      "frequency": 8.315009e-06
+    },
+    {
+      "thai": "ม้ะ",
+      "override_romanizations": [
+        "ma"
+      ],
+      "in_trie": true,
+      "word_id": 4849,
+      "frequency": 4.190315e-06
+    },
+    {
+      "thai": "ยิ",
+      "override_romanizations": [
+        "yi"
+      ],
+      "in_trie": true,
+      "word_id": 4957,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ยี",
+      "override_romanizations": [
+        "yee",
+        "yi",
+        "yii"
+      ],
+      "in_trie": true,
+      "word_id": 4958,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ยี่",
+      "override_romanizations": [
+        "yee",
+        "yi",
+        "yii"
+      ],
+      "in_trie": true,
+      "word_id": 4959,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ยี้",
+      "override_romanizations": [
+        "yee",
+        "yi",
+        "yii"
+      ],
+      "in_trie": true,
+      "word_id": 4960,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ยูนนาน",
+      "override_romanizations": [
+        "yunnan",
+        "yunan",
+        "yoonan",
+        "younan",
+        "yuunan"
+      ],
+      "in_trie": true,
+      "word_id": 4797,
+      "frequency": 8.277226e-06
+    },
+    {
+      "thai": "รอมฎอน",
+      "override_romanizations": [
+        "ramadan",
+        "romdon"
+      ],
+      "in_trie": true,
+      "word_id": 4806,
+      "frequency": 7.204598e-06
+    },
+    {
+      "thai": "รัฐาธิปัตย์",
+      "override_romanizations": [
+        "ratthathipad"
+      ],
+      "in_trie": true,
+      "word_id": 4853,
+      "frequency": 3.479892e-06
+    },
+    {
+      "thai": "รากศัพท์",
+      "override_romanizations": [
+        "raksapt",
+        "raaksapt",
+        "rahksapt"
+      ],
+      "in_trie": true,
+      "word_id": 4816,
+      "frequency": 6.29523e-06
+    },
+    {
+      "thai": "รามเทพ",
+      "override_romanizations": [
+        "rammatep",
+        "rammathep"
+      ],
+      "in_trie": true,
+      "word_id": 4814,
+      "frequency": 6.580364e-06
+    },
+    {
+      "thai": "ริ",
+      "override_romanizations": [
+        "ri"
+      ],
+      "in_trie": true,
+      "word_id": 4961,
+      "frequency": 0.0
+    },
+    {
+      "thai": "รี",
+      "override_romanizations": [
+        "ree",
+        "ri",
+        "rii"
+      ],
+      "in_trie": true,
+      "word_id": 4962,
+      "frequency": 0.0
+    },
+    {
+      "thai": "รี้",
+      "override_romanizations": [
+        "ree",
+        "ri",
+        "rii"
+      ],
+      "in_trie": true,
+      "word_id": 4963,
+      "frequency": 0.0
+    },
+    {
+      "thai": "รึ",
+      "override_romanizations": [
+        "reu",
+        "rue",
+        "ruh"
+      ],
+      "in_trie": true,
+      "word_id": 4964,
+      "frequency": 0.0
+    },
+    {
+      "thai": "รู้",
+      "override_romanizations": [
+        "ru",
+        "ruu",
+        "roo"
+      ],
+      "in_trie": true,
+      "word_id": 4846,
+      "frequency": 4.695606e-06
+    },
+    {
+      "thai": "ฤๅ",
+      "override_romanizations": [
+        "reu",
+        "rue",
+        "ruee",
+        "ruh"
+      ],
+      "in_trie": true,
+      "word_id": 4965,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ลากจูง",
+      "override_romanizations": [
+        "lakjoong",
+        "laakjoong",
+        "lahkjoong",
+        "larkjoong"
+      ],
+      "in_trie": true,
+      "word_id": 4834,
+      "frequency": 5.648998e-06
+    },
+    {
+      "thai": "ลาดชัน",
+      "override_romanizations": [
+        "ladchan",
+        "laadchan"
+      ],
+      "in_trie": true,
+      "word_id": 4829,
+      "frequency": 5.765336e-06
+    },
+    {
+      "thai": "ลิ",
+      "override_romanizations": [
+        "li"
+      ],
+      "in_trie": true,
+      "word_id": 4966,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ลี",
+      "override_romanizations": [
+        "lee",
+        "li",
+        "lii"
+      ],
+      "in_trie": true,
+      "word_id": 4967,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ลีดเดอร์",
+      "override_romanizations": [
+        "leader",
+        "leeder",
+        "liider"
+      ],
+      "in_trie": true,
+      "word_id": 4827,
+      "frequency": 5.81733e-06
+    },
+    {
+      "thai": "ลี่",
+      "override_romanizations": [
+        "lee",
+        "li",
+        "lii"
+      ],
+      "in_trie": true,
+      "word_id": 4968,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ลี้",
+      "override_romanizations": [
+        "lee",
+        "li",
+        "lii"
+      ],
+      "in_trie": true,
+      "word_id": 4969,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ล่อกแล่ก",
+      "override_romanizations": [
+        "loklaek"
+      ],
+      "in_trie": true,
+      "word_id": 4862,
+      "frequency": 3.346664e-06
+    },
+    {
+      "thai": "ล้ะ",
+      "override_romanizations": [
+        "la",
+        "lah"
+      ],
+      "in_trie": true,
+      "word_id": 4785,
+      "frequency": 9.946142e-06
+    },
+    {
+      "thai": "ฦๅ",
+      "override_romanizations": [
+        "leu",
+        "lue",
+        "luee",
+        "luh"
+      ],
+      "in_trie": true,
+      "word_id": 4970,
+      "frequency": 0.0
+    },
+    {
+      "thai": "วอดก้า",
+      "override_romanizations": [
+        "vodka",
+        "wodka"
+      ],
+      "in_trie": true,
+      "word_id": 4803,
+      "frequency": 7.622894e-06
+    },
+    {
+      "thai": "วิ",
+      "override_romanizations": [
+        "vi",
+        "wi"
+      ],
+      "in_trie": true,
+      "word_id": 4971,
+      "frequency": 0.0
+    },
+    {
+      "thai": "วิทยาศาสตร์",
+      "override_romanizations": [
+        "wittayasat"
+      ],
+      "in_trie": true,
+      "word_id": 4873,
+      "frequency": 0.0
+    },
+    {
+      "thai": "วินเซนต์",
+      "override_romanizations": [
+        "vincent",
+        "wincent"
+      ],
+      "in_trie": true,
+      "word_id": 4843,
+      "frequency": 5.062528e-06
+    },
+    {
+      "thai": "วินโดวส์",
+      "override_romanizations": [
+        "windows",
+        "windo",
+        "windoh",
+        "window",
+        "vindo",
+        "vindoh",
+        "vindow"
+      ],
+      "in_trie": true,
+      "word_id": 4780,
+      "frequency": 1.2043171e-05
+    },
+    {
+      "thai": "วี",
+      "override_romanizations": [
+        "vee",
+        "vi",
+        "vii",
+        "wee",
+        "wi",
+        "wii"
+      ],
+      "in_trie": true,
+      "word_id": 4972,
+      "frequency": 0.0
+    },
+    {
+      "thai": "วีลแชร์",
+      "override_romanizations": [
+        "wheelchair"
+      ],
+      "in_trie": true,
+      "word_id": 4820,
+      "frequency": 5.97716e-06
+    },
+    {
+      "thai": "วี่",
+      "override_romanizations": [
+        "vee",
+        "vi",
+        "vii",
+        "wee",
+        "wi",
+        "wii"
+      ],
+      "in_trie": true,
+      "word_id": 4973,
+      "frequency": 0.0
+    },
+    {
+      "thai": "วี้",
+      "override_romanizations": [
+        "vee",
+        "vi",
+        "vii",
+        "wee",
+        "wi",
+        "wii"
+      ],
+      "in_trie": true,
+      "word_id": 4974,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ศรีอยุูธยา",
+      "override_romanizations": [
+        "siayutthaya",
+        "sriayutthaya"
+      ],
+      "in_trie": true,
+      "word_id": 4859,
+      "frequency": 3.346664e-06
+    },
+    {
+      "thai": "ศิ",
+      "override_romanizations": [
+        "si"
+      ],
+      "in_trie": true,
+      "word_id": 4975,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ศี",
+      "override_romanizations": [
+        "see",
+        "si",
+        "sii"
+      ],
+      "in_trie": true,
+      "word_id": 4976,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ษี",
+      "override_romanizations": [
+        "see",
+        "si",
+        "sii"
+      ],
+      "in_trie": true,
+      "word_id": 4977,
+      "frequency": 0.0
+    },
+    {
+      "thai": "สมณศักดิ์",
+      "override_romanizations": [
+        "samanasakd",
+        "samanasak",
+        "sumannasakd",
+        "sumannasak"
+      ],
+      "in_trie": true,
+      "word_id": 4786,
+      "frequency": 9.498965e-06
+    },
+    {
+      "thai": "สัมปชญัญะ",
+      "override_romanizations": [
+        "sampachanya"
+      ],
+      "in_trie": true,
+      "word_id": 4861,
+      "frequency": 3.346664e-06
+    },
+    {
+      "thai": "สาปแช่ง",
+      "override_romanizations": [
+        "sapchaeng",
+        "saapchaeng",
+        "sahpchaeng"
+      ],
+      "in_trie": true,
+      "word_id": 4822,
+      "frequency": 5.919496e-06
+    },
+    {
+      "thai": "สิ",
+      "override_romanizations": [
+        "si"
+      ],
+      "in_trie": true,
+      "word_id": 4978,
+      "frequency": 0.0
+    },
+    {
+      "thai": "สิบห้า",
+      "override_romanizations": [
+        "sibha",
+        "sibhaa"
+      ],
+      "in_trie": true,
+      "word_id": 4795,
+      "frequency": 8.323683e-06
+    },
+    {
+      "thai": "สิบเอ็ด",
+      "override_romanizations": [
+        "sibaed",
+        "sibaet",
+        "sibed",
+        "sibet",
+        "sipaed",
+        "sipaet",
+        "siped",
+        "sipet"
+      ],
+      "in_trie": true,
+      "word_id": 4790,
+      "frequency": 9.053835e-06
+    },
+    {
+      "thai": "สิ้",
+      "override_romanizations": [
+        "si"
+      ],
+      "in_trie": true,
+      "word_id": 4979,
+      "frequency": 0.0
+    },
+    {
+      "thai": "สี",
+      "override_romanizations": [
+        "see",
+        "si",
+        "sii"
+      ],
+      "in_trie": true,
+      "word_id": 4980,
+      "frequency": 0.0
+    },
+    {
+      "thai": "สี่",
+      "override_romanizations": [
+        "see",
+        "si",
+        "sii"
+      ],
+      "in_trie": true,
+      "word_id": 4981,
+      "frequency": 0.0
+    },
+    {
+      "thai": "สี้",
+      "override_romanizations": [
+        "see",
+        "si",
+        "sii"
+      ],
+      "in_trie": true,
+      "word_id": 4982,
+      "frequency": 0.0
+    },
+    {
+      "thai": "สึ",
+      "override_romanizations": [
+        "seu",
+        "sue",
+        "suh"
+      ],
+      "in_trie": true,
+      "word_id": 4983,
+      "frequency": 0.0
+    },
+    {
+      "thai": "สุรศักดิ์",
+      "override_romanizations": [
+        "soorasak",
+        "surasak",
+        "surasakd"
+      ],
+      "in_trie": true,
+      "word_id": 4787,
+      "frequency": 9.493216e-06
+    },
+    {
+      "thai": "หง่ะ",
+      "override_romanizations": [
+        "nga"
+      ],
+      "in_trie": true,
+      "word_id": 4847,
+      "frequency": 4.391063e-06
+    },
+    {
+      "thai": "หล่ะ",
+      "override_romanizations": [
+        "la",
+        "lah"
+      ],
+      "in_trie": true,
+      "word_id": 4767,
+      "frequency": 1.9417225e-05
+    },
+    {
+      "thai": "หว่ะ",
+      "override_romanizations": [
+        "wa",
+        "wah"
+      ],
+      "in_trie": true,
+      "word_id": 4810,
+      "frequency": 6.938689e-06
+    },
+    {
+      "thai": "หิ",
+      "override_romanizations": [
+        "hi"
+      ],
+      "in_trie": true,
+      "word_id": 4984,
+      "frequency": 0.0
+    },
+    {
+      "thai": "หี",
+      "override_romanizations": [
+        "hee",
+        "hi",
+        "hii"
+      ],
+      "in_trie": true,
+      "word_id": 4985,
+      "frequency": 0.0
+    },
+    {
+      "thai": "หึ",
+      "override_romanizations": [
+        "heu",
+        "hue",
+        "huh"
+      ],
+      "in_trie": true,
+      "word_id": 4986,
+      "frequency": 0.0
+    },
+    {
+      "thai": "หึๆ",
+      "override_romanizations": [
+        "heu",
+        "hue",
+        "huh"
+      ],
+      "in_trie": true,
+      "word_id": 4987,
+      "frequency": 0.0
+    },
+    {
+      "thai": "อยู่",
+      "override_romanizations": [
+        "yu",
+        "yuu",
+        "yoo"
+      ],
+      "in_trie": true,
+      "word_id": 4821,
+      "frequency": 5.965645e-06
+    },
+    {
+      "thai": "ออ",
+      "override_romanizations": [
+        "aw",
+        "o",
+        "oh",
+        "or"
+      ],
+      "in_trie": true,
+      "word_id": 4988,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ออร์",
+      "override_romanizations": [
+        "or"
+      ],
+      "in_trie": true,
+      "word_id": 4559,
+      "frequency": 2.1177068e-05
+    },
+    {
+      "thai": "อาร์",
+      "override_romanizations": [
+        "ar"
+      ],
+      "in_trie": true,
+      "word_id": 1064,
+      "frequency": 0.000124605205
+    },
+    {
+      "thai": "อิ",
+      "override_romanizations": [
+        "i"
+      ],
+      "in_trie": true,
+      "word_id": 4989,
+      "frequency": 0.0
+    },
+    {
+      "thai": "อินทร์",
+      "override_romanizations": [
+        "in",
+        "intr"
+      ],
+      "in_trie": true,
+      "word_id": 4769,
+      "frequency": 1.8481053e-05
+    },
+    {
+      "thai": "อิมแพค",
+      "override_romanizations": [
+        "impact",
+        "impaek",
+        "impak"
+      ],
+      "in_trie": true,
+      "word_id": 4788,
+      "frequency": 9.406509e-06
+    },
+    {
+      "thai": "อิๆ",
+      "override_romanizations": [
+        "i"
+      ],
+      "in_trie": true,
+      "word_id": 4990,
+      "frequency": 0.0
+    },
+    {
+      "thai": "อี",
+      "override_romanizations": [
+        "ee",
+        "i",
+        "ii"
+      ],
+      "in_trie": true,
+      "word_id": 4991,
+      "frequency": 0.0
+    },
+    {
+      "thai": "อี่",
+      "override_romanizations": [
+        "ee",
+        "i",
+        "ii"
+      ],
+      "in_trie": true,
+      "word_id": 4992,
+      "frequency": 0.0
+    },
+    {
+      "thai": "อี้",
+      "override_romanizations": [
+        "ee",
+        "i",
+        "ii"
+      ],
+      "in_trie": true,
+      "word_id": 4993,
+      "frequency": 0.0
+    },
+    {
+      "thai": "อึ",
+      "override_romanizations": [
+        "eu",
+        "ue",
+        "uh"
+      ],
+      "in_trie": true,
+      "word_id": 4994,
+      "frequency": 0.0
+    },
+    {
+      "thai": "อุตส่าห์",
+      "override_romanizations": [
+        "ootsah",
+        "ootsa",
+        "utsah",
+        "utsa"
+      ],
+      "in_trie": true,
+      "word_id": 4793,
+      "frequency": 8.525935e-06
+    },
+    {
+      "thai": "อ่ะ",
+      "override_romanizations": [
+        "a",
+        "ah"
+      ],
+      "in_trie": true,
+      "word_id": 334,
+      "frequency": 0.000370711111
+    },
+    {
+      "thai": "ฮิ",
+      "override_romanizations": [
+        "hi"
+      ],
+      "in_trie": true,
+      "word_id": 4995,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ฮี",
+      "override_romanizations": [
+        "hee",
+        "hi",
+        "hii"
+      ],
+      "in_trie": true,
+      "word_id": 4996,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ฮี่ๆ",
+      "override_romanizations": [
+        "hee",
+        "hi",
+        "hii"
+      ],
+      "in_trie": true,
+      "word_id": 4997,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ฮี้",
+      "override_romanizations": [
+        "hee",
+        "hi",
+        "hii"
+      ],
+      "in_trie": true,
+      "word_id": 4998,
+      "frequency": 0.0
+    },
+    {
+      "thai": "ฮึ",
+      "override_romanizations": [
+        "heu",
+        "hue",
+        "huh"
+      ],
+      "in_trie": true,
+      "word_id": 4999,
+      "frequency": 0.0
+    },
+    {
+      "thai": "เซลฟี่",
+      "override_romanizations": [
+        "selfie",
+        "selfi"
+      ],
+      "in_trie": true,
+      "word_id": 4775,
+      "frequency": 1.4318929e-05
+    },
+    {
+      "thai": "เด่ะ",
+      "override_romanizations": [
+        "de",
+        "dae"
+      ],
+      "in_trie": true,
+      "word_id": 4867,
+      "frequency": 1.013681e-06
+    },
+    {
+      "thai": "เนลสัน",
+      "override_romanizations": [
+        "nelson"
+      ],
+      "in_trie": true,
+      "word_id": 4824,
+      "frequency": 5.859777e-06
+    },
+    {
+      "thai": "เบคอน",
+      "override_romanizations": [
+        "bekon",
+        "bakon",
+        "baekon"
+      ],
+      "in_trie": true,
+      "word_id": 2374,
+      "frequency": 4.7666502e-05
+    },
+    {
+      "thai": "เบงกอล",
+      "override_romanizations": [
+        "bengal",
+        "bengol"
+      ],
+      "in_trie": true,
+      "word_id": 4802,
+      "frequency": 7.745861e-06
+    },
+    {
+      "thai": "เบตง",
+      "override_romanizations": [
+        "betong",
+        "baetong"
+      ],
+      "in_trie": true,
+      "word_id": 4791,
+      "frequency": 8.881476e-06
+    },
+    {
+      "thai": "เบสิก",
+      "override_romanizations": [
+        "besik",
+        "basik",
+        "baesik"
+      ],
+      "in_trie": true,
+      "word_id": 4812,
+      "frequency": 6.833938e-06
+    },
+    {
+      "thai": "เมกกะ",
+      "override_romanizations": [
+        "mecca",
+        "mekka"
+      ],
+      "in_trie": true,
+      "word_id": 4808,
+      "frequency": 7.10762e-06
+    },
+    {
+      "thai": "เมคอัพ",
+      "override_romanizations": [
+        "makeup",
+        "mekup",
+        "maykup",
+        "mehkup",
+        "mekap",
+        "maykap",
+        "mehkap"
+      ],
+      "in_trie": true,
+      "word_id": 2854,
+      "frequency": 3.8014017e-05
+    },
+    {
+      "thai": "เมจิก",
+      "override_romanizations": [
+        "mejik",
+        "majik",
+        "maejik"
+      ],
+      "in_trie": true,
+      "word_id": 4836,
+      "frequency": 5.43649e-06
+    },
+    {
+      "thai": "เมจิค",
+      "override_romanizations": [
+        "mejik",
+        "majik",
+        "maejik"
+      ],
+      "in_trie": true,
+      "word_id": 4852,
+      "frequency": 3.732508e-06
+    },
+    {
+      "thai": "เรซิ่น",
+      "override_romanizations": [
+        "resin",
+        "raesin"
+      ],
+      "in_trie": true,
+      "word_id": 4848,
+      "frequency": 4.327327e-06
+    },
+    {
+      "thai": "เรนเจอร์",
+      "override_romanizations": [
+        "ranger",
+        "raenjer",
+        "renjer",
+        "rehnjer"
+      ],
+      "in_trie": true,
+      "word_id": 3401,
+      "frequency": 3.0577453e-05
+    },
+    {
+      "thai": "เรนโบว์",
+      "override_romanizations": [
+        "rainbow",
+        "raenbow",
+        "renbow",
+        "rehnbow",
+        "raynbow"
+      ],
+      "in_trie": true,
+      "word_id": 4800,
+      "frequency": 7.806086e-06
+    },
+    {
+      "thai": "เริ่ด",
+      "override_romanizations": [
+        "reud"
+      ],
+      "in_trie": true,
+      "word_id": 4618,
+      "frequency": 2.0832939e-05
+    },
+    {
+      "thai": "เลสิก",
+      "override_romanizations": [
+        "lasik",
+        "lesik"
+      ],
+      "in_trie": true,
+      "word_id": 4857,
+      "frequency": 3.374219e-06
+    },
+    {
+      "thai": "เวชภัณฑ์",
+      "override_romanizations": [
+        "vaechapant",
+        "vaychapant",
+        "vechapant",
+        "veechapant",
+        "vehchapant",
+        "waechapant",
+        "waychapant",
+        "wechapant",
+        "weechapant",
+        "wehchapant"
+      ],
+      "in_trie": true,
+      "word_id": 4815,
+      "frequency": 6.423957e-06
+    },
+    {
+      "thai": "เวชศาสตร์",
+      "override_romanizations": [
+        "vaechasat",
+        "vaychasat",
+        "vechasat",
+        "veechasat",
+        "vehchasat",
+        "waechasat",
+        "waychasat",
+        "wechasat",
+        "weechasat",
+        "wehchasat"
+      ],
+      "in_trie": true,
+      "word_id": 4727,
+      "frequency": 2.017303e-05
+    },
+    {
+      "thai": "เวนเดอร์",
+      "override_romanizations": [
+        "vendor",
+        "vender",
+        "wender"
+      ],
+      "in_trie": true,
+      "word_id": 4813,
+      "frequency": 6.653666e-06
+    },
+    {
+      "thai": "เหมาะ",
+      "override_romanizations": [
+        "mho",
+        "mhoa",
+        "mhor"
+      ],
+      "in_trie": true,
+      "word_id": 1161,
+      "frequency": 0.000114363546
+    },
+    {
+      "thai": "เหยาะ",
+      "override_romanizations": [
+        "yoa",
+        "yor"
+      ],
+      "in_trie": true,
+      "word_id": 4809,
+      "frequency": 7.066632e-06
+    },
+    {
+      "thai": "เหอหนาน",
+      "override_romanizations": [
+        "henan",
+        "henaan",
+        "henahn",
+        "hernan",
+        "hernaan",
+        "hernahn"
+      ],
+      "in_trie": true,
+      "word_id": 4840,
+      "frequency": 5.150931e-06
+    },
+    {
+      "thai": "เอนจิน",
+      "override_romanizations": [
+        "engine",
+        "enjin"
+      ],
+      "in_trie": true,
+      "word_id": 4823,
+      "frequency": 5.864369e-06
+    },
+    {
+      "thai": "เอนไซม์",
+      "override_romanizations": [
+        "enzyme",
+        "ensaim",
+        "enzaim"
+      ],
+      "in_trie": true,
+      "word_id": 4781,
+      "frequency": 1.181032e-05
+    },
+    {
+      "thai": "เอวบาง",
+      "override_romanizations": [
+        "aewbang"
+      ],
+      "in_trie": true,
+      "word_id": 4830,
+      "frequency": 5.749249e-06
+    },
+    {
+      "thai": "เอะ",
+      "override_romanizations": [
+        "e",
+        "eh"
+      ],
+      "in_trie": true,
+      "word_id": 4375,
+      "frequency": 2.2472021e-05
+    },
+    {
+      "thai": "เอะอะ",
+      "override_romanizations": [
+        "ehah"
+      ],
+      "in_trie": true,
+      "word_id": 4794,
+      "frequency": 8.45891e-06
+    },
+    {
+      "thai": "เอ็กซ์",
+      "override_romanizations": [
+        "ex",
+        "eks",
+        "ek"
+      ],
+      "in_trie": true,
+      "word_id": 2018,
+      "frequency": 5.7996081e-05
+    },
+    {
+      "thai": "แซ่ด",
+      "override_romanizations": [
+        "zaed",
+        "saed"
+      ],
+      "in_trie": true,
+      "word_id": 4856,
+      "frequency": 3.396074e-06
+    },
+    {
+      "thai": "แซ่บ",
+      "override_romanizations": [
+        "zaeb",
+        "saeb"
+      ],
+      "in_trie": true,
+      "word_id": 830,
+      "frequency": 0.000164385476
+    },
+    {
+      "thai": "แน่บ",
+      "override_romanizations": [
+        "naeb",
+        "nab"
+      ],
+      "in_trie": true,
+      "word_id": 4858,
+      "frequency": 3.365188e-06
+    },
+    {
+      "thai": "แมนฯยู",
+      "override_romanizations": [
+        "manyu",
+        "maenyu",
+        "maenyuu",
+        "maenyoo"
+      ],
+      "in_trie": true,
+      "word_id": 4854,
+      "frequency": 3.414289e-06
+    },
+    {
+      "thai": "แว่บ",
+      "override_romanizations": [
+        "wab",
+        "waeb"
+      ],
+      "in_trie": true,
+      "word_id": 4837,
+      "frequency": 5.371673e-06
+    },
+    {
+      "thai": "โภคภัณฑ์",
+      "override_romanizations": [
+        "phokapant",
+        "pokapant",
+        "pohkapant"
+      ],
+      "in_trie": true,
+      "word_id": 4804,
+      "frequency": 7.398021e-06
+    },
+    {
+      "thai": "โหยหิว",
+      "override_romanizations": [
+        "hoihiw",
+        "hoihiu"
+      ],
+      "in_trie": true,
+      "word_id": 4839,
+      "frequency": 5.159977e-06
+    },
+    {
+      "thai": "โอษฐ์",
+      "override_romanizations": [
+        "ot",
+        "oht"
+      ],
+      "in_trie": true,
+      "word_id": 4805,
+      "frequency": 7.38543e-06
+    },
+    {
+      "thai": "โอะ",
+      "override_romanizations": [
+        "o",
+        "oh"
+      ],
+      "in_trie": true,
+      "word_id": 4768,
+      "frequency": 1.9174115e-05
+    },
+    {
+      "thai": "ไทยมี",
+      "override_romanizations": [
+        "thaime"
+      ],
+      "in_trie": true,
+      "word_id": 4871,
+      "frequency": 0.0
+    }
+  ]
+}
