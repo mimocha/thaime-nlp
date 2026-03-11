@@ -48,3 +48,7 @@ experiments/*/data/*.csv.gz
 # Pipeline outputs (regenerate via pipeline code)
 pipelines/*/outputs/
 pipelines/*/output/
+
+# Large experiment intermediates (regenerable)
+experiments/006-frequency-scoring/per_corpus_frequencies.json
+experiments/006-frequency-scoring/results_raw.json

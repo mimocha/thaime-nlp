@@ -173,14 +173,17 @@ SCORING_FORMULAS: dict[str, callable] = {
 # Data preparation
 # ---------------------------------------------------------------------------
 
-def prepare_word_data(trie_dataset: dict) -> dict[int, dict]:
+def prepare_word_data(
+    trie_dataset: dict,
+    per_corpus_path: str | Path | None = None,
+) -> dict[int, dict]:
     """Enrich trie dataset entries with derived fields for scoring.
 
     Adds:
         source_count (int): number of corpora the word appears in
         rank (int): 1-based frequency rank (1 = most frequent)
-        per_corpus_frequencies (dict): empty — trie dataset doesn't include
-            per-corpus breakdowns, so balanced formula falls back to baseline
+        per_corpus_frequencies (dict): per-corpus normalized frequencies
+            (loaded from per_corpus_path if provided)
 
     Returns:
         Mapping word_id → enriched word data dict.
@@ -193,9 +196,25 @@ def prepare_word_data(trie_dataset: dict) -> dict[int, dict]:
     for rank_1based, entry in enumerate(sorted_entries, start=1):
         rank_map[entry["word_id"]] = rank_1based
 
+    # Load per-corpus frequencies if available
+    per_corpus_data: dict[str, dict] = {}
+    max_corpus_freqs: dict[str, float] = {}
+    if per_corpus_path is not None:
+        per_corpus_path = Path(per_corpus_path)
+        if per_corpus_path.exists():
+            with open(per_corpus_path, encoding="utf-8") as f:
+                pc_raw = json.load(f)
+            per_corpus_data = pc_raw.get("per_word", {})
+            # Compute max frequency per corpus from the data
+            for wid_str, freqs in per_corpus_data.items():
+                for corpus, freq_val in freqs.items():
+                    if corpus not in max_corpus_freqs or freq_val > max_corpus_freqs[corpus]:
+                        max_corpus_freqs[corpus] = freq_val
+
     word_data: dict[int, dict] = {}
     for entry in entries:
         wid = entry["word_id"]
+        pc_freqs = per_corpus_data.get(str(wid), {})
         word_data[wid] = {
             "word_id": wid,
             "thai": entry["thai"],
@@ -204,28 +223,37 @@ def prepare_word_data(trie_dataset: dict) -> dict[int, dict]:
             "source_count": len(entry["sources"]),
             "rank": rank_map[wid],
             "romanizations": entry["romanizations"],
-            "per_corpus_frequencies": {},  # Not available in current dataset
+            "per_corpus_frequencies": pc_freqs,
         }
 
-    return word_data
+    return word_data, max_corpus_freqs
 
 
-def load_trie_dataset(path: str | Path) -> dict:
+def load_trie_dataset(
+    path: str | Path,
+    per_corpus_path: str | Path | None = None,
+) -> dict:
     """Load the trie dataset JSON and prepare enriched word data.
+
+    Args:
+        path: Path to trie_dataset_sample_5k.json
+        per_corpus_path: Optional path to per_corpus_frequencies.json
 
     Returns:
         Dict with keys:
             "raw": the original parsed JSON
             "word_data": word_id → enriched dict (from prepare_word_data)
             "metadata": dataset metadata
+            "max_corpus_freqs": max frequency per corpus (for balanced formula)
     """
     path = Path(path)
     with open(path, encoding="utf-8") as f:
         raw = json.load(f)
 
-    word_data = prepare_word_data(raw)
+    word_data, max_corpus_freqs = prepare_word_data(raw, per_corpus_path)
     return {
         "raw": raw,
         "word_data": word_data,
         "metadata": raw["metadata"],
+        "max_corpus_freqs": max_corpus_freqs,
     }

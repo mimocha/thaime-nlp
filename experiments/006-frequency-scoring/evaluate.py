@@ -364,10 +364,20 @@ def main():
 
     # --- Load data ---
     trie_path = EXPERIMENT_DIR / "reference" / "trie_dataset_sample_5k.json"
+    per_corpus_path = EXPERIMENT_DIR / "per_corpus_frequencies.json"
     print(f"\nLoading trie dataset from {trie_path.name} ...")
-    dataset = load_trie_dataset(trie_path)
+    if per_corpus_path.exists():
+        print(f"  Loading per-corpus frequencies from {per_corpus_path.name}")
+        dataset = load_trie_dataset(trie_path, per_corpus_path)
+    else:
+        print("  No per-corpus frequencies found — balanced formula will fall back to baseline")
+        dataset = load_trie_dataset(trie_path)
     word_data = dataset["word_data"]
+    max_corpus_freqs = dataset.get("max_corpus_freqs", {})
     print(f"  Loaded {len(word_data)} words")
+    if max_corpus_freqs:
+        pc_count = sum(1 for wd in word_data.values() if wd.get("per_corpus_frequencies"))
+        print(f"  Per-corpus data available for {pc_count}/{len(word_data)} words")
 
     print("Building romanization index ...")
     rom_index = build_romanization_index(word_data)
@@ -401,18 +411,31 @@ def main():
     for fname in formula_names:
         cost_fn = SCORING_FORMULAS[fname]
 
+        # Build extra kwargs for formulas that need them
+        extra_params = {}
+        if fname == "balanced" and max_corpus_freqs:
+            extra_params["max_corpus_freqs"] = max_corpus_freqs
+
         for lam in lambda_values:
             combo_idx += 1
             t0 = time.time()
 
+            # Wrap cost_fn with extra params if needed
+            if extra_params:
+                def _cost_fn(wid, wd, _fn=cost_fn, _p=extra_params):
+                    return _fn(wid, wd, **_p)
+                active_cost_fn = _cost_fn
+            else:
+                active_cost_fn = cost_fn
+
             a_mrr, a_top1, a_details = evaluate_set_a(
-                set_a, rom_index, word_data, cost_fn, lam,
+                set_a, rom_index, word_data, active_cost_fn, lam,
             )
             b_mrr, b_top1, b_details = evaluate_set_b(
-                set_b, rom_index, word_data, cost_fn, lam,
+                set_b, rom_index, word_data, active_cost_fn, lam,
             )
             c_recall, c_details = evaluate_set_c(
-                set_c, rom_index, word_data, cost_fn, lam,
+                set_c, rom_index, word_data, active_cost_fn, lam,
             )
 
             elapsed = time.time() - t0
