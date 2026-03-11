@@ -52,7 +52,7 @@ except ImportError as e:
 # Path to the component romanization dictionary
 _DICT_PATH = (
     Path(__file__).parent.parent / "data" / "dictionaries"
-    / "component-romanization.yaml"
+    / "component-romanization" / "dictionary-v0.4.2.yaml"
 )
 
 # Module-level cache for the loaded dictionary
@@ -327,6 +327,29 @@ def _detect_jor_coda(thai_segment: str) -> bool:
     return last_consonant == "\u0e08"  # จ
 
 
+def _detect_sor_coda(thai_segment: str) -> bool:
+    """Detect if the syllable's coda consonant is ส/ศ/ษ.
+
+    TLTK g2p maps ส/ศ/ษ-as-coda to ``t``, but we have a separate ``s``
+    coda entry. This function detects these from the Thai text so we can
+    use the correct dictionary key.
+
+    Returns:
+        ``True`` if the last Thai consonant in the segment is ส, ศ, or ษ.
+    """
+    if not thai_segment:
+        return False
+
+    # Find the last Thai consonant (ก U+0E01 through ฮ U+0E2E)
+    last_consonant = None
+    for ch in thai_segment:
+        if 0x0E01 <= ord(ch) <= 0x0E2E:
+            last_consonant = ch
+
+    # ส = U+0E2A, ศ = U+0E28, ษ = U+0E29
+    return last_consonant in ("\u0e2a", "\u0e28", "\u0e29")
+
+
 # ---------------------------------------------------------------------------
 # Word analysis
 # ---------------------------------------------------------------------------
@@ -391,6 +414,10 @@ def analyze_word(thai_word: str) -> list[SyllableComponents]:
             # Apply จ-as-coda correction (TLTK maps จ coda to 't')
             if comp.coda == "t" and _detect_jor_coda(thai_seg):
                 comp.coda = "c"
+
+            # Apply ส/ศ/ษ-as-coda correction (TLTK maps these to 't')
+            if comp.coda == "t" and _detect_sor_coda(thai_seg):
+                comp.coda = "s"
 
             syllables.append(comp)
 
@@ -506,6 +533,44 @@ def _estimate_product_size(syllable_options: list[list[str]]) -> int:
     return size
 
 
+def _vowel_context_tag(comp: SyllableComponents) -> str:
+    """Compute a context tag for vowel grouping in consistent generation.
+
+    Guard clauses in ``_get_component_variants`` modify the vowel variant
+    list based on syllable context.  When the same vowel appears in
+    different contexts (e.g., open vs closed syllable), those occurrences
+    must be treated as independent — they have different valid variant
+    sets.
+
+    The tag encodes the guard-relevant properties:
+
+    - **has_coda** — affects the ``a → u`` guard (only valid in closed
+      syllables).
+    - **glide_coda** — affects suppression of consonant-ending vowel
+      variants before ``j``/``w`` codas.
+    """
+    parts: list[str] = []
+    if comp.coda:
+        parts.append("cl")  # closed syllable
+        if comp.coda in ("j", "w"):
+            parts.append("gl")  # glide coda
+    else:
+        parts.append("op")  # open syllable
+    return ":".join(parts)
+
+
+def _coda_context_tag(comp: SyllableComponents, vowel_variants: list[str]) -> str:
+    """Compute a context tag for coda grouping in consistent generation.
+
+    The ``w → o`` suppression guard depends on whether any vowel variant
+    ends in ``i``.  This can differ across syllables sharing the same
+    ``w`` coda if the vowels differ.
+    """
+    if comp.coda == "w" and any(v and v[-1] == "i" for v in vowel_variants):
+        return "after_i"
+    return ""
+
+
 def _generate_variants_consistent(
     syllables: list[SyllableComponents],
     max_variants: int,
@@ -518,9 +583,15 @@ def _generate_variants_consistent(
     plausible whole-word forms and dramatically reduces the combinatorial
     product for long words.
 
+    Component keys are enriched with context tags so that guard-dependent
+    differences are preserved.  For example, vowel ``a`` in an open
+    syllable (no ``u`` variant) gets a different key from ``a`` in a
+    closed syllable (``u`` is valid), so they vary independently.  Same
+    vowel in the *same* context still shares a consistent choice.
+
     Algorithm:
-        1. For each syllable, extract (onset_key, vowel_key, coda_key) and
-           their guarded variant lists.
+        1. For each syllable, extract (onset_key, vowel_key, coda_key)
+           with context-aware tags and their guarded variant lists.
         2. Identify unique component keys across all syllables.
         3. For components appearing in multiple syllables, intersect the
            per-syllable variant lists to find choices valid in all contexts.
@@ -534,7 +605,7 @@ def _generate_variants_consistent(
     Returns:
         Set of variant strings.
     """
-    # Step 1: Extract per-syllable component info
+    # Step 1: Extract per-syllable component info with context-aware keys
     # Each entry: [(onset_key, onset_v), (vowel_key, vowel_v), (coda_key, coda_v)]
     syllable_info: list[list[tuple[str, list[str]]]] = []
     for comp in syllables:
@@ -543,10 +614,16 @@ def _generate_variants_consistent(
         onset_key = comp.onset if comp.onset not in ("?", "") else ""
         vowel_key = comp.vowel or ""
         coda_key = comp.coda or ""
+
+        # Context-aware keys: same component in different guard contexts
+        # gets a different key so it varies independently.
+        v_ctx = _vowel_context_tag(comp)
+        c_ctx = _coda_context_tag(comp, vowel_v)
+
         syllable_info.append([
             (f"o:{onset_key}", onset_v),
-            (f"v:{vowel_key}", vowel_v),
-            (f"c:{coda_key}", coda_v),
+            (f"v:{vowel_key}:{v_ctx}", vowel_v),
+            (f"c:{coda_key}:{c_ctx}" if c_ctx else f"c:{coda_key}", coda_v),
         ])
 
     # Step 2: Collect unique component keys and intersect variant lists

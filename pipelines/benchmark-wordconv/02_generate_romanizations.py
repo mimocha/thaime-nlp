@@ -353,7 +353,7 @@ def main() -> None:
     # Write output
     output_data = {
         "metadata": {
-            "version": "v0.2.0-draft",
+            "version": "v0.4.1-draft",
             "source": "pipeline/benchmark-v2",
             "corpora": ["wisesight", "wongnai", "prachathai"],
             "weighting": "equal (1/3 each)",

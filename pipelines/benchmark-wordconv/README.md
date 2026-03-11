@@ -38,11 +38,16 @@ python -m pipelines.benchmark-wordconv.02_generate_romanizations --top-k 10000 -
 `ProcessPoolExecutor` (fork context). Recommended for large runs (10K+ words).
 Default is `--workers 1` (sequential). TLTK process safety has been verified.
 
-| Scale | Workers | Approx. time |
-|-------|---------|-------------|
-| 1K | 1 | ~4 min |
-| 10K | 4 | ~7 min |
-| 10K | 1 | ~37 min |
+| Scale | Workers | Approx time | Approx words/s |
+|-------|---------|-------------|----------------|
+| 1K    |  1      | ~3:54 min   | ~ 4.3 wps      |
+| 1K    |  4      | ~1:02 min   | ~16.1 wps      |
+| 1K    |  8      | ~0:47 min   | ~21.3 wps      |
+| 5K    |  4      | ~5:08 min   | ~16.2 wps      |
+| 5K    |  8      | ~2:50 min   | ~29.4 wps      |
+| 5K    | 15      | ~2:05 min   | ~40.0 wps      |
+| 10K   | 15      | ~3:57 min   | ~42.2 wps      |
+| 20K   | 15      | ~7:31 min   | ~44.3 wps      |
 
 **Output:** `output/draft_benchmark.json`
 
