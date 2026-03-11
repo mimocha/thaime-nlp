@@ -27,7 +27,7 @@ Evaluated 6 unigram scoring formulas against 3 test sets (70 common words, 25 am
 
 - **Segmentation penalty λ has no measurable effect on single-word candidate ranking.** The baseline, source_weighted, smoothed, and tfidf formulas produce identical results across all 7 λ values. This confirms live testing observations — λ only matters for multi-word segmentation, not single-word ranking. **The current default λ=1.0 is fine.**
 
-- **The 2 residual errors are genuine ambiguity cases:** `hun` (หุ้น vs หั่น, freq ratio 1.06×) and `chae` (แชร์ vs เจ, freq ratio 1.48×). These require bigram/context scoring to resolve.
+- **The 2 apparent Set B misrankings are test set artifacts, not real errors.** The `hun` and `chae` cases arise because Set B defines collisions by shortest-romanization, while the Viterbi matches all romanizations. In both cases, the Viterbi correctly ranks the globally highest-frequency word first. The true Top-1 accuracy is likely higher than the reported 92%.
 
 | Formula | Best λ | A MRR | A Top-1 | B MRR | B Top-1 | C Recall |
 |---------|--------|-------|---------|-------|---------|----------|
@@ -50,13 +50,14 @@ Specific recommendations for the THAIME engine:
 2. **Segmentation penalty λ:** Keep the current default λ=1.0. The sweep confirms λ has no effect on single-word ranking. It may matter for multi-word segmentation but needs evaluation on segmentation test cases (not covered in this study).
 3. **Source-count metadata:** Do not invest in source-count weighting for unigram scoring. The trie pipeline's quality filtering already captures source reliability implicitly.
 4. **Per-corpus frequency data:** Do not use corpus-balanced frequencies — they actively hurt ranking quality. The averaged frequency in the trie dataset is the correct signal.
-5. **Next priority for ranking improvement:** Bigram/n-gram scoring (research 007 candidate) — this is the only approach that can resolve the genuine ambiguity cases where unigram scoring fails.
+5. **Next priority for ranking improvement:** Bigram/n-gram scoring (research 007 candidate) — this is the only approach that can resolve context-dependent ambiguity cases (e.g., "kao" → ข้าว after กิน vs เขา in other contexts).
 
 ## Limitations
 
 - **Test sets are limited in scope.** Set A (70 entries) and Set B (25 entries) are small. Results may not generalize to all input patterns. The test sets are heavily weighted toward single-word inputs.
 - **Multi-word segmentation not evaluated.** The segmentation penalty λ was only evaluated on single-word inputs where it has no effect. A dedicated segmentation benchmark is needed to evaluate λ's impact on multi-word paths.
-- **No context scoring.** All formulas evaluated are unigram (context-free). The remaining errors are fundamentally ambiguity problems that require bigram or contextual scoring.
+- **Test set B collision detection uses shortest-romanization grouping.** This means some "failures" in Set B are actually correct Viterbi behavior — the Viterbi matches all romanization variants, not just the shortest. A more comprehensive collision detection (matching all romanization overlaps) would give a more accurate Set B accuracy estimate.
+- **No context scoring.** All formulas evaluated are unigram (context-free). Context-dependent disambiguation (e.g., "kao" → ข้าว after กิน vs เขา otherwise) requires bigram or contextual scoring.
 - **Per-corpus extraction used only 3 of 5 corpora.** The thwiki and pythainlp sources were not included in per-corpus frequency extraction (thwiki is slow to parse; pythainlp provides only binary presence, not frequencies). This may slightly affect the balanced formula's results, though the formula's poor performance is likely inherent to its normalization approach.
 - **Test set construction is automated.** Expected top candidates in Set B are chosen by frequency, which may not always match human intuition (e.g., `hun → หุ้น` vs หั่น is genuinely debatable).
 

@@ -25,6 +25,7 @@ OVERRIDES_PATH = (
     SCRIPT_DIR.parent.parent / "data" / "dictionaries" / "word_overrides" / "overrides-v0.4.2.yaml"
 )
 OUTPUT_DIR = SCRIPT_DIR
+# Fixed date for reproducibility — test sets should be regenerated deterministically
 DATE = "2026-03-11"
 
 
