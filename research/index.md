@@ -15,4 +15,5 @@
 
 | Topic | Branch | Stage | Started |
 |-------|--------|-------|---------|
+| N-gram Transition Probability | `research/007-bigram-scoring` | 2 (Planning) | 2026-03-12 |
 
