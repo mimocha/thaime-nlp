@@ -42,8 +42,8 @@ uv.lock
 
 # Experiment outputs that shouldn't be tracked
 # (large generated files — commit summaries and key results, not raw dumps)
-experiments/*/data/raw/
-experiments/*/data/*.csv.gz
+experiments/*/data/
+experiments/*/data/*
 
 # Pipeline outputs (regenerate via pipeline code)
 pipelines/*/outputs/
