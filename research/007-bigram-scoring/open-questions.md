@@ -1,17 +1,31 @@
 # Research 007: Open Questions for Follow-up Research
 
 **Date:** 2026-03-13
-**Context:** Phase 3 (Smoothing Evaluation) findings
+**Context:** Phase 3 (Smoothing Evaluation) and Phase 4 (Bigram Viterbi) findings
 
-## 1. Benchmark Insufficiency for Smoothing Method Discrimination
+## 1. Benchmark Reliability — Proposed Follow-up Research Topic
 
 ### Problem
 
-The current bigram ranking benchmark (v0.1.1, 110 bigram-type rows) cannot reliably discriminate between smoothing methods. Diagnostic analysis revealed:
+Multiple lines of evidence from Phases 3 and 4 indicate the current bigram ranking benchmark (v0.1.1, 110 bigram-type rows) has systematic issues that limit its usefulness for evaluating scoring methods.
 
+**Phase 3 finding — insufficient discriminating power:**
 - **30/110 rows (27%) have unseen expected bigrams** — all methods fall back to unigram with identical rankings (3.3% Top-1 across all methods).
 - **55/110 rows (50%) produce the same top-1 winner as pure unigram** — context had no effect on the ranking for these rows.
-- **Effective discriminating sample is ~55 rows** — and even within these, method differences amount to 2-7 rows, well within noise for a hand-curated benchmark.
+- **Effective discriminating sample is ~55 rows** — method differences amount to 2-7 rows, well within noise.
+
+**Phase 4 finding — compound tokenization contaminates training data:**
+
+Analysis of the full 162K tokenizer wordlist revealed that 22/110 bigram-type benchmark rows have their context+expected pair as a single compound word in the tokenizer vocabulary. When the tokenizer processes corpus text, it produces these compounds as single tokens, suppressing the component bigram signal:
+
+| Condition | Miss rate (bw=3.0) | N |
+|---|---|---|
+| Compound in wordlist | **95.5%** | 21/22 |
+| Compound NOT in wordlist | 53.4% | 47/88 |
+
+13 of the 21 compound misses have **zero bigram count** — the bigram was completely eaten by compound tokenization (e.g., เติบโต, ป้องกัน, ลูกไก่, ตีโต้, ลั่นไก). The remaining 8 have counts of 1-32 — vastly suppressed. This means ~20% of bigram-type benchmark rows are testing pairs where the training data is systematically biased against the correct answer.
+
+**Combined effect:** Between unseen bigrams (27%), compound-eaten bigrams (~20%), and dominant-word imbalance (covered in §2), the benchmark has multiple confounding factors that make it unreliable for comparing scoring methods.
 
 ### Result
 
@@ -19,15 +33,17 @@ All backoff-family methods (Stupid Backoff, Katz, MKN) hit the same Top-1 ceilin
 
 ### Recommended Follow-up
 
-A dedicated research topic should:
+This warrants a dedicated research topic to investigate benchmark reliability and propose improvements:
 
-1. **Expand the benchmark** — target 500+ bigram-type rows, with systematic coverage of:
+1. **Audit existing rows** — classify all 110 bigram rows by failure mode (compound tokenization, unseen bigram, dominant-word, genuine model failure) to understand the true effective sample
+2. **Expand the benchmark** — target 500+ bigram-type rows, with systematic coverage of:
    - Different bigram count ranges (count=1, 2-5, 5-20, 20-100, 100+)
    - Balanced representation across ambiguity levels (2-candidate, 5-candidate, 10+ candidate groups)
    - More latin_input groups (currently only 13)
-2. **Use corpus-driven test case generation** — instead of hand-curation, sample (context, candidate) pairs directly from corpus data to avoid selection bias
-3. **Include negative cases** — rows where unigram ranking is already correct, to measure whether bigram scoring introduces regressions
-4. **Statistical significance testing** — bootstrap confidence intervals on MRR/Top-1 to determine if method differences are real
+3. **Compound-aware test design** — exclude or separately tag rows where compound tokenization suppresses the bigram signal, so they don't contaminate method comparisons
+4. **Use corpus-driven test case generation** — instead of hand-curation, sample (context, candidate) pairs directly from corpus data to avoid selection bias
+5. **Include negative cases** — rows where unigram ranking is already correct, to measure whether bigram scoring introduces regressions
+6. **Statistical significance testing** — bootstrap confidence intervals on MRR/Top-1 to determine if method differences are real
 
 
 ## 2. Dominant-Word Frequency Imbalance
@@ -58,11 +74,30 @@ Investigate alternative scoring approaches:
 3. **Context-dependent interpolation** — Weight the bigram component higher when the context word is informative (low entropy over continuations) and lower when it's uninformative.
 
 
-## 3. Unseen Bigram Handling
+## 3. Compound Tokenization Suppresses Bigram Signal
 
 ### Problem
 
-30/110 benchmark rows (27%) have expected bigrams not found in any training corpus. For these cases, all methods collapse to unigram ranking with 3.3% Top-1 accuracy. This represents a hard ceiling that no smoothing method can break.
+Phase 4 analysis revealed that the tokenizer (newmm) treats many context+expected pairs as single compound tokens during corpus processing. The full tokenizer wordlist (162K entries, much larger than the 15K trie dictionary) contains compound forms like เติบโต, ป้องกัน, ลูกไก่, ตีโต้ — when the tokenizer encounters these in running text, it produces one token instead of two, so the component bigram is never counted.
+
+This affects 22/110 bigram-type benchmark rows (20%), with a 95.5% miss rate at bw=3.0. Of these, 13 have zero bigram count and 8 have counts of 1-32.
+
+### Why this is fundamental
+
+This is not a bug — it's an inherent tension between tokenizer granularity and n-gram model assumptions. The tokenizer is designed to produce the longest matching word, which is correct for many NLP tasks but directly conflicts with bigram counting. Both the "compound" and "decomposed" tokenizations are linguistically valid.
+
+### Recommended Follow-up
+
+1. **Dual tokenization** — Run corpus tokenization at two granularities (word-level and subword-level) and merge the bigram counts, giving credit to both compound and decomposed forms.
+2. **Dictionary-based bigram injection** — For known compound words in the trie, synthetically inject bigram counts for their decomposed forms based on the compound's unigram frequency.
+3. **SentencePiece tokenization** — Data-driven subword tokenization (BPE/Unigram model) avoids the longest-match bias of dictionary-based tokenizers and may naturally produce more decomposed bigrams.
+
+
+## 4. Unseen Bigram Handling
+
+### Problem
+
+30/110 benchmark rows (27%) have expected bigrams not found in any training corpus. For these cases, all methods collapse to unigram ranking with 3.3% Top-1 accuracy. This represents a hard ceiling that no smoothing method can break. Note: some of these unseen bigrams are likely caused by the compound tokenization issue described in §3.
 
 ### Recommended Follow-up
 
@@ -71,7 +106,7 @@ Investigate alternative scoring approaches:
 3. **Synthetic bigram generation** — Use word embeddings or dictionary-based heuristics to estimate scores for unseen bigrams (e.g., words in the same semantic cluster may have similar transition probabilities).
 
 
-## 4. MKN Discount Parameter Anomaly
+## 5. MKN Discount Parameter Anomaly
 
 ### Observation
 

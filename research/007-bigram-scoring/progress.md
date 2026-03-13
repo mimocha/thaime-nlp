@@ -3,7 +3,7 @@
 **Last updated:** 2026-03-13
 **Branch:** `research/007-bigram-scoring`
 
-## Current Status: Phase 3 complete
+## Current Status: Phase 4 complete
 
 ### Phase 1: Ranking Benchmark — Complete
 
@@ -109,13 +109,70 @@ Diagnostic analysis revealed the benchmark cannot discriminate between smoothing
 
 **Open questions documented in:** `research/007-bigram-scoring/open-questions.md`
 
+### Phase 4: Bigram-Aware Viterbi Prototype — Complete
+
+**Script:** `experiments/007-bigram-scoring/scripts/viterbi_bigram.py`
+
+Integrates Stupid Backoff bigram scoring into a Viterbi candidate selection
+algorithm using real trie data (15K words, 187K romanization keys) and corpus
+bigram counts (8M entries).
+
+**How to run** (in devcontainer):
+```bash
+# Default sweep
+python -m experiments.007-bigram-scoring.scripts.viterbi_bigram
+
+# Specific weights, verbose
+python -m experiments.007-bigram-scoring.scripts.viterbi_bigram --bigram-weights 0.0,1.0,3.0 --verbose
+
+# Specific row types
+python -m experiments.007-bigram-scoring.scripts.viterbi_bigram --types bigram
+```
+
+**Key results (all 200 rows, fixed alpha=0.4, seg_penalty=0.5):**
+
+| bigram_weight | Overall MRR | Overall Top-1 | Baseline MRR | Bigram MRR | Compound MRR |
+|---|---|---|---|---|---|
+| 0.0 (unigram) | 0.413 | 21.5% | **1.000** | 0.326 | 0.406 |
+| 1.0 | 0.502 | 29.0% | **1.000** | 0.497 | 0.394 |
+| 2.0 | 0.526 | 33.0% | **1.000** | 0.536 | 0.402 |
+| 3.0 | 0.540 | 35.5% | **1.000** | 0.560 | 0.402 |
+
+**Verification results:**
+1. bw=0.0 matches Phase 3's unigram baseline (bigram MRR=0.326) ✓
+2. Bigram rows improve monotonically with weight (+72% MRR at bw=3.0) ✓
+3. Baseline rows unaffected across all weights (100% MRR) ✓
+4. Diminishing returns past bw=2.0 — the jump 0→1 (+0.17 MRR) >> 2→3 (+0.025 MRR)
+
+**Compound tokenization analysis (Phase 4 key finding):**
+
+Verbose miss analysis revealed a systematic failure mode: when context+expected
+exists as a single compound word in the tokenizer's vocabulary (the full 162K
+wordlist), the tokenizer tends to produce it as one token during corpus
+processing, suppressing the bigram signal.
+
+| Condition | Miss rate | N |
+|---|---|---|
+| Compound in wordlist | **95.5%** | 21/22 |
+| Compound NOT in wordlist | 53.4% | 47/88 |
+
+Cross-tabulation of all 68 bigram-row misses (at bw=3.0):
+- **13 misses (19%):** compound in wordlist + zero bigram count — tokenizer completely ate the bigram (e.g., เติบโต, ป้องกัน, ลูกไก่, ตีโต้)
+- **8 misses (12%):** compound in wordlist + low bigram count (1-32) — suppressed but not eliminated
+- **47 misses (69%):** compound NOT in wordlist — other failure modes (dominant-word frequency imbalance)
+
+**Two distinct failure modes confirmed:**
+
+1. **Compound tokenization steals bigram signal (31% of misses)** — The tokenizer vocabulary contains compound forms of context+expected pairs. When the tokenizer processes corpus text, it produces these as single tokens, preventing the component bigram from being counted. This is a training data problem, not a model problem.
+
+2. **High-frequency word dominates despite bigram (69% of misses)** — Ultra-frequent words (ไม่, การ, จะ, แต่) have such high unigram+bigram counts that even a meaningful bigram signal for the correct candidate can't overcome the frequency gap. This confirms Phase 3's dominant-word finding.
+
+**Production recommendation:** bigram_weight=2.0 is a reasonable default. It captures most of the gain (+64% bigram MRR) with minimal compound row degradation (-0.004 MRR).
+
 ## Next Steps
 
-### Immediate
-- Phase 4: Viterbi integration prototype with Stupid Backoff
-
 ### Follow-up research (separate topics)
-- Expand bigram benchmark (500+ rows, corpus-driven generation, balanced coverage)
+- **Benchmark reliability investigation** — Current benchmark has known limitations: compound tokenization artificially suppresses bigram evidence for ~20% of test cases, effective discriminating sample is only ~55 rows, and dominant-word imbalance affects 69% of misses. A dedicated research topic should assess benchmark validity and propose improvements (500+ rows, corpus-driven generation, compound-aware test design).
 - Investigate PMI-based scoring / frequency dampening for dominant-word problem
 - SentencePiece tokenization for better n-gram coverage
 - Revisit smoothing method comparison with improved benchmark
@@ -147,6 +204,7 @@ experiments/007-bigram-scoring/
         find_collisions.py      # Phase 1 helper (romanization collisions)
         evaluate_smoothing.py   # Phase 3: smoothing method evaluation
         diagnose_benchmark.py   # Phase 3: benchmark bias diagnostics
+        viterbi_bigram.py       # Phase 4: bigram-aware Viterbi prototype
     data/
         tokens_*.txt            # Cached token files (gitignored)
         ngrams_2_*.tsv          # Bigram frequency tables (gitignored)
