@@ -1,9 +1,9 @@
 # Research 007: Bigram Scoring — Progress Notes
 
-**Last updated:** 2026-03-13
+**Last updated:** 2026-03-14
 **Branch:** `research/007-bigram-scoring`
 
-## Current Status: Phase 4 complete
+## Current Status: Phase 6 complete (research complete)
 
 ### Phase 1: Ranking Benchmark — Complete
 
@@ -169,16 +169,57 @@ Cross-tabulation of all 68 bigram-row misses (at bw=3.0):
 
 **Production recommendation:** bigram_weight=2.0 is a reasonable default. It captures most of the gain (+64% bigram MRR) with minimal compound row degradation (-0.004 MRR).
 
-## Next Steps
+### Phase 5: Trigram Assessment — Complete
 
-### Follow-up research (separate topics)
-- **Benchmark reliability investigation** — Current benchmark has known limitations: compound tokenization artificially suppresses bigram evidence for ~20% of test cases, effective discriminating sample is only ~55 rows, and dominant-word imbalance affects 69% of misses. A dedicated research topic should assess benchmark validity and propose improvements (500+ rows, corpus-driven generation, compound-aware test design).
-- Investigate PMI-based scoring / frequency dampening for dominant-word problem
-- SentencePiece tokenization for better n-gram coverage
-- Revisit smoothing method comparison with improved benchmark
+**Data generation:** Reused `count_ngrams.py` with `--n 3 --min-count 2`.
 
-### Deferred
-- Fix number-bridged bigrams (insert boundaries at dropped tokens)
+**Trigram corpus statistics:**
+
+| Corpus | Unique trigrams | Total |
+|---|---|---|
+| wisesight | 268K | 315K |
+| wongnai | 2.3M | 3.8M |
+| prachathai | 21.0M | 48.5M |
+| thwiki | 20.4M | 43.3M |
+
+Raw merged (min-count≥2): 9.9M trigrams (447 MB)
+Normalized merged (all): 40.7M trigrams (2.6 GB)
+
+**Coverage analysis on benchmark:**
+
+| Metric | Bigram-type (110) | Compound-type (73) | All with context (183) |
+|---|---|---|---|
+| Has bigram (ctx, exp) | 80 (72.7%) | 53 (72.6%) | 133 (72.7%) |
+| Has trigram (\*, ctx, exp) | 68 (61.8%) | 31 (42.5%) | 99 (54.1%) |
+| Has trigram (ctx, exp, \*) | 66 (60.0%) | 32 (43.8%) | 98 (53.6%) |
+
+**Key finding: trigram coverage is a strict subset of bigram coverage.** Every benchmark row with trigram evidence also has bigram evidence (0 rows have trigram but no bigram). Of the 80 bigram-type rows with bigram counts, 68 (85%) also have trigram evidence — with median 14 distinct left contexts per pair.
+
+**Assessment conclusion:**
+
+- Trigrams cannot help with the unseen-bigram problem (27% of rows) — they're strictly less available
+- But for the 85% of seen-bigram rows that also have trigram data, there is ample signal (median 49 total trigram occurrences)
+- The Stupid Backoff chain trigram→bigram→unigram has clean fallback at every level
+- **Current benchmark cannot measure trigram improvement** — inputs are single-word, and context is only one word deep. Measuring actual trigram gains requires a benchmark with two-word context or multi-word inputs.
+- **Production recommendation: implement trigram with backoff.** Literature consistently shows 1.6x perplexity reduction (trigram vs bigram). Storage cost is manageable (447 MB raw, compressible). The fallback chain guarantees no degradation — worst case, trigram adds nothing and bigram takes over.
+
+### Phase 6: Summary — Complete
+
+Summary document written: `research/007-bigram-scoring/summary.md`
+
+**Pipeline assessment:** The n-gram extraction scripts (`tokenize_corpora.py`, `count_ngrams.py`) are usable for production data generation with moderate refactoring — move to `pipelines/ngram/`, add `generate.py` entrypoint, add README, fix number-bridged false bigrams. Structurally similar to the trie pipeline.
+
+## Follow-up Research (separate topics)
+
+| Topic | Priority | Rationale |
+|---|---|---|
+| Benchmark reliability investigation | High | Current benchmark cannot discriminate methods or measure improvements reliably |
+| PMI-based scoring | Medium | Addresses dominant-word imbalance (69% of misses) |
+| N-gram pipeline productionization | Medium | Move scripts to `pipelines/ngram/`; fix number-bridged false bigrams |
+| SentencePiece tokenization | Low | May improve n-gram coverage; addresses compound tokenization issue |
+
+## Deferred Issues
+
 - MKN discount parameter anomaly investigation
 - Benchmark tagging review (bigram/compound borderline cases)
 
@@ -187,8 +228,9 @@ Cross-tabulation of all 68 bigram-row misses (at bw=3.0):
 ```
 research/007-bigram-scoring/
     007-bigram-scoring.md       # Research plan (Phase 1-6)
+    summary.md                  # Final summary (key deliverable)
     tokenization-issues.md      # Known issues analysis
-    open-questions.md           # Phase 3 open questions for follow-up research
+    open-questions.md           # Open questions for follow-up research
     progress.md                 # This file
 
 benchmarks/ranking/bigram/
@@ -208,4 +250,5 @@ experiments/007-bigram-scoring/
     data/
         tokens_*.txt            # Cached token files (gitignored)
         ngrams_2_*.tsv          # Bigram frequency tables (gitignored)
+        ngrams_3_*.tsv          # Trigram frequency tables (gitignored)
 ```
