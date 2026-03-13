@@ -3,7 +3,7 @@
 **Last updated:** 2026-03-13
 **Branch:** `research/007-bigram-scoring`
 
-## Current Status: Phase 2 complete, Phase 3 next
+## Current Status: Phase 3 complete
 
 ### Phase 1: Ranking Benchmark — Complete
 
@@ -75,23 +75,55 @@ Full analysis in `research/007-bigram-scoring/tokenization-issues.md`:
 
 Documented in `tokenization-issues.md` Issue 4. Key finding: all major IMEs (Mozc, libkkc, libpinyin, Rime) store both compound words and their decomposed forms, letting Viterbi + language model arbitrate. THAIME should follow the same pattern.
 
+### Phase 3: Smoothing Evaluation — Complete
+
+**Scripts** (in `experiments/007-bigram-scoring/scripts/`):
+- `evaluate_smoothing.py` — evaluates 4 smoothing methods on benchmark
+- `diagnose_benchmark.py` — diagnostic analysis of benchmark bias
+
+**Methods evaluated:**
+1. Stupid Backoff (α ∈ {0.2, 0.4, 0.6}) — Brants et al. 2007
+2. Jelinek-Mercer interpolation (λ ∈ {0.1, 0.3, 0.5, 0.7, 0.9})
+3. Modified Kneser-Ney (D1=0.622, D2=1.087, D3+=1.490) — Chen & Goodman 1999
+4. Katz Backoff (Good-Turing discounting)
+
+**Key results (110 bigram-type rows, `--min-count 1`):**
+
+| Method | MRR | Top-1 |
+|--------|-----|-------|
+| Unigram (baseline) | 0.323 | 10.0% |
+| Stupid Backoff (α=0.2) | **0.600** | **42.7%** |
+| Jelinek-Mercer (λ=0.9) | 0.576 | 39.1% |
+| Modified Kneser-Ney | 0.581 | 41.8% |
+| Katz Backoff | 0.600 | 42.7% |
+
+**Key finding: methods are indistinguishable on current benchmark.**
+
+Diagnostic analysis revealed the benchmark cannot discriminate between smoothing methods:
+- 30/110 rows (27%) have unseen bigrams → all methods fall back to unigram identically
+- 55/110 rows (50%) produce the same top-1 as unigram → context had no effect
+- Method differences amount to 2-7 rows on an effective sample of ~55, well within noise
+- Dominant words (ไม่, การ, จะ) block correct answers regardless of method
+
+**Production recommendation:** Stupid Backoff — trivial to implement in Rust (one hash lookup + branch), performs within noise of Katz/MKN, no parameter estimation needed.
+
+**Open questions documented in:** `research/007-bigram-scoring/open-questions.md`
+
 ## Next Steps
 
-### Immediate (Phase 3: Smoothing Evaluation)
-1. Implement smoothing methods (add-alpha, Kneser-Ney, deleted interpolation)
-2. Build a bigram scoring function that takes `(context_word, candidate_word)` → score
-3. Evaluate on the 110 bigram-type benchmark rows
-4. Compare smoothing methods and interpolation weights
+### Immediate
+- Phase 4: Viterbi integration prototype with Stupid Backoff
 
-### Before Phase 3 (optional cleanup)
-- Maintainer review of v0.1.1 benchmark tagging — a few bigram-tagged rows may need reclassification to compound (สีขาว, ดีไหม, มีแต่, วิบากกรรม, etc.)
-- These are rows where `context + expected_top` is a compound word but wasn't in the trie vocab
+### Follow-up research (separate topics)
+- Expand bigram benchmark (500+ rows, corpus-driven generation, balanced coverage)
+- Investigate PMI-based scoring / frequency dampening for dominant-word problem
+- SentencePiece tokenization for better n-gram coverage
+- Revisit smoothing method comparison with improved benchmark
 
-### Later
+### Deferred
 - Fix number-bridged bigrams (insert boundaries at dropped tokens)
-- Explore SentencePiece tokenization for better n-gram extraction
-- Phase 4: Viterbi integration prototype
-- Phase 5: Trigram assessment (if needed)
+- MKN discount parameter anomaly investigation
+- Benchmark tagging review (bigram/compound borderline cases)
 
 ## File Inventory
 
@@ -99,6 +131,7 @@ Documented in `tokenization-issues.md` Issue 4. Key finding: all major IMEs (Moz
 research/007-bigram-scoring/
     007-bigram-scoring.md       # Research plan (Phase 1-6)
     tokenization-issues.md      # Known issues analysis
+    open-questions.md           # Phase 3 open questions for follow-up research
     progress.md                 # This file
 
 benchmarks/ranking/bigram/
@@ -112,6 +145,8 @@ experiments/007-bigram-scoring/
         count_ngrams.py         # Stage 2: token files → n-gram TSVs
         check_coverage.py       # Benchmark coverage analysis
         find_collisions.py      # Phase 1 helper (romanization collisions)
+        evaluate_smoothing.py   # Phase 3: smoothing method evaluation
+        diagnose_benchmark.py   # Phase 3: benchmark bias diagnostics
     data/
         tokens_*.txt            # Cached token files (gitignored)
         ngrams_2_*.tsv          # Bigram frequency tables (gitignored)

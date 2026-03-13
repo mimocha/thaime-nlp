@@ -3,7 +3,7 @@
 **Topic:** research/007-bigram-scoring
 **Date:** 2026-03-12
 **Author:** Claude (agent) + Chawit Leosrisook (maintainer)
-**Status:** Planning
+**Status:** Phase 3 Complete
 **Prerequisites:** Research 005 (Candidate Selection), Research 006 (Frequency Scoring)
 
 ## Research Question
@@ -54,6 +54,8 @@ The unigram-to-bigram jump is massive. Bigram-to-trigram is meaningful but much 
 - Kudo et al. 2011 — Efficient dictionary and LM compression for IME (ACL)
 - Chen & Lee 2000 — Statistical approach to Chinese Pinyin input (ACL)
 - Jurafsky & Martin — SLP3, Ch. 3: N-gram Language Models
+- Chen & Goodman 1999 — An Empirical Study of Smoothing Techniques for Language Modeling (Modified Kneser-Ney)
+- Brants et al. 2007 — Large Language Models in Machine Translation (Stupid Backoff)
 - Research 005 — Candidate Selection Algorithm (Viterbi upgrade path section)
 - Research 006 — Word Frequency Scoring (unigram ceiling finding)
 
@@ -85,8 +87,9 @@ The extraction pipeline and Viterbi integration will be designed to be n-gram-or
 | Variable | Values | Description |
 |----------|--------|-------------|
 | N-gram order | 2 (primary), 3 (if needed) | Context window size |
-| Smoothing method | Add-alpha, Kneser-Ney, deleted interpolation | How unseen n-grams are handled |
-| Interpolation weight | lambda in {0.1, 0.3, 0.5, 0.7, 0.9} | Bigram vs unigram mixing weight |
+| Smoothing method | Stupid Backoff, Jelinek-Mercer, Modified Kneser-Ney, Katz Backoff | How unseen n-grams are handled |
+| Interpolation weight | lambda in {0.1, 0.3, 0.5, 0.7, 0.9} | Bigram vs unigram mixing weight (Jelinek-Mercer) |
+| Backoff weight | alpha in {0.2, 0.4, 0.6} | Backoff penalty (Stupid Backoff) |
 | Corpus combination | Individual corpora, merged | Whether to merge counts across corpora |
 | Context source | No context, within-input, last committed word | Where bigram context comes from |
 
@@ -144,15 +147,23 @@ The extraction pipeline and Viterbi integration will be designed to be n-gram-or
 
 **Primarily agent work, with maintainer review.**
 
-1. Implement 3 smoothing methods:
-   - **Add-alpha:** `P(w2|w1) = (count(w1,w2) + alpha) / (count(w1) + alpha * V)`. Simple, one parameter.
-   - **Kneser-Ney:** Discounted counts with continuation probability for backoff. Standard in NLP.
-   - **Deleted interpolation:** `P(w2|w1) = lambda_2 * P_bigram(w2|w1) + lambda_1 * P_unigram(w2)`. Learned weights.
+1. Implement 4 smoothing methods:
+   - **Stupid Backoff** (baseline): `Score(w2|w1) = count(w1,w2)/count(w1)` if seen, else `alpha * P_unigram(w2)`. Not true probabilities — just scores. Alpha typically 0.4. (Brants et al. 2007)
+   - **Jelinek-Mercer interpolation** (practical workhorse): `P(w2|w1) = lambda * P_bigram(w2|w1) + (1-lambda) * P_unigram(w2)`. Always blends both orders. Lambda tuned on held-out data. Used by libpinyin in production.
+   - **Modified Kneser-Ney** (theoretical best): Three discount values (D1, D2, D3+) based on count, with continuation probability for lower-order distribution. Gold standard in KenLM/SRILM. (Chen & Goodman 1999)
+   - **Katz Backoff** (alternative philosophy): Good-Turing discounted counts for seen bigrams; normalized backoff to unigram for unseen. Tests backoff-vs-interpolation question.
 2. Evaluate each method on the ranking benchmark:
-   - Run bigram-aware Viterbi on all test cases
+   - Run bigram-aware scoring on all bigram-type test cases (110 rows)
    - Measure MRR, Top-1 accuracy, and context improvement
-   - Compare across smoothing methods and interpolation weights
+   - Sweep parameters: lambda for Jelinek-Mercer, alpha for Stupid Backoff
+   - Compare across smoothing methods
 3. Analyze failure cases: which test cases does bigram scoring fix vs break vs leave unchanged?
+
+**Rationale for method selection:**
+- Add-alpha dropped: consistently worst performer in literature; Stupid Backoff is equally simple but better.
+- Basic Kneser-Ney dropped: Modified KN is strictly superior with minimal extra complexity.
+- Absolute discounting, Witten-Bell: dominated by MKN, no unique design-space coverage.
+- The four selected methods span: simple baseline → practical middle → theoretical best → alternative philosophy (backoff vs interpolation).
 
 ### Phase 4: Viterbi Integration Prototype
 
