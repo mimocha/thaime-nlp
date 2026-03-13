@@ -1,0 +1,215 @@
+latin_input,context,expected_top,valid_alternatives,type,notes
+# ===== NO-CONTEXT BASELINES (most frequent candidate wins) =====
+kao,,เขา,เข้า|เค้า|ข้าว|ข่าว|ขาว|เก่า|เก้า,baseline,he/she — most frequent
+mai,,ไม่,ใหม่|ไหม|มั้ย|ไม้|หมาย,baseline,negation — most frequent
+kan,,การ,กัน|คัน|การณ์|ขั้น,baseline,nominalizer — most frequent
+ka,,ค่ะ,คะ|ค่า|กา|กะ|คา|ขา,baseline,polite particle (f) — most frequent
+chai,,ใช้,ใช่|จ่าย|ชัย|ชาย|ใจ,baseline,to use — most frequent
+tang,,ทาง,ทั้ง|ตั้ง|ต่าง|ตัง,baseline,direction/way — most frequent
+toh,,ต่อ,โต|โทร|ท่อ|โต้,baseline,continue — most frequent
+tai,,ไทย,ใต้|ตาย|ท้าย|ถ่าย,baseline,Thai — most frequent
+koh,,ขอ,ข้อ|คอ|เกาะ|ก่อ,baseline,to request — most frequent
+pan,,ผ่าน,พัน|พันธ์|พันธุ์|ปั่น,baseline,to pass — most frequent
+tan,,ทาน,ท่าน|ฐาน|ทัน|ตัน,baseline,to eat (polite) — most frequent
+kai,,ขาย,ไก่|ไข่|ค่าย|กาย,baseline,to sell — most frequent
+chao,,ชาว,เจ้า|เช้า|เช่า,baseline,folk/people — most frequent
+kum,,คำ,คุ้ม|กรรม|คุม|ค่ำ,baseline,word — most frequent
+tae,,แต่,แท้|แตะ|แถ,baseline,but — most frequent
+kohn,,คน,ก่อน|ก้อน|คอน|ขน,baseline,person — most frequent
+cha,,จะ,ชา|จ้า|ช้า|จ้ะ,baseline,future marker — most frequent
+# ===== CONTEXT-DEPENDENT: kao =====
+kao,กิน,ข้าว,เขา|ข่าว|ขาว|เก่า,compound,กินข้าว = eat rice
+kao,หุง,ข้าว,เขา|ข่าว|ขาว|เก่า,compound,หุงข้าว = cook rice
+kao,สี,ขาว,เขา|ข้าว|ข่าว|เก่า,bigram,สีขาว = white color
+kao,อ่าน,ข่าว,เขา|ข้าว|ขาว|เก่า,bigram,อ่านข่าว = read news
+kao,ดู,ข่าว,เขา|ข้าว|ขาว|เก่า,bigram,ดูข่าว = watch news
+kao,ของ,เก่า,เขา|ข้าว|ข่าว|ขาว,compound,ของเก่า = old thing/antique
+kao,ปีน,เขา,ข้าว|ข่าว|ขาว|เก่า,bigram,ปีนเขา = hiking/trekking
+kao,เดิน,เข้า,ข้าว|ข่าว|ขาว|เก่า,bigram,เดินเข้า = to walk-in
+kao,อาหาร,คาว,ข้าว|ข่าว|ขาว|เก่า,compound,อาหารคาว = savory food
+kao,หัว,เข่า,ข้าว|ข่าว|ขาว|เก่า,compound,หัวเข่า = knee
+kao,เก่า,ๆ,ข้าว|ข่าว|ขาว|เข้า,compound,[repeater] เก่าๆ = pretty old
+# ===== CONTEXT-DEPENDENT: mai =====
+mai,เสื้อ,ใหม่,ไม่|ไหม|มั้ย|ไม้,bigram,เสื้อใหม่ = new shirt
+mai,ปี,ใหม่,ไม่|ไหม|มั้ย|ไม้,compound,ปีใหม่ = new year
+mai,ต้น,ไม้,ไม่|ใหม่|ไหม|มั้ย,compound,ต้นไม้ = tree
+mai,ใช่,ไหม,ไม่|ใหม่|มั้ย|ไม้,compound,ใช่ไหม = is it? (question)
+mai,ดี,ไหม,ไม่|ใหม่|มั้ย|ไม้,bigram,ดีไหม = is it good?
+mai,จริง,ไหม,ไม่|ใหม่|มั้ย|ไม้,bigram,จริงไหม = really?
+mai,ผ้า,ไหม,ไม่|ใหม่|มั้ย|ไม้,compound,ผ้าไหม = silk
+mai,หนอน,ไหม,ไม่|ใหม่|มั้ย|ไม้,bigram,หนอนไหม = silk worm
+mai,กิ่ง,ไม้,ไม่|ใหม่|มั้ย|ไหม,bigram,กิ่งไม้ = tree branch
+mai,ไป,มั้ย,ไม่|ใหม่|ไม้|ไหม,bigram,ไปมั้ย = wanna go? (question-informal)
+mai,ไม่,ไหม้,ใหม่|มั้ย|ไม้|ไหม,bigram,ไม่ไหม้ = not burnt
+mai,ไหม้,ๆ,ไม่|ใหม่|มั้ย|ไม้,bigram,[repeater] ไหม้ๆ = pretty burnt
+# ===== CONTEXT-DEPENDENT: kan =====
+kan,ช่วย,กัน,การ|คัน|ขั้น,compound,ช่วยกัน = help each other
+kan,ด้วย,กัน,การ|คัน|ขั้น,compound,ด้วยกัน = together
+kan,ป้อง,กัน,การ|คัน|ขั้น,compound,ป้องกัน = to protect/defend
+kan,เจอ,กัน,การ|คัน|ขั้น,compound,เจอกัน = see you later (informal)
+kan,ดี,กัน,การ|คัน|ขั้น,bigram,ดีกัน = to be nice to each other
+kan,ไม้,กั้น,การ|คัน|ขั้น,bigram,ไม้กั้น = barrier pole
+kan,ข้าม,ขั้น,การ|คัน|กัน,bigram,ข้ามขั้น = to skip a level
+kan,เข้า,ขั้น,การ|คัน|กัน,compound,เข้าขั้น = to enter a new metaphorical level
+kan,เสื้อ,คัน,การ|ขัน|ขั้น,bigram,เสื้อคัน = itchy shirt
+kan,คัน,ๆ,การ|กัน|ขั้น,bigram,[repeater] คันๆ = kinda itchy
+kan,ส้ม,คั้น,การ|คัน|ขั้น,bigram,ส้มคั้น = squeezed orange juice
+# ===== CONTEXT-DEPENDENT: tai =====
+tai,ภาค,ใต้,ไทย|ตาย|ท้าย|ถ่าย,compound,ภาคใต้ = southern region
+tai,คน,ไทย,ใต้|ตาย|ท้าย|ถ่าย,compound,คนไทย = Thai person
+tai,ไทย,ๆ,ใต้|ตาย|ท้าย|ถ่าย,bigram,[repeater] ไทยๆ = Thai-ish
+tai,ลง,ท้าย,ไทย|ใต้|ตาย|ถ่าย,compound,ลงท้าย = ending/suffix
+tai,ชน,ท้าย,ไทย|ใต้|ตาย|ถ่าย,bigram,ชนท้าย = rear-end collision
+tai,ท้าย,ๆ,ไทย|ใต้|ตาย|ถ่าย,bigram,[repeater] ท้ายๆ = toward the end
+tai,เป็น,ตาย,ไทย|ใต้|ท้าย|ถ่าย,bigram,เป็นตาย = life and death
+tai,ของ,ตาย,ไทย|ใต้|ท้าย|ถ่าย,bigram,ของตาย = sure thing / a given
+tai,รีด,ไถ,ไทย|ใต้|ตาย|ท้าย,compound,รีดไถ = to extort
+tai,ตับ,ไต,ไทย|ใต้|ตาย|ท้าย,bigram,ตับไต = liver and kidneys
+tai,แบ,ไต๋,ไทย|ใต้|ตาย|ท้าย,bigram,แบไต๋ = to reveal/show cards
+tai,ให้,ทาย,ไทย|ใต้|ตาย|ท้าย,bigram,ให้ทาย = to have someone guess
+tai,ขับ,ถ่าย,ไทย|ใต้|ตาย|ท้าย,compound,ขับถ่าย = to excrete
+# ===== CONTEXT-DEPENDENT: kai =====
+kai,ทอด,ไก่,ขาย|ไข่|ค่าย,bigram,ทอดไก่ = fried chicken
+kai,ฟัก,ไข่,ขาย|ไก่|ค่าย,bigram,ฟักไข่ = hatch egg
+kai,ลูก,ไก่,ขาย|ไข่|ค่าย,bigram,ลูกไก่ = chick
+kai,ลัก,ไก่,ขาย|ไข่|ค่าย,bigram,ลักไก่ = to cheat/sneak
+kai,ไข่,ไก่,ขาย|ค่าย|ข่าย,compound,ไข่ไก่ = chicken egg
+kai,ไก่,ไข่,ขาย|ค่าย|ข่าย,bigram,ไก่ไข่ = egg-laying hen
+kai,กล,ไก,ขาย|ไก่|ไข่,compound,กลไก = mechanism
+kai,ลั่น,ไก,ขาย|ไก่|ไข่,bigram,ลั่นไก = pull the trigger
+kai,ซื้อ,ขาย,ไก่|ไข่|ค่าย,compound,ซื้อขาย = to trade/buy-sell
+kai,ของ,ขาย,ไก่|ไข่|ค่าย,bigram,ของขาย = items for sale
+kai,วาง,ขาย,ไก่|ไข่|ค่าย,compound,วางขาย = to put on sale
+kai,เข้า,ข่าย,ขาย|ไก่|ไข่,compound,เข้าข่าย = to fall under scope
+kai,เครือ,ข่าย,ขาย|ไก่|ไข่,compound,เครือข่าย = network
+kai,ก้าว,ก่าย,ขาย|ไก่|ไข่,compound,ก้าวก่าย = to interfere/meddle
+kai,เทียน,ไข,ขาย|ไก่|ไข่,bigram,เทียนไข = candle (wax candle)
+# ===== CONTEXT-DEPENDENT: chao =====
+chao,ตอน,เช้า,ชาว|เจ้า|เช่า,compound,ตอนเช้า = in the morning
+chao,บ้าน,เช่า,ชาว|เจ้า|เช้า,bigram,บ้านเช่า = rental house
+chao,ตื่น,เช้า,ชาว|เจ้า|เช่า,bigram,ตื่นเช้า = wake up early
+chao,ข้าว,เช้า,ชาว|เจ้า|เช่า,bigram,ข้าวเช้า = breakfast (rice)
+chao,เช้า,ๆ,ชาว|เจ้า|เช่า,bigram,[repeater] เช้าๆ = early morning
+chao,ห้อง,เช่า,ชาว|เจ้า|เช้า,bigram,ห้องเช่า = rented room
+chao,รถ,เช่า,ชาว|เจ้า|เช้า,bigram,รถเช่า = rental car
+chao,คน,เช่า,ชาว|เจ้า|เช้า,bigram,คนเช่า = renter/tenant
+chao,เหี่ยว,เฉา,ชาว|เจ้า|เช้า|เช่า,bigram,เหี่ยวเฉา = to wither/wilt
+chao,อื้อ,ฉาว,ชาว|เจ้า|เช้า|เช่า,compound,อื้อฉาว = scandalous
+chao,ข้าว,เจ้า,ชาว|เช้า|เช่า,compound,ข้าวเจ้า = non-glutinous rice
+chao,พระ,เจ้า,ชาว|เช้า|เช่า,compound,พระเจ้า = God
+chao,กระ,เช้า,ชาว|เจ้า|เช่า,compound,กระเช้า = basket/gondola
+chao,ปัญหา,เชาว์,ชาว|เจ้า|เช้า|เช่า,bigram,ปัญหาเชาว์ = riddle/intelligence puzzle
+# ===== CONTEXT-DEPENDENT: tang =====
+tang,แตก,ต่าง,ทาง|ทั้ง|ตั้ง|ตัง,compound,แตกต่าง = to differ
+tang,เห็น,ต่าง,ทาง|ทั้ง|ตั้ง|ตัง,bigram,เห็นต่าง = to disagree
+tang,ต่าง,ๆ,ทาง|ทั้ง|ตั้ง|ตัง,compound,[repeater] ต่างๆ = various
+tang,เก็บ,ตัง,ทาง|ทั้ง|ตั้ง|ต่าง,bigram,เก็บตัง = to save money (informal)
+tang,คิด,ตัง,ทาง|ทั้ง|ตั้ง|ต่าง,bigram,คิดตัง = to charge money (informal)
+tang,ข้าว,ตั้ง,ทาง|ทั้ง|ต่าง|ตัง,bigram,ข้าวตั้ง = rice-setting/offering
+tang,แต่ง,ตั้ง,ทาง|ทั้ง|ต่าง|ตัง,compound,แต่งตั้ง = to appoint
+tang,ก่อ,ตั้ง,ทาง|ทั้ง|ต่าง|ตัง,compound,ก่อตั้ง = to found/establish
+tang,เลือก,ตั้ง,ทาง|ทั้ง|ต่าง|ตัง,compound,เลือกตั้ง = to elect
+tang,ทิศ,ทาง,ทั้ง|ตั้ง|ต่าง|ตัง,compound,ทิศทาง = direction
+tang,เปิด,ทาง,ทั้ง|ตั้ง|ต่าง|ตัง,compound,เปิดทาง = to make way/clear path
+tang,นำ,ทาง,ทั้ง|ตั้ง|ต่าง|ตัง,compound,นำทาง = to guide/lead the way
+tang,กระ,ทั่ง,ทาง|ทั้ง|ตั้ง|ต่าง,compound,กระทั่ง = until/even
+# ===== CONTEXT-DEPENDENT: pa =====
+pa,เข้า,ป่า,พา|ปา|ป้า|ผ้า,bigram,เข้าป่า = enter the forest
+pa,ผืน,ผ้า,พา|ป่า|ปา|ป้า,bigram,ผืนผ้า = piece of cloth
+pa,ผ้า,ป่า,พา|ปา|ป้า,bigram,ผ้าป่า = temple robe donation
+pa,แกง,ป่า,พา|ปา|ป้า|ผ้า,compound,แกงป่า = jungle curry
+pa,ทอ,ผ้า,พา|ป่า|ปา|ป้า,compound,ทอผ้า = to weave cloth
+pa,เสื้อ,ผ้า,พา|ป่า|ปา|ป้า,compound,เสื้อผ้า = clothing
+pa,เนื้อ,ผ้า,พา|ป่า|ปา|ป้า,compound,เนื้อผ้า = fabric texture
+pa,พับ,ผ้า,พา|ป่า|ปา|ป้า,bigram,พับผ้า = to fold cloth
+pa,ฟ้า,ผ่า,พา|ป่า|ปา|ป้า|ผ้า,compound,ฟ้าผ่า = lightning strike
+pa,หน้า,ผา,พา|ป่า|ปา|ป้า|ผ้า,compound,หน้าผา = cliff face
+pa,ปีน,ผา,พา|ป่า|ปา|ป้า|ผ้า,bigram,ปีนผา = rock climbing
+pa,ปะ,ป๊า,พา|ป่า|ปา|ป้า|ผ้า,bigram,ปะป๊า = dad (informal)
+pa,คุณ,ป้า,พา|ป่า|ปา|ผ้า,compound,คุณป้า = auntie (polite)
+pa,ลุง,ป้า,พา|ป่า|ปา|ผ้า,bigram,ลุงป้า = uncle and aunt
+pa,นำ,พา,ป่า|ปา|ป้า|ผ้า,compound,นำพา = to bring/lead
+# ===== CONTEXT-DEPENDENT: kum =====
+kum,ตก,ค่ำ,คำ|คุ้ม|กรรม|คุม,bigram,ตกค่ำ = dusk / evening falls
+kum,หนึ่ง,คำ,คุ้ม|กรรม|คุม|ค่ำ,bigram,หนึ่งคำ = one word
+kum,สัก,คำ,คุ้ม|กรรม|คุม|ค่ำ,bigram,สักคำ = just a word
+kum,หัว,ค่ำ,คำ|คุ้ม|กรรม|คุม,compound,หัวค่ำ = early evening
+kum,ผู้,คุม,คำ|คุ้ม|กรรม|ค่ำ,compound,ผู้คุม = guard/supervisor
+kum,ดีล,คุ้ม,คำ|กรรม|คุม|ค่ำ,bigram,ดีลคุ้ม = good deal / worth it
+kum,สุด,คุ้ม,คำ|กรรม|คุม|ค่ำ,bigram,สุดคุ้ม = best value
+kum,จุด,คุ้ม,คำ|กรรม|คุม|ค่ำ,bigram,จุดคุ้ม = break-even point
+kum,คู่,กรรม,คำ|คุ้ม|คุม|ค่ำ,bigram,คู่กรรม = fated partner/nemesis
+kum,เคราะห์,กรรม,คำ|คุ้ม|คุม|ค่ำ,bigram,เคราะห์กรรม = misfortune/karma
+kum,วิบาก,กรรม,คำ|คุ้ม|คุม|ค่ำ,bigram,วิบากกรรม = karmic retribution
+kum,บาป,กรรม,คำ|คุ้ม|คุม|ค่ำ,bigram,บาปกรรม = sin/bad karma
+kum,บึง,กุ่ม,คำ|คุ้ม|กรรม|คุม,bigram,บึงกุ่ม = Bueng Kum (Bangkok district)
+kum,ขำ,ๆ,คำ|คุ้ม|กรรม|คุม,bigram,[repeater] ขำๆ = kinda funny
+# ===== CONTEXT-DEPENDENT: pag/pak =====
+pag,ผัด,ผัก,พรรค|ภาค|ปาก|พัก,bigram,ผัดผัก = stir-fried vegetables
+pag,ห้อง,พัก,พรรค|ภาค|ผัก|ปาก,compound,ห้องพัก = room (hotel)
+pag,โรง,พัก,พรรค|ภาค|ผัก|ปาก,compound,โรงพัก = police station
+pag,ไป,พัก,พรรค|ภาค|ผัก|ปาก,bigram,ไปพัก = go rest
+pag,นอน,พัก,พรรค|ภาค|ผัก|ปาก,bigram,นอนพัก = rest/sleep
+pag,เข้า,พัก,พรรค|ภาค|ผัก|ปาก,bigram,เข้าพัก = check in / stay
+pag,ที่,พัก,พรรค|ภาค|ผัก|ปาก,compound,ที่พัก = accommodation
+pag,ซัก,พัก,พรรค|ภาค|ผัก|ปาก,bigram,ซักพัก = for a while
+pag,ผัก,ๆ,พรรค|ภาค|ปาก|พัก,bigram,[repeater] ผักๆ = various vegetables
+pag,กิน,ผัก,พรรค|ภาค|ปาก|พัก,bigram,กินผัก = eat vegetables
+pag,ปลูก,ผัก,พรรค|ภาค|ปาก|พัก,bigram,ปลูกผัก = grow vegetables
+pag,ซื้อ,ผัก,พรรค|ภาค|ปาก|พัก,bigram,ซื้อผัก = buy vegetables
+pag,คน,พากย์,พรรค|ภาค|ผัก|ปาก,bigram,คนพากย์ = voice actor/dubber
+pag,นัก,พากย์,พรรค|ภาค|ผัก|ปาก,bigram,นักพากย์ = professional dubber
+pag,คัน,ปาก,พรรค|ภาค|ผัก|พัก,compound,คันปาก = itchy mouth / can't keep quiet
+pag,แบ่ง,พรรค,ภาค|ผัก|ปาก|พัก,bigram,แบ่งพรรค = to split a party (political)
+# ===== CONTEXT-DEPENDENT: tae =====
+tae,ของ,แท้,แต่|แตะ|แถ,compound,ของแท้ = genuine article
+tae,มี,แต่,แท้|แตะ|แถ,bigram,มีแต่ = there is only / nothing but
+tae,แม้,แต่,แท้|แตะ|แถ,compound,แม้แต่ = even (emphasis)
+tae,แล้ว,แต่,แท้|แตะ|แถ,compound,แล้วแต่ = up to / depends on
+tae,ใช้,แต่,แท้|แตะ|แถ,bigram,ใช้แต่ = only use
+tae,ใช่,แต่,แท้|แตะ|แถ,bigram,ใช่แต่ = yes but
+tae,ได้,แต่,แท้|แตะ|แถ,bigram,ได้แต่ = can only / ended up just
+tae,เจอ,แต่,แท้|แตะ|แถ,bigram,เจอแต่ = only encounter
+tae,ห้าม,แตะ,แต่|แท้|แถ,bigram,ห้ามแตะ = do not touch
+tae,หนู,แทะ,แต่|แท้|แตะ,bigram,หนูแทะ = mouse gnawing
+tae,รองเท้า,แตะ,แต่|แท้|แถ,bigram,รองเท้าแตะ = sandals/flip-flops
+tae,บัตร,แตะ,แต่|แท้|แถ,bigram,บัตรแตะ = tap card (transit)
+tae,หนัง,แท้,แต่|แตะ|แถ,bigram,หนังแท้ = genuine leather
+tae,กระเป๋า,แท้,แต่|แตะ|แถ,bigram,กระเป๋าแท้ = genuine bag (not counterfeit)
+# ===== CONTEXT-DEPENDENT: cha =====
+cha,ดื่ม,ชา,จะ|จ้า|ช้า|จ้ะ,bigram,ดื่มชา = drink tea
+cha,ถ้วย,ชา,จะ|จ้า|ช้า|จ้ะ,bigram,ถ้วยชา = teacup
+cha,เย็น,ชา,จะ|จ้า|ช้า|จ้ะ,compound,เย็นชา = cold/aloof
+cha,ยา,ชา,จะ|จ้า|ช้า|จ้ะ,bigram,ยาชา = anesthetic/numbing medicine
+cha,ป่า,ช้า,จะ|ชา|จ้า|จ้ะ,compound,ป่าช้า = cemetery/graveyard
+cha,มา,ช้า,จะ|ชา|จ้า|จ้ะ,bigram,มาช้า = to come late
+cha,ส่ง,ช้า,จะ|ชา|จ้า|จ้ะ,bigram,ส่งช้า = delivered late
+cha,อย่า,ช้า,จะ|ชา|จ้า|จ้ะ,bigram,อย่าช้า = don't be slow
+cha,สาม,ช่า,จะ|ชา|จ้า|ช้า,bigram,สามช่า = cha-cha-cha (dance)
+cha,ผัด,ฉ่า,จะ|ชา|จ้า|ช้า,compound,ผัดฉ่า = sizzle stir-fry
+cha,แสง,จ้า,จะ|ชา|ช้า|จ้ะ,bigram,แสงจ้า = bright/glaring light
+cha,แดด,จ้า,จะ|ชา|ช้า|จ้ะ,bigram,แดดจ้า = bright/harsh sun
+cha,สวัสดี,จ้ะ,จะ|ชา|จ้า|ช้า,bigram,สวัสดีจ้ะ = hello (cute/informal)
+cha,มัท,ฉะ,จะ|ชา|จ้า|ช้า,compound,มัทฉะ = matcha
+cha,อาจ,จะ,ชา|จ้า|ช้า|จ้ะ,compound,อาจจะ = might/may
+cha,อยาก,จะ,ชา|จ้า|ช้า|จ้ะ,bigram,อยากจะ = want to
+# ===== CONTEXT-DEPENDENT: toh =====
+toh,เติบ,โต,ต่อ|โทร|ท่อ|โต้,compound,เติบโต = to grow up
+toh,เด็ก,โต,ต่อ|โทร|ท่อ|โต้,bigram,เด็กโต = grown-up child
+toh,ใหญ่,โต,ต่อ|โทร|ท่อ|โต้,compound,ใหญ่โต = large/grand
+toh,ตอบ,โต้,ต่อ|โต|โทร|ท่อ,compound,ตอบโต้ = to retaliate/counter
+toh,ตี,โต้,ต่อ|โต|โทร|ท่อ,bigram,ตีโต้ = to counter-attack
+toh,ส่ง,ต่อ,โต|โทร|ท่อ|โต้,compound,ส่งต่อ = to pass on/forward
+toh,ข้อ,ต่อ,โต|โทร|ท่อ|โต้,compound,ข้อต่อ = joint/connector
+toh,เป็น,ต่อ,โต|โทร|ท่อ|โต้,compound,เป็นต่อ = to have advantage
+toh,เรียน,ต่อ,โต|โทร|ท่อ|โต้,compound,เรียนต่อ = to continue studying
+toh,ตัว,ต่อ,โต|โทร|ท่อ|โต้,compound,ตัวต่อ = jigsaw/puzzle piece
+toh,นั่ง,โต๊ะ,ต่อ|โต|โทร|ท่อ,bigram,นั่งโต๊ะ = to sit at a table
+toh,ปริญญา,โท,ต่อ|โต|โทร|ท่อ,compound,ปริญญาโท = master's degree
+toh,ไม้,โท,ต่อ|โต|โทร|ท่อ,bigram,ไม้โท = Thai tone mark (mai tho)
+toh,เบอร์,โทร,ต่อ|โต|ท่อ|โต้,bigram,เบอร์โทร = phone number
+toh,สิ่ง,ทอ,ต่อ|โต|โทร|ท่อ,compound,สิ่งทอ = textiles
+toh,ต่อ,ท่อ,โต|โทร|โต้,bigram,ต่อท่อ = to connect pipes
+toh,อย่าง,ท้อ,ต่อ|โต|โทร|ท่อ,bigram,อย่างท้อ = don't be discouraged (colloquial)
+toh,ลูก,ท้อ,ต่อ|โต|โทร|ท่อ,bigram,ลูกท้อ = peach (fruit)
+toh,ข้าว,โถ,ต่อ|โต|โทร|ท่อ,bigram,ข้าวโถ = rice in a container

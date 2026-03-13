@@ -10,6 +10,7 @@
 | 4 | Trie Data Structure Selection | 2026-03-08 | Double-array trie (DARTS) is the best all-around choice; recommend `yada` Rust crate for production. MARISA-trie is 5× smaller but 2–3× slower for common prefix search. | [research/trie-selection/summary.md](004-trie-selection/summary.md) |
 | 5 | Candidate Selection Algorithm | 2026-03-09 | Viterbi DP with k-best tracking on a word lattice, scoring via -log(freq) + segmentation penalty. All surveyed IMEs (Mozc, librime, libkkc, Anthy) use this pattern. Sub-millisecond performance confirmed. | [research/005-candidate-selection/summary.md](005-candidate-selection/summary.md) |
 | 6 | Word Frequency Scoring | 2026-03-11 | Current baseline `-log(freq)` is near-optimal (MRR=0.989/0.960). No alternative formula improves over it. λ has no effect on single-word ranking. Next improvement requires bigram scoring. | [research/006-frequency-scoring/summary.md](006-frequency-scoring/summary.md) |
+| 7 | N-gram Transition Probability | 2026-03-14 | Bigram scoring improves context-dependent MRR by +72% over unigram. Stupid Backoff recommended as MVP implementation, with trigram→bigram→unigram fallback. Benchmark reliability is a known limitation. | [research/007-bigram-scoring/summary.md](007-bigram-scoring/summary.md) |
 
 ## In Progress
 
