@@ -46,5 +46,7 @@ experiments/*/data/
 experiments/*/data/*
 
 # Pipeline outputs (regenerate via pipeline code)
+pipelines/outputs/
+# Legacy per-pipeline output dirs (kept for transition)
 pipelines/*/outputs/
 pipelines/*/output/
