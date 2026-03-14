@@ -4,42 +4,27 @@ A command-line tool for spot-checking the trie dataset. Filters the
 dataset by various criteria (source, variant count, collisions) and
 outputs summary stats plus an optional CSV export for further review.
 
-This is a read-only inspection tool — it does not modify the trie
-dataset. Fixes flow through the component dictionary, overrides file,
-or word filters, then re-run the pipeline.
-
 Usage:
-    # Show overall dataset summary
-    python -m pipelines.trie.review
-
-    # Words with 0 variants (TLTK failures)
-    python -m pipelines.trie.review --failures
-
-    # Words unique to thwiki
-    python -m pipelines.trie.review --source-only thwiki
-
-    # Words in 4+ sources with low variant counts
-    python -m pipelines.trie.review --source-min 4 --max-variants 5
-
-    # High-collision romanization keys
-    python -m pipelines.trie.review --collisions --min-collision 10
-
-    # Export filtered results to CSV
-    python -m pipelines.trie.review --failures --export failures.csv
-
-    # Limit output rows
-    python -m pipelines.trie.review --failures --limit 50
+    python -m pipelines trie review
+    python -m pipelines trie review --failures
+    python -m pipelines trie review --source-only thwiki
+    python -m pipelines trie review --collisions --min-collision 10
 """
 
 from __future__ import annotations
 
-import argparse
 import csv
 import json
 import sys
+from collections import Counter
 from pathlib import Path
 
-from pipelines.trie.config import OUTPUT_DIR
+import click
+
+from pipelines.config import TrieConfig
+from pipelines.console import console
+
+_cfg = TrieConfig()
 
 
 # ---------------------------------------------------------------------------
@@ -58,39 +43,36 @@ def load_dataset(path: Path) -> dict:
 # ---------------------------------------------------------------------------
 
 
-def apply_word_filters(entries: list[dict], args: argparse.Namespace) -> list[dict]:
-    """Apply word-level filters based on CLI arguments.
-
-    Returns the filtered subset of entries.
-    """
+def apply_word_filters(
+    entries: list[dict],
+    source: str | None,
+    source_only: str | None,
+    source_min: int | None,
+    source_max: int | None,
+    failures: bool,
+    min_variants: int | None,
+    max_variants: int | None,
+    search: str | None,
+) -> list[dict]:
+    """Apply word-level filters based on CLI arguments."""
     result = entries
 
-    # Source filters
-    if args.source:
-        result = [e for e in result if args.source in e["sources"]]
-
-    if args.source_only:
-        result = [e for e in result if e["sources"] == [args.source_only]]
-
-    if args.source_min is not None:
-        result = [e for e in result if len(e["sources"]) >= args.source_min]
-
-    if args.source_max is not None:
-        result = [e for e in result if len(e["sources"]) <= args.source_max]
-
-    # Variant count filters
-    if args.failures:
+    if source:
+        result = [e for e in result if source in e["sources"]]
+    if source_only:
+        result = [e for e in result if e["sources"] == [source_only]]
+    if source_min is not None:
+        result = [e for e in result if len(e["sources"]) >= source_min]
+    if source_max is not None:
+        result = [e for e in result if len(e["sources"]) <= source_max]
+    if failures:
         result = [e for e in result if len(e["romanizations"]) == 0]
-
-    if args.min_variants is not None:
-        result = [e for e in result if len(e["romanizations"]) >= args.min_variants]
-
-    if args.max_variants is not None:
-        result = [e for e in result if len(e["romanizations"]) <= args.max_variants]
-
-    # Text search
-    if args.search:
-        query = args.search.lower()
+    if min_variants is not None:
+        result = [e for e in result if len(e["romanizations"]) >= min_variants]
+    if max_variants is not None:
+        result = [e for e in result if len(e["romanizations"]) <= max_variants]
+    if search:
+        query = search.lower()
         result = [
             e for e in result
             if query in e["thai"] or any(query in r for r in e["romanizations"])
@@ -108,73 +90,34 @@ def print_dataset_summary(entries: list[dict]) -> None:
     """Print overall dataset summary statistics."""
     total = len(entries)
     if total == 0:
-        print("  (empty dataset)")
+        console.print("  (empty dataset)")
         return
 
     variant_counts = [len(e["romanizations"]) for e in entries]
     total_keys = sum(variant_counts)
-    failures = sum(1 for vc in variant_counts if vc == 0)
+    fail_count = sum(1 for vc in variant_counts if vc == 0)
 
-    print(f"  Words:          {total:>10,}")
-    print(f"  Total keys:     {total_keys:>10,}")
-    print(f"  Failures (0v):  {failures:>10,} ({failures * 100 / total:.1f}%)")
+    console.print(f"  Words:          {total:>10,}")
+    console.print(f"  Total keys:     {total_keys:>10,}")
+    console.print(f"  Failures (0v):  {fail_count:>10,} ({fail_count * 100 / total:.1f}%)")
 
     if any(vc > 0 for vc in variant_counts):
         nonzero = [vc for vc in variant_counts if vc > 0]
         avg = sum(nonzero) / len(nonzero)
         nonzero.sort()
         median = nonzero[len(nonzero) // 2]
-        print(f"  Avg variants:   {avg:>10.1f}")
-        print(f"  Median:         {median:>10}")
+        console.print(f"  Avg variants:   {avg:>10.1f}")
+        console.print(f"  Median:         {median:>10}")
 
-    # Source distribution
-    from collections import Counter
     source_counts = Counter()
     for e in entries:
         for s in e["sources"]:
             source_counts[s] += 1
 
     if source_counts:
-        print(f"\n  Sources:")
+        console.print(f"\n  Sources:")
         for name, count in source_counts.most_common():
-            print(f"    {name:<14} {count:>8,} ({count * 100 / total:.1f}%)")
-
-
-def print_filter_summary(
-    filtered: list[dict], total: int, args: argparse.Namespace,
-) -> None:
-    """Print summary of the active filter and its results."""
-    # Build filter description
-    filters = []
-    if args.source:
-        filters.append(f"source={args.source}")
-    if args.source_only:
-        filters.append(f"source-only={args.source_only}")
-    if args.source_min is not None:
-        filters.append(f"source-min={args.source_min}")
-    if args.source_max is not None:
-        filters.append(f"source-max={args.source_max}")
-    if args.failures:
-        filters.append("failures")
-    if args.min_variants is not None:
-        filters.append(f"min-variants={args.min_variants}")
-    if args.max_variants is not None:
-        filters.append(f"max-variants={args.max_variants}")
-    if args.search:
-        filters.append(f"search={args.search!r}")
-
-    if filters:
-        desc = ", ".join(filters)
-        print(f"\n  Filter: {desc}")
-        print(f"  Matched: {len(filtered):,} of {total:,} "
-              f"({len(filtered) * 100 / total:.1f}%)")
-    else:
-        print(f"\n  No filter applied (showing all {total:,} words)")
-
-
-# ---------------------------------------------------------------------------
-# Word display
-# ---------------------------------------------------------------------------
+            console.print(f"    {name:<14} {count:>8,} ({count * 100 / total:.1f}%)")
 
 
 def print_word_table(
@@ -189,37 +132,35 @@ def print_word_table(
         subset = subset[:limit]
 
     if not subset:
-        print("  (no entries)")
+        console.print("  (no entries)")
         return
 
-    # Header
     if show_romanizations:
-        print(f"\n  {'ID':>6}  {'Thai':<16} {'Vars':>5} {'Srcs':>4}  "
-              f"Sources                   Romanizations")
-        print(f"  {'-' * 100}")
+        console.print(f"\n  {'ID':>6}  {'Thai':<16} {'Vars':>5} {'Srcs':>4}  "
+                       f"Sources                   Romanizations")
+        console.print(f"  {'-' * 100}")
     else:
-        print(f"\n  {'ID':>6}  {'Thai':<16} {'Vars':>5} {'Srcs':>4}  Sources")
-        print(f"  {'-' * 60}")
+        console.print(f"\n  {'ID':>6}  {'Thai':<16} {'Vars':>5} {'Srcs':>4}  Sources")
+        console.print(f"  {'-' * 60}")
 
     for e in subset:
         sources = "|".join(e["sources"])
         n_vars = len(e["romanizations"])
 
         if show_romanizations:
-            # Show first few romanizations inline, truncated
             romans = ", ".join(e["romanizations"][:8])
             if len(e["romanizations"]) > 8:
                 romans += f", ... (+{len(e['romanizations']) - 8})"
-            print(f"  {e['word_id']:>6}  {e['thai']:<16} {n_vars:>5} "
-                  f"{len(e['sources']):>4}  {sources:<25} {romans}")
+            console.print(f"  {e['word_id']:>6}  {e['thai']:<16} {n_vars:>5} "
+                           f"{len(e['sources']):>4}  {sources:<25} {romans}")
         else:
-            print(f"  {e['word_id']:>6}  {e['thai']:<16} {n_vars:>5} "
-                  f"{len(e['sources']):>4}  {sources}")
+            console.print(f"  {e['word_id']:>6}  {e['thai']:<16} {n_vars:>5} "
+                           f"{len(e['sources']):>4}  {sources}")
 
     shown = len(subset)
     remaining = len(entries) - offset - shown
     if remaining > 0:
-        print(f"\n  ... {remaining:,} more entries (use --limit and --offset to paginate)")
+        console.print(f"\n  ... {remaining:,} more entries (use --limit and --offset to paginate)")
 
 
 # ---------------------------------------------------------------------------
@@ -227,69 +168,57 @@ def print_word_table(
 # ---------------------------------------------------------------------------
 
 
-def run_collision_mode(dataset: dict, args: argparse.Namespace) -> None:
+def run_collision_mode(
+    dataset: dict,
+    min_collision: int,
+    search: str | None,
+    limit: int,
+    offset: int,
+    export_path: str | None,
+) -> None:
     """Display romanization key collisions."""
-    min_collision = args.min_collision or 2
-
-    # Build key -> words mapping
     key_to_words: dict[str, list[str]] = {}
     for entry in dataset["entries"]:
         for key in entry["romanizations"]:
             key_to_words.setdefault(key, []).append(entry["thai"])
 
-    collisions = {
-        k: v for k, v in key_to_words.items()
-        if len(v) >= min_collision
-    }
+    collisions = {k: v for k, v in key_to_words.items() if len(v) >= min_collision}
 
-    print(f"\n  Collision keys (>= {min_collision} words): {len(collisions):,}")
+    console.print(f"\n  Collision keys (>= {min_collision} words): {len(collisions):,}")
 
-    if args.search:
-        query = args.search.lower()
-        collisions = {
-            k: v for k, v in collisions.items()
-            if query in k
-        }
-        print(f"  After search filter: {len(collisions):,}")
+    if search:
+        query = search.lower()
+        collisions = {k: v for k, v in collisions.items() if query in k}
+        console.print(f"  After search filter: {len(collisions):,}")
 
-    # Sort by collision count descending
     sorted_collisions = sorted(
         collisions.items(), key=lambda x: len(x[1]), reverse=True,
     )
 
-    limit = args.limit or 50
-    offset = args.offset or 0
-    subset = sorted_collisions[offset:offset + limit]
-
-    if args.export:
-        _export_collisions_csv(sorted_collisions, args.export)
+    if export_path:
+        out = Path(export_path)
+        with open(out, "w", encoding="utf-8", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["romanization_key", "word_count", "thai_words"])
+            for key, words in sorted_collisions:
+                writer.writerow([key, len(words), "|".join(words)])
+        console.print(f"  Exported {len(sorted_collisions):,} collision keys to {out}")
         return
 
-    print(f"\n  {'Key':<20} {'Words':>6}  Thai words")
-    print(f"  {'-' * 80}")
+    subset = sorted_collisions[offset:offset + limit]
+
+    console.print(f"\n  {'Key':<20} {'Words':>6}  Thai words")
+    console.print(f"  {'-' * 80}")
 
     for key, words in subset:
         display = ", ".join(words[:10])
         if len(words) > 10:
             display += f", ... (+{len(words) - 10})"
-        print(f"  {key:<20} {len(words):>6}  {display}")
+        console.print(f"  {key:<20} {len(words):>6}  {display}")
 
     remaining = len(sorted_collisions) - offset - len(subset)
     if remaining > 0:
-        print(f"\n  ... {remaining:,} more keys")
-
-
-def _export_collisions_csv(
-    collisions: list[tuple[str, list[str]]], path: str,
-) -> None:
-    """Export collision data to CSV."""
-    out = Path(path)
-    with open(out, "w", encoding="utf-8", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["romanization_key", "word_count", "thai_words"])
-        for key, words in collisions:
-            writer.writerow([key, len(words), "|".join(words)])
-    print(f"  Exported {len(collisions):,} collision keys to {out}")
+        console.print(f"\n  ... {remaining:,} more keys")
 
 
 # ---------------------------------------------------------------------------
@@ -315,190 +244,95 @@ def export_words_csv(entries: list[dict], path: str) -> None:
                 "|".join(e["sources"]),
                 "|".join(e["romanizations"]),
             ])
-    print(f"  Exported {len(entries):,} entries to {out}")
+    console.print(f"  Exported {len(entries):,} entries to {out}")
 
 
 # ---------------------------------------------------------------------------
-# Main
+# CLI
 # ---------------------------------------------------------------------------
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(
-        description="Review and inspect the trie dataset.",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""\
-examples:
-  %(prog)s                                  Show dataset summary
-  %(prog)s --failures                       Words with 0 variants
-  %(prog)s --source-only thwiki             Words unique to thwiki
-  %(prog)s --source-min 4 --max-variants 5  High-confidence, low-variant words
-  %(prog)s --collisions --min-collision 10  Keys mapping to 10+ words
-  %(prog)s --failures --export out.csv      Export failures to CSV
-  %(prog)s --search kaw                     Search by romanization key
-""",
-    )
-    parser.add_argument(
-        "--dataset",
-        type=str,
-        default=None,
-        help=f"Path to trie_dataset.json (default: {OUTPUT_DIR / 'trie_dataset.json'})",
-    )
+@click.command()
+@click.option("--dataset", type=str, default=None, help="Path to trie_dataset.json")
+# Source filters
+@click.option("--source", type=str, default=None, help="Words that appear in this source")
+@click.option("--source-only", type=str, default=None, help="Words that appear ONLY in this source")
+@click.option("--source-min", type=int, default=None, help="Words appearing in at least N sources")
+@click.option("--source-max", type=int, default=None, help="Words appearing in at most N sources")
+# Variant filters
+@click.option("--failures", is_flag=True, help="Words with 0 variants (TLTK failures)")
+@click.option("--min-variants", type=int, default=None, help="Words with at least N variants")
+@click.option("--max-variants", type=int, default=None, help="Words with at most N variants")
+# Collision mode
+@click.option("--collisions", is_flag=True, help="Show romanization key collisions instead of words")
+@click.option("--min-collision", type=int, default=None, help="Minimum words per key to show (default: 2)")
+# Search and display
+@click.option("--search", type=str, default=None, help="Search Thai words or romanization keys")
+@click.option("--limit", type=int, default=0, help="Maximum entries to display")
+@click.option("--offset", type=int, default=0, help="Skip first N entries")
+@click.option("--show-romanizations", "-r", is_flag=True, help="Show romanization variants in word table")
+# Export
+@click.option("--export", "export_path", type=str, default=None, help="Export filtered results to CSV file")
+def review(dataset, source, source_only, source_min, source_max,
+           failures, min_variants, max_variants, collisions, min_collision,
+           search, limit, offset, show_romanizations, export_path) -> None:
+    """Read-only inspection of the trie dataset."""
+    trie_dir = _cfg.output_dir / "trie"
+    dataset_path = Path(dataset) if dataset else trie_dir / "trie_dataset.json"
 
-    # Source filters
-    source_group = parser.add_argument_group("source filters")
-    source_group.add_argument(
-        "--source",
-        type=str,
-        help="Words that appear in this source (e.g., thwiki, pythainlp)",
-    )
-    source_group.add_argument(
-        "--source-only",
-        type=str,
-        help="Words that appear ONLY in this source",
-    )
-    source_group.add_argument(
-        "--source-min",
-        type=int,
-        default=None,
-        help="Words appearing in at least N sources",
-    )
-    source_group.add_argument(
-        "--source-max",
-        type=int,
-        default=None,
-        help="Words appearing in at most N sources",
-    )
-
-    # Variant filters
-    variant_group = parser.add_argument_group("variant filters")
-    variant_group.add_argument(
-        "--failures",
-        action="store_true",
-        help="Words with 0 variants (TLTK failures)",
-    )
-    variant_group.add_argument(
-        "--min-variants",
-        type=int,
-        default=None,
-        help="Words with at least N variants",
-    )
-    variant_group.add_argument(
-        "--max-variants",
-        type=int,
-        default=None,
-        help="Words with at most N variants",
-    )
-
-    # Collision mode
-    collision_group = parser.add_argument_group("collision mode")
-    collision_group.add_argument(
-        "--collisions",
-        action="store_true",
-        help="Show romanization key collisions instead of words",
-    )
-    collision_group.add_argument(
-        "--min-collision",
-        type=int,
-        default=None,
-        help="Minimum words per key to show (default: 2)",
-    )
-
-    # Search and display
-    display_group = parser.add_argument_group("search and display")
-    display_group.add_argument(
-        "--search",
-        type=str,
-        help="Search Thai words or romanization keys containing this string",
-    )
-    display_group.add_argument(
-        "--limit",
-        type=int,
-        default=0,
-        help="Maximum entries to display (0 = default per mode)",
-    )
-    display_group.add_argument(
-        "--offset",
-        type=int,
-        default=0,
-        help="Skip first N entries (for pagination)",
-    )
-    display_group.add_argument(
-        "--show-romanizations", "-r",
-        action="store_true",
-        help="Show romanization variants in word table",
-    )
-
-    # Export
-    parser.add_argument(
-        "--export",
-        type=str,
-        default=None,
-        help="Export filtered results to CSV file",
-    )
-
-    args = parser.parse_args()
-
-    # Load dataset
-    dataset_path = (
-        Path(args.dataset) if args.dataset
-        else OUTPUT_DIR / "trie_dataset.json"
-    )
     if not dataset_path.exists():
-        print(f"ERROR: Dataset not found at {dataset_path}")
-        print("  Run the pipeline first: python -m pipelines.trie.generate")
+        console.print(f"[red]ERROR: Dataset not found at {dataset_path}[/red]")
+        console.print("  Run the pipeline first: python -m pipelines trie run")
         sys.exit(1)
 
-    print(f"Loading {dataset_path}...")
-    dataset = load_dataset(dataset_path)
-    entries = dataset["entries"]
-    print(f"  {len(entries):,} words loaded")
+    console.print(f"Loading {dataset_path}...")
+    ds = load_dataset(dataset_path)
+    entries = ds["entries"]
+    console.print(f"  {len(entries):,} words loaded")
 
-    # Collision mode is separate
-    if args.collisions:
-        run_collision_mode(dataset, args)
+    # Collision mode
+    if collisions:
+        run_collision_mode(
+            ds, min_collision or 2, search, limit or 50, offset, export_path,
+        )
         return
 
     # Check if any filter is active
     has_filter = any([
-        args.source, args.source_only, args.source_min is not None,
-        args.source_max is not None, args.failures,
-        args.min_variants is not None, args.max_variants is not None,
-        args.search,
+        source, source_only, source_min is not None, source_max is not None,
+        failures, min_variants is not None, max_variants is not None, search,
     ])
 
     if not has_filter:
-        # No filter — show dataset summary
-        print(f"\n{'=' * 60}")
-        print("Dataset Summary")
-        print(f"{'=' * 60}")
+        console.print(f"\n{'=' * 60}")
+        console.print("Dataset Summary")
+        console.print(f"{'=' * 60}")
         print_dataset_summary(entries)
-        print(f"\nUse --help to see available filters.")
+        console.print(f"\nUse --help to see available filters.")
         return
 
-    # Apply filters
-    filtered = apply_word_filters(entries, args)
-    print_filter_summary(filtered, len(entries), args)
+    filtered = apply_word_filters(
+        entries, source, source_only, source_min, source_max,
+        failures, min_variants, max_variants, search,
+    )
+
+    console.print(f"\n  Matched: {len(filtered):,} of {len(entries):,} "
+                   f"({len(filtered) * 100 / len(entries):.1f}%)")
 
     if not filtered:
         return
 
-    # Print summary of filtered set
-    print()
+    console.print()
     print_dataset_summary(filtered)
 
-    # Export or display
-    if args.export:
-        export_words_csv(filtered, args.export)
+    if export_path:
+        export_words_csv(filtered, export_path)
     else:
-        limit = args.limit or 100
         print_word_table(
-            filtered,
-            limit=limit,
-            offset=args.offset,
-            show_romanizations=args.show_romanizations,
+            filtered, limit=limit or 100, offset=offset,
+            show_romanizations=show_romanizations,
         )
 
 
 if __name__ == "__main__":
-    main()
+    review()

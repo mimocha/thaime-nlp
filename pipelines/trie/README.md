@@ -29,48 +29,56 @@ PyThaiNLP's built-in word list is downloaded automatically on first use.
 
 ```bash
 # Full pipeline (all steps)
-python -m pipelines.trie.generate
+python -m pipelines trie run
 
 # Individual steps (use cached intermediates)
-python -m pipelines.trie.generate --wordlist-only     # Step 1 only
-python -m pipelines.trie.generate --variant-only      # Step 2 only (requires wordlist.csv)
-python -m pipelines.trie.generate --export-only       # Steps 3-4 only (requires wordlist.csv + variants.json)
+python -m pipelines trie wordlist    # Step 1 only
+python -m pipelines trie variant     # Step 2 only (requires wordlist.csv)
+python -m pipelines trie export      # Steps 3-4 only (requires wordlist.csv + variants.json)
 
-# Options
-python -m pipelines.trie.generate --sources wisesight,wongnai,pythainlp  # Subset of sources
-python -m pipelines.trie.generate --workers 4         # Parallel workers (default: 8, 0=sequential)
-python -m pipelines.trie.generate --max-variants 50   # Max variants per word (default: 100)
-python -m pipelines.trie.generate --no-cache          # Force full rebuild, ignore cached files
-python -m pipelines.trie.generate --output-dir /path  # Custom output directory
+# Inspection and validation
+python -m pipelines trie review      # Read-only dataset inspection
+python -m pipelines trie validate    # Benchmark regression check
 ```
 
 Caching: the pipeline saves intermediate files (`wordlist.csv`, `variants.json`) and reuses them on subsequent runs. Use `--no-cache` to force regeneration.
 
-## Review CLI
+### Subcommands
+
+#### `trie run`
+
+Runs all pipeline steps in sequence.
+
+```bash
+python -m pipelines trie run
+python -m pipelines trie run --sources wisesight,wongnai,pythainlp
+python -m pipelines trie run --workers 4 --max-variants 50
+python -m pipelines trie run --no-cache
+```
+
+| Option | Description |
+|--------|-------------|
+| `--sources` | Comma-separated source names (default: all five) |
+| `--workers` | Parallel workers (default: 8, 0=sequential) |
+| `--max-variants` | Max variants per word (default: 100) |
+| `--vocab-limit` | Limit vocabulary size (default: unlimited) |
+| `--min-sources` | Minimum source count (default: 2) |
+| `--exclusion-list` / `--no-exclusion-list` | Toggle word exclusion list |
+| `--overrides` | Path to overrides YAML (default: auto-resolve latest) |
+| `--output-dir` | Custom output directory |
+| `--no-cache` | Force full rebuild, ignore cached files |
+
+#### `trie review`
 
 Read-only inspection tool for spot-checking the generated dataset:
 
 ```bash
-# Dataset summary
-python -m pipelines.trie.review
-
-# Filter by source
-python -m pipelines.trie.review --source prachathai        # Words in prachathai
-python -m pipelines.trie.review --source-only thwiki       # Words ONLY in thwiki
-python -m pipelines.trie.review --source-min 3             # Words in 3+ sources
-
-# Filter by variants
-python -m pipelines.trie.review --failures                 # 0-variant words
-python -m pipelines.trie.review --min-variants 50          # High-variant words
-python -m pipelines.trie.review --max-variants 2           # Low-variant words
-
-# Collisions
-python -m pipelines.trie.review --collisions               # Keys mapping to 2+ words
-python -m pipelines.trie.review --collisions --min-collision 10  # High-collision keys
-
-# Search and export
-python -m pipelines.trie.review --search กาแฟ              # Search Thai words or keys
-python -m pipelines.trie.review --source-min 5 --export high_confidence.csv
+python -m pipelines trie review                           # Dataset summary
+python -m pipelines trie review --source prachathai       # Words in prachathai
+python -m pipelines trie review --source-only thwiki      # Words ONLY in thwiki
+python -m pipelines trie review --failures                # 0-variant words
+python -m pipelines trie review --collisions              # Key collisions
+python -m pipelines trie review --search กาแฟ             # Search
 ```
 
 ## Data Sources
@@ -83,42 +91,28 @@ python -m pipelines.trie.review --source-min 5 --export high_confidence.csv
 | Thai Wikipedia | Encyclopedic | Thai Wikipedia XML dump (~500MB compressed) |
 | PyThaiNLP | Dictionary | Curated built-in word list |
 
-All corpora are tokenized with PyThaiNLP (`newmm` engine) and filtered for valid Thai tokens.
-
 ## Configuration
 
-Parameters in `config.py`:
+Parameters in `pipelines/config.py` (`TrieConfig` class):
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| `MIN_SOURCE_COUNT` | 2 | Minimum corpus sources per word (pythainlp-only exempt) |
-| `MIN_FREQUENCY` | 5e-6 | Minimum word frequency after normalization |
-| `MAX_LENGTH_RATIO` | 2.0 | Max `thai_base_len / min_rom_len` before removal |
-| `MAX_VARIANTS_PER_WORD` | 100 | Cap on romanization variants per word |
-| `NUM_WORKERS` | 8 | Parallel worker processes for variant generation |
-
-## Manual Overrides
-
-`overrides.yaml` contains manually curated romanizations for words the variant generator can't handle correctly:
-
-- TLTK failures (colloquial particles, slang)
-- Words filtered by aggressive regex rules but still valid
-- Loanwords with English-style romanizations (e.g., เรนเจอร์ → ranger)
-- False positives from the length-ratio filter (e.g., เหมาะ, เอ็กซ์)
-
-Override words bypass all dataset filters. Currently 240 entries.
+| `min_source_count` | 2 | Minimum corpus sources per word (pythainlp-only exempt) |
+| `min_frequency` | 5e-6 | Minimum word frequency after normalization |
+| `max_length_ratio` | 2.0 | Max `thai_base_len / min_rom_len` before removal |
+| `max_variants_per_word` | 100 | Cap on romanization variants per word |
+| `num_workers` | 8 | Parallel worker processes for variant generation |
 
 ## Output Files
 
-All outputs are in `pipelines/trie/outputs/` (gitignored). Re-run the pipeline to regenerate.
+All outputs are in `pipelines/outputs/` (gitignored):
 
-| File | Description |
+| Path | Description |
 |------|-------------|
-| `wordlist.csv` | Intermediate: assembled word list with frequencies and sources |
-| `variants.json` | Intermediate: romanization variants per word (large, ~500MB) |
-| `trie_dataset.json` | Final: structured dataset with metadata and all entries |
-| `trie_dataset.csv` | Final: flat format, one row per romanization key |
-| `variant_strategies.log` | Log of non-standard variant generation strategies used |
+| `wordlist/wordlist.csv` | Intermediate: assembled word list with frequencies |
+| `variants/variants.json` | Intermediate: romanization variants per word |
+| `trie/trie_dataset.json` | Final: structured dataset with metadata |
+| `trie/trie_dataset.csv` | Final: flat format, one row per romanization key |
 
 ### Output format
 
@@ -145,26 +139,8 @@ All outputs are in `pipelines/trie/outputs/` (gitignored). Re-run the pipeline t
 }
 ```
 
-**CSV** (`trie_dataset.csv`):
-```
-word_id,thai,romanization_key,frequency,sources
-0,ที่,thi,0.0182,prachathai|pythainlp|thwiki|wisesight|wongnai
-0,ที่,thee,0.0182,prachathai|pythainlp|thwiki|wisesight|wongnai
-```
-
-## Validation
-
-`validate.py` checks the dataset against the word-conversion benchmark:
-
-```bash
-python -m pipelines.trie.validate
-```
-
-Reports benchmark recall, per-source coverage, and collision statistics.
-
 ## Known Limitations
 
-- **Loanword romanization** — Words like กาแฟ→"coffee" are not systematically handled. A separate loanword pipeline is planned (`pipeline/trie-loanwords`).
-- **Equal variant weights** — All romanization variants are treated equally. Future work could assign weights based on typing probability.
-- **Frequency bias** — Equal-weight averaging across sources means corpus-specific frequency patterns (e.g., ร้าน dominant in Wongnai) are diluted.
+- **Loanword romanization** — Words like กาแฟ→"coffee" are not systematically handled.
+- **Equal variant weights** — All romanization variants are treated equally.
 - **TLTK dependency** — Variant generation requires TLTK, which is only available in the devcontainer environment.
