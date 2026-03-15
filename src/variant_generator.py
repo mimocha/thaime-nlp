@@ -52,7 +52,7 @@ except ImportError as e:
 # Path to the component romanization dictionary
 _DICT_PATH = (
     Path(__file__).parent.parent / "data" / "dictionaries"
-    / "component-romanization" / "dictionary-v0.4.2.yaml"
+    / "component-romanization" / "dictionary-v0.5.0.yaml"
 )
 
 # Module-level cache for the loaded dictionary

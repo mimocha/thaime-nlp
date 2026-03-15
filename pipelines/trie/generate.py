@@ -120,18 +120,23 @@ def apply_overrides(
     existing_words = {e.word for e in entries}
     added = 0
 
+    # Floor frequency for override-only words: use the minimum observed corpus
+    # frequency so they rank at the bottom but remain selectable by the Viterbi
+    # scorer when bigram/trigram context favors them.
+    min_freq = min((e.frequency for e in entries if e.frequency > 0), default=1e-9)
+
     for word, romanizations in overrides.items():
         variants[word] = romanizations
         if word not in existing_words:
             entries.append(WordEntry(
-                word=word, frequency=0.0, sources={"overrides"},
+                word=word, frequency=min_freq, sources={"overrides"},
             ))
             existing_words.add(word)
             added += 1
 
     replaced = len(overrides) - added
     console.print(f"  Manual overrides applied: {len(overrides)} words "
-                   f"({replaced} replaced, {added} new)")
+                   f"({replaced} replaced, {added} new, floor freq={min_freq:.2e})")
 
     return entries, variants
 
