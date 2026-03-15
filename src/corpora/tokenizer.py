@@ -9,6 +9,8 @@ Both use PyThaiNLP ``word_tokenize(engine="newmm")``.
 
 from __future__ import annotations
 
+from collections import Counter
+
 from pythainlp.tokenize import word_tokenize
 
 from src.corpora.validation import is_valid_thai_word
@@ -21,6 +23,18 @@ def tokenize_and_filter(text: str) -> list[str]:
     """
     tokens = word_tokenize(text, engine="newmm")
     return [t for t in tokens if is_valid_thai_word(t)]
+
+
+def tokenize_chunk(texts: list[str]) -> Counter:
+    """Tokenize a batch of texts and return combined word counts.
+
+    Worker function for parallel wordlist assembly. Each text is tokenized
+    independently — no cross-text batching.
+    """
+    counter: Counter = Counter()
+    for text in texts:
+        counter.update(tokenize_and_filter(text))
+    return counter
 
 
 def tokenize_with_boundaries(

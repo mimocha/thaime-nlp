@@ -27,7 +27,8 @@ import click
 from pipelines.cache import check_cache
 from pipelines.config import REPO_ROOT, BenchmarkConfig
 from pipelines.console import console
-from src.corpora.readers import check_corpus_available, read_corpus
+from src.corpora.readers import check_corpus_available, iter_corpus_texts
+from src.corpora.tokenizer import tokenize_and_filter
 from src.utils.frequency import merge_frequencies, normalize_frequencies
 
 _cfg = BenchmarkConfig()
@@ -54,7 +55,9 @@ def extract_frequencies(
             console.print(f"  [{name}] Not available, skipping")
             continue
         console.print(f"  [{name}] Reading...")
-        counter = read_corpus(name)
+        counter: Counter = Counter()
+        for text in iter_corpus_texts(name):
+            counter.update(tokenize_and_filter(text))
         raw_counters[name] = counter
         console.print(f"  [{name}] {len(counter):,} unique words, {sum(counter.values()):,} tokens")
 

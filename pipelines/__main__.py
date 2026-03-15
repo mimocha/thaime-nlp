@@ -33,9 +33,11 @@ def _register_subcommands() -> None:
     from pipelines.trie.generate import cli as trie_cli
     from pipelines.ngram.generate import cli as ngram_cli
     from pipelines.benchmarks.word_conversion.generate import cli as benchmark_wc_cli
+    from pipelines.llm_filter.cli import cli as llm_filter_cli
 
     cli.add_command(trie_cli, "trie")
     cli.add_command(ngram_cli, "ngram")
+    cli.add_command(llm_filter_cli, "llm-filter")
 
     # Nested: benchmark -> word-conversion
     @cli.group()

@@ -715,7 +715,7 @@ def run(ctx, sources, workers, max_variants, vocab_limit, min_sources,
         console.print(f"  Loaded {len(entries):,} words from cache")
         wordlist_was_cached = True
     else:
-        entries = assemble_wordlist(sources=sources_dict)
+        entries = assemble_wordlist(sources=sources_dict, num_workers=workers)
         if not entries:
             console.print("[red]ERROR: No words assembled. Check that corpora are downloaded.[/red]")
             sys.exit(1)
@@ -765,8 +765,9 @@ def run(ctx, sources, workers, max_variants, vocab_limit, min_sources,
 
 @cli.command()
 @click.option("--sources", default=None, help="Comma-separated sources (default: all configured)")
+@click.option("--workers", default=_cfg.num_workers, type=int, help=f"Worker processes (default: {_cfg.num_workers})")
 @click.option("--output-dir", default=None, type=click.Path(), help="Base output directory")
-def wordlist(sources, output_dir):
+def wordlist(sources, workers, output_dir):
     """Step 1: Assemble word list from corpora."""
     sources_dict = _parse_sources(sources)
     wordlist_dir = _resolve_output_dir(output_dir, "wordlist")
@@ -776,7 +777,7 @@ def wordlist(sources, output_dir):
     console.print("Step 1: Word List Assembly")
     console.print("=" * 60)
 
-    entries = assemble_wordlist(sources=sources_dict)
+    entries = assemble_wordlist(sources=sources_dict, num_workers=workers)
     if not entries:
         console.print("[red]ERROR: No words assembled.[/red]")
         sys.exit(1)

@@ -70,6 +70,7 @@ class TrieConfig:
     # Processing settings
     num_workers: int = 12
     log_interval: int = 1000
+    tokenize_chunk_size: int = 500
 
     # Output paths
     output_dir: Path = field(default_factory=lambda: OUTPUT_DIR)
@@ -142,3 +143,30 @@ class BenchmarkConfig:
     @property
     def benchmark_dir(self) -> Path:
         return self.output_dir / "benchmarks" / "word_conversion"
+
+
+@dataclass
+class LlmFilterConfig:
+    """Configuration for the LLM vocabulary filter."""
+
+    # Input
+    wordlist_path: Path = field(
+        default_factory=lambda: OUTPUT_DIR / "wordlist" / "wordlist.csv"
+    )
+
+    # Output
+    output_dir: Path = field(default_factory=lambda: OUTPUT_DIR / "llm_filter")
+
+    # Exclusion list destination (versioned data directory)
+    exclusions_dir: Path = field(
+        default_factory=lambda: REPO_ROOT / "data" / "dictionaries" / "word_exclusions"
+    )
+
+    # LLM settings
+    model_id: str = "global.anthropic.claude-sonnet-4-6"
+    region: str = "us-east-1"
+
+    # Processing settings
+    batch_size: int = 1000
+    wordlist_limit: int = 5000
+    num_workers: int = 4
