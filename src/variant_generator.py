@@ -52,7 +52,7 @@ except ImportError as e:
 # Path to the component romanization dictionary
 _DICT_PATH = (
     Path(__file__).parent.parent / "data" / "dictionaries"
-    / "component-romanization" / "dictionary-v0.4.2.yaml"
+    / "component-romanization" / "dictionary-v0.5.0.yaml"
 )
 
 # Module-level cache for the loaded dictionary
@@ -510,8 +510,8 @@ def generate_syllable_variants(comp: SyllableComponents) -> list[str]:
 # Product size estimation and cascade strategies
 # ---------------------------------------------------------------------------
 
-# When the cross-syllable Cartesian product exceeds this many combinations,
-# switch from full enumeration to consistency-based generation.
+# Hard limit to the number of variations to be generated
+# Separate from the configurable max_variants limit
 _PRODUCT_THRESHOLD = 10_000
 
 # Words with more syllables than this get RTGS-only fallback.
@@ -817,18 +817,20 @@ def generate_word_variants(
 
     product_size = _estimate_product_size(syllable_options)
 
-    if product_size <= _PRODUCT_THRESHOLD:
-        # Strategy 1: Full Cartesian product (current behavior for small words)
+    if num_syllables == 1:
+        # Single syllable: consistency has no effect, use direct product
         all_variants: set[str] = set()
         for combo in product(*syllable_options):
             all_variants.add("".join(combo))
     else:
-        # Strategy 2: Consistency-based generation
+        # Multi-syllable: always use consistency-based generation to
+        # enforce uniform component choices across syllables that share
+        # the same phoneme in the same context.
         strategy = "consistent"
         all_variants = _generate_variants_consistent(syllables, max_variants)
 
         if len(all_variants) > _PRODUCT_THRESHOLD:
-            # Strategy 3: Limit each component to top 2 variants
+            # Fallback: limit each component to top 2 variants
             strategy = "limited"
             all_variants = _generate_variants_limited(
                 syllables, max_per_component=2, max_variants=max_variants,

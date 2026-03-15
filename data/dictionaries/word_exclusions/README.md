@@ -5,17 +5,17 @@ lists are filtered out of the vocabulary before variant generation.
 
 ## Workflow
 
-1. Run the LLM filter script to generate a raw exclusion list:
+1. Run the LLM filter to generate a raw exclusion list:
    ```
-   python -m pipelines.trie.llm_filter generate
+   python -m pipelines llm-filter generate
    ```
 
-2. Review the raw output at `pipelines/trie/outputs/dropped_words_raw.txt`.
+2. Review the raw output at `pipelines/outputs/llm_filter/dropped_words_raw.txt`.
    Remove any legitimate words that were incorrectly flagged.
 
 3. Approve the reviewed list:
    ```
-   python -m pipelines.trie.llm_filter approve --version 1.0.0
+   python -m pipelines llm-filter approve --version 1.0.0
    ```
 
 4. Use in the pipeline:

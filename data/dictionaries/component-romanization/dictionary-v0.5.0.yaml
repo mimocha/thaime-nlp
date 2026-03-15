@@ -38,14 +38,14 @@
 #     and routed to a separate "s" coda entry (parallels the จ→c split).
 
 metadata:
-  version: "0.4.2"
+  version: "0.5.0"
   description: "Component-level Thai informal romanization mappings (g2p-keyed)"
   source_vocabulary: "top 10K words from wisesight+wongnai+prachathai+thwiki"
-  inventory_date: "2026-03-11"
+  inventory_date: "2026-03-15"
   total_entries: 72
 
 # ===========================================================================
-# ONSETS (36 entries)
+# ONSETS
 # ===========================================================================
 # Initial consonants and clusters. Keys are TLTK g2p phoneme strings.
 #
@@ -132,8 +132,8 @@ onsets:
     rtgs: "t"
     g2p: "t"
     thai: "ต"
-    variants: ["t"]
-    notes: "removed [d/dt] to cut down on noise"
+    variants: ["t", "dt"]
+    notes: ""
   th:
     rtgs: "th"
     g2p: "th"
@@ -144,8 +144,8 @@ onsets:
     rtgs: "tr"
     g2p: "tr"
     thai: "ตร"
-    variants: ["tr"]
-    notes: "removed [dtr] to cut down on noise"
+    variants: ["tr", "dtr"]
+    notes: ""
   thr:
     rtgs: "thr"
     g2p: "thr"
@@ -174,8 +174,8 @@ onsets:
     rtgs: "p"
     g2p: "p"
     thai: "ป"
-    variants: ["p"]
-    notes: "removed [b/bp] to cut down on noise"
+    variants: ["p", "bp"]
+    notes: ""
   ph:
     rtgs: "ph"
     g2p: "ph"
@@ -199,13 +199,13 @@ onsets:
     g2p: "pr"
     thai: "ปร"
     variants: ["pr"]
-    notes: "removed [br] to cut down on noise"
+    notes: ""
   pl:
     rtgs: "pl"
     g2p: "pl"
     thai: "ปล"
     variants: ["pl"]
-    notes: "removed [bl] to cut down on noise"
+    notes: ""
   bl:
     rtgs: "bl"
     g2p: "bl"
@@ -258,8 +258,8 @@ onsets:
     rtgs: "w"
     g2p: "w"
     thai: "ว"
-    variants: ["w"]
-    notes: "removed [v] to cut down on noise"
+    variants: ["w", "v"]
+    notes: ""
   h:
     rtgs: "h"
     g2p: "h"
@@ -274,7 +274,7 @@ onsets:
     notes: "no common informal variants"
 
 # ===========================================================================
-# VOWELS (26 entries)
+# VOWELS
 # ===========================================================================
 # Vowel nuclei. Keys are TLTK g2p phoneme strings.
 #
@@ -293,14 +293,14 @@ vowels:
     rtgs: "a"
     g2p: "a"
     thai: "อะ"
-    variants: ["a", "u"]
-    notes: "removed [ah] to cut down on noise"
+    variants: ["a", "u", "ah"]
+    notes: ""
   aa:
     rtgs: "a"
     g2p: "aa"
     thai: "อา"
-    variants: ["a", "aa", "ar"]
-    notes: "removed [ah] to cut down on noise"
+    variants: ["a", "aa", "ar", "ah"]
+    notes: ""
   e:
     rtgs: "e"
     g2p: "e"
@@ -311,8 +311,8 @@ vowels:
     rtgs: "e"
     g2p: "ee"
     thai: "เอ"
-    variants: ["ee", "ay", "ae"]
-    notes: "removed [e/eh] to cut down on noise"
+    variants: ["ee", "ay", "ae", "e", "eh"]
+    notes: ""
   i:
     rtgs: "i"
     g2p: "i"
@@ -323,7 +323,7 @@ vowels:
     rtgs: "i"
     g2p: "ii"
     thai: "อี"
-    variants: ["ee", "ii"]
+    variants: ["ee", "ii", "i"]
     notes: ""
   o:
     rtgs: "o"
@@ -335,111 +335,115 @@ vowels:
     rtgs: "o"
     g2p: "oo"
     thai: "โอ"
-    variants: ["o", "oh"]
+    variants: ["o", "oh", "ou"]
     notes: ""
   O:
     rtgs: "o"
     g2p: "O"
     thai: "เอาะ"
-    variants: ["o", "oh"]
-    notes: "removed [or/oa] to cut down on noise, replaced with oh"
+    variants: ["o", "oh", "or", "oa"]
+    notes: ""
   OO:
     rtgs: "o"
     g2p: "OO"
     thai: "ออ"
-    variants: ["or", "oh"]
-    notes: "removed [o/aw] to cut down on noise"
+    variants: ["or", "oh", "o", "aw"]
+    notes: ""
   u:
     rtgs: "u"
     g2p: "u"
     thai: "อุ"
-    variants: ["u"]
-    notes: "removed [oo] to cut down on noise"
+    variants: ["u", "oo"]
+    notes: ""
   uu:
     rtgs: "u"
     g2p: "uu"
     thai: "อู"
-    variants: ["oo", "uu"]
+    variants: ["oo", "uu", "u"]
     notes: ""
   ae:
     rtgs: "ae"
     g2p: "x"
     thai: "แอะ"
-    variants: ["ae"]
-    notes: "unable to disambiguate long/short sounds in romanization"
+    variants: ["ae", "aae"]
+    notes: ""
   aae:
     rtgs: "ae"
     g2p: "xx"
     thai: "แอ"
-    variants: ["ae"]
-    notes: "unable to disambiguate long/short sounds in romanization"
+    variants: ["ae", "aae"]
+    notes: ""
   ue:
     rtgs: "ue"
     g2p: "U"
     thai: "อึ"
-    variants: ["ue", "uh"]
-    notes: "unable to disambiguate long/short sounds in romanization"
+    variants: ["ue", "uh", "uee", "eu"]
+    notes: ""
   uee:
     rtgs: "ue"
     g2p: "UU"
     thai: "อือ"
-    variants: ["ue", "uee", "uh"]
-    notes: "unable to disambiguate long/short sounds in romanization"
+    variants: ["ue", "uee", "uh", "eu"]
+    notes: ""
   oe:
     rtgs: "oe"
     g2p: "@"
-    variants: ["oe", "er"]
+    variants: ["oe", "er", "eo"]
     thai: "เออะ"
     notes: ""
   oee:
     rtgs: "oe"
     g2p: "@@"
     thai: "เออ"
-    variants: ["oe", "er", "ur"]
-    notes: "uh from TLC/T2E, ur from McFarland"
+    variants: ["oe", "er", "ur", "eo", "uh"]
+    notes: ""
 
-  # Diphthongs (compound vowels handled as single units)
+  # ===========================================================================
+  # DIPHTHONGS (VOWEL)
+  # ===========================================================================
+  # Diphthongs - compound vowels handled as single units
+
   ai:
     rtgs: "ai"
     g2p: "aj"
     thai: "ไอ/ใอ"
-    variants: ["ai"]
+    variants: ["ai", "aai", "aii"]
     notes: ""
   ao:
     rtgs: "ao"
     g2p: "aw"
     thai: "เอา"
-    variants: ["ao", "ow", "aow"]
+    variants: ["ao", "ow", "aow", "aao", "au", "aw"]
     notes: ""
   ua:
     rtgs: "ua"
     g2p: "ua"
     thai: "อัว"
-    variants: ["ua"]
+    variants: ["ua", "uaa"]
     notes: ""
   uea:
     rtgs: "uea"
     g2p: "UUa"
     thai: "เอือ"
-    variants: ["uea", "eua"]
-    notes: "removed [ua] to cut down on noise"
+    variants: ["uea", "eua", "ueaa"]
+    notes: ""
   ia:
     rtgs: "ia"
     g2p: "iia"
     thai: "เอีย"
-    variants: ["ia", "iia"]
+    variants: ["ia", "iia", "ea"]
     notes: ""
   oi:
     rtgs: "oi"
     g2p: "Oj"
     thai: "ออย"
-    variants: ["oi", "oii"]
-    notes: "removed oy (j->y pattern looks wrong in context)."
+    variants: ["oy", "oi", "oii"]
+    notes: ""
   iao:
     rtgs: "iao"
     g2p: "iiaw"
     thai: "เอียว"
-    variants: ["iao", "eao", "eaw"]
+    variants: ["iao", "eao", "eaw", "iaw", "iew"]
     notes: ""
   uai:
     rtgs: "uai"
@@ -449,7 +453,7 @@ vowels:
     notes: ""
 
 # ===========================================================================
-# CODAS (9 entries)
+# CODAS
 # ===========================================================================
 # Final consonants. Keys are TLTK g2p phoneme strings.
 
@@ -488,8 +492,8 @@ codas:
     rtgs: "t"
     g2p: "c"
     thai: "จ"
-    variants: ["j"]
-    notes: "removed [t/d] to cut down on noise"
+    variants: ["j", "t", "d"]
+    notes: ""
   k:
     rtgs: "k"
     g2p: "k"

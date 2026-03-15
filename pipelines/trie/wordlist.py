@@ -15,12 +15,21 @@ This module retains:
 from __future__ import annotations
 
 import csv
+import time
 from collections import Counter
+from concurrent.futures import ProcessPoolExecutor, as_completed
+from multiprocessing import get_context
 from pathlib import Path
 
 from pipelines.config import TrieConfig
 from pipelines.console import console
-from src.corpora.readers import check_corpus_available, read_corpus
+from src.corpora.readers import (
+    CORPUS_REGISTRY,
+    check_corpus_available,
+    iter_corpus_texts,
+    read_pythainlp,
+)
+from src.corpora.tokenizer import tokenize_chunk
 from src.utils.frequency import merge_frequencies, normalize_frequencies
 
 
@@ -141,36 +150,145 @@ def _decompose_compounds(
 # ---------------------------------------------------------------------------
 
 
+def _count_corpus_texts(name: str) -> int:
+    """Count total texts in a corpus without tokenizing (cheap iteration)."""
+    return sum(1 for _ in iter_corpus_texts(name))
+
+
 def assemble_wordlist(
     sources: dict[str, bool] | None = None,
+    num_workers: int | None = None,
+    chunk_size: int | None = None,
 ) -> list[WordEntry]:
     """Assemble the unified word list from all enabled sources.
 
+    Uses map-reduce parallelism: the main thread streams texts from corpus
+    iterators and dispatches chunks to a worker pool for tokenization.
+    Results are merged per-corpus, then across corpora.
+
     Args:
         sources: Dict of {source_name: enabled}. Defaults to TrieConfig.sources.
+        num_workers: Number of worker processes. Defaults to TrieConfig.num_workers.
+        chunk_size: Texts per worker chunk. Defaults to TrieConfig.tokenize_chunk_size.
 
     Returns:
         List of WordEntry, sorted by frequency descending.
     """
+    cfg = TrieConfig()
     if sources is None:
-        sources = TrieConfig().sources
+        sources = cfg.sources
+    if num_workers is None:
+        num_workers = cfg.num_workers
+    if chunk_size is None:
+        chunk_size = cfg.tokenize_chunk_size
 
     enabled = {name for name, on in sources.items() if on}
 
-    # Read each source
-    raw_counters: dict[str, Counter] = {}
+    # Separate text corpora from dictionary-only sources
+    text_corpora: list[str] = []
+    dict_sources: list[str] = []
     for name in sorted(enabled):
         if not check_corpus_available(name):
             console.print(f"  [dim][{name}] Not available (not downloaded), skipping[/dim]")
             continue
+        entry = CORPUS_REGISTRY[name]
+        if entry.has_text:
+            text_corpora.append(name)
+        else:
+            dict_sources.append(name)
 
-        console.print(f"  [{name}] Reading...")
-        counter = read_corpus(name)
-        raw_counters[name] = counter
+    raw_counters: dict[str, Counter] = {}
+
+    # ------------------------------------------------------------------
+    # Parallel tokenization of text corpora
+    # ------------------------------------------------------------------
+    if text_corpora:
+        # Pre-count texts per corpus for progress reporting
+        console.print(f"  Counting texts across {len(text_corpora)} corpora...")
+        corpus_counts: dict[str, int] = {}
+        for name in text_corpora:
+            n = _count_corpus_texts(name)
+            corpus_counts[name] = n
+        total_texts = sum(corpus_counts.values())
+
+        for name in text_corpora:
+            console.print(f"    {name}: {corpus_counts[name]:,} texts")
+        console.print(f"    Total: {total_texts:,} texts")
+
         console.print(
-            f"  [{name}] {len(counter):,} unique words, "
-            f"{sum(counter.values()):,} total tokens"
+            f"\n  Tokenizing {len(text_corpora)} text corpora "
+            f"(workers={num_workers}, chunk_size={chunk_size})..."
         )
+
+        # Per-corpus counters — accumulate results from workers
+        per_corpus: dict[str, Counter] = {name: Counter() for name in text_corpora}
+
+        t_start = time.monotonic()
+        texts_done = 0
+        last_log_time = t_start
+
+        ctx = get_context("fork")
+        with ProcessPoolExecutor(max_workers=num_workers, mp_context=ctx) as pool:
+            futures = {}
+            chunk_corpus_map: dict[int, str] = {}  # future id -> corpus name
+            chunk_sizes: dict[int, int] = {}  # future id -> chunk text count
+
+            # Producer: stream texts from all corpora, dispatch chunks
+            for name in text_corpora:
+                buffer: list[str] = []
+                for text in iter_corpus_texts(name):
+                    buffer.append(text)
+                    if len(buffer) >= chunk_size:
+                        fut = pool.submit(tokenize_chunk, buffer)
+                        futures[id(fut)] = fut
+                        chunk_corpus_map[id(fut)] = name
+                        chunk_sizes[id(fut)] = len(buffer)
+                        buffer = []
+                # Flush remaining buffer
+                if buffer:
+                    fut = pool.submit(tokenize_chunk, buffer)
+                    futures[id(fut)] = fut
+                    chunk_corpus_map[id(fut)] = name
+                    chunk_sizes[id(fut)] = len(buffer)
+
+            # Consumer: collect results as they complete
+            for fut in as_completed(futures.values()):
+                fid = id(fut)
+                corpus_name = chunk_corpus_map[fid]
+                chunk_count = chunk_sizes[fid]
+                per_corpus[corpus_name] += fut.result()
+                texts_done += chunk_count
+
+                # Progress reporting at intervals
+                now = time.monotonic()
+                if now - last_log_time >= 5.0:
+                    elapsed = now - t_start
+                    rate = texts_done / elapsed if elapsed > 0 else 0
+                    console.print(
+                        f"    [{texts_done:,}/{total_texts:,} texts] "
+                        f"{rate:,.0f} texts/sec"
+                    )
+                    last_log_time = now
+
+        elapsed = time.monotonic() - t_start
+        console.print(f"  Tokenization complete in {elapsed:.1f}s")
+
+        for name in text_corpora:
+            counter = per_corpus[name]
+            raw_counters[name] = counter
+            console.print(
+                f"    {name}: {len(counter):,} unique words, "
+                f"{sum(counter.values()):,} total tokens"
+            )
+
+    # ------------------------------------------------------------------
+    # Dictionary-only sources (e.g. pythainlp)
+    # ------------------------------------------------------------------
+    for name in dict_sources:
+        console.print(f"  Loading {name} dictionary...")
+        counter = read_pythainlp()
+        raw_counters[name] = counter
+        console.print(f"    {name}: {len(counter):,} words")
 
     if not raw_counters:
         console.print("  [red]ERROR: No sources loaded![/red]")

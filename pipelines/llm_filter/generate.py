@@ -1,58 +1,25 @@
 """LLM-based vocabulary filter for the trie generation pipeline.
 
-Standalone script that uses Claude Sonnet via AWS Bedrock to identify
-garbage tokens (tokenization artifacts, fragments, misspellings) in the
-wordlist. Outputs an exclusion list of words to drop, for human review.
+Uses Claude Sonnet via AWS Bedrock to identify garbage tokens (tokenization
+artifacts, fragments, misspellings) in the wordlist. Outputs an exclusion
+list of words to drop, for human review.
 
 The workflow:
   1. Run 'generate' to produce a raw exclusion list via LLM review.
   2. Manually review the raw output, removing any legitimate words.
   3. Run 'approve' to copy the reviewed list to the data directory.
   4. The main pipeline reads the approved exclusion list during filtering.
-
-Usage:
-    # Generate raw exclusion list
-    python -m pipelines.trie.llm_filter generate
-    python -m pipelines.trie.llm_filter generate --batch-size 500
-    python -m pipelines.trie.llm_filter generate --input path/to/wordlist.csv
-
-    # Approve the reviewed exclusion list
-    python -m pipelines.trie.llm_filter approve --version 1.0.0
-
-Environment:
-    AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION (or AWS profile)
-    must be configured for Bedrock access.
 """
 
 from __future__ import annotations
 
-import argparse
 import csv
 import json
 import re
-import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from pathlib import Path
-
-# ---------------------------------------------------------------------------
-# Paths & defaults
-# ---------------------------------------------------------------------------
-
-_SCRIPT_DIR = Path(__file__).resolve().parent
-DEFAULT_INPUT = _SCRIPT_DIR / "outputs" / "wordlist.csv"
-DEFAULT_OUTPUT = _SCRIPT_DIR / "outputs" / "dropped_words_raw.txt"
-EXCLUSIONS_DIR = (
-    _SCRIPT_DIR.parent.parent / "data" / "dictionaries" / "word_exclusions"
-)
-
-DEFAULT_MODEL_ID = "global.anthropic.claude-sonnet-4-6"
-DEFAULT_BATCH_SIZE = 1000
-DEFAULT_REGION = "us-east-1"
-
-# Default limit on number of words to process from the wordlist (for testing)
-RAW_WORDLIST_LIMIT = 5000
 
 # ---------------------------------------------------------------------------
 # Prompt
@@ -148,7 +115,7 @@ def call_bedrock(
                 {
                     "anthropic_version": "bedrock-2023-05-31",
                     "max_tokens": 8192,
-                    "temperature": 0.1,
+                    "temperature": 0.0,
                     "system": [
                         {
                             "type": "text",
@@ -204,43 +171,51 @@ def call_bedrock(
 
 
 # ---------------------------------------------------------------------------
-# Subcommands
+# Commands
 # ---------------------------------------------------------------------------
 
 
-DEFAULT_WORKERS = 4
-
-
-def cmd_generate(args: argparse.Namespace) -> None:
+def cmd_generate(
+    input_path: Path,
+    output_path: Path,
+    batch_size: int,
+    limit: int,
+    workers: int,
+    model: str,
+    region: str,
+) -> None:
     """Generate raw exclusion list by running LLM filter on the wordlist."""
+    import sys
+
     try:
         import boto3
     except ImportError:
         print("ERROR: boto3 is required. Install with: uv pip install boto3")
         sys.exit(1)
 
-    input_path = Path(args.input)
-    output_path = Path(args.output)
-
     if not input_path.exists():
         print(f"ERROR: Wordlist not found at {input_path}")
-        print("  Run the trie pipeline first to generate wordlist.csv.")
+        print()
+        print("  The LLM filter requires a wordlist from the trie pipeline.")
+        print("  Run the trie pipeline first:")
+        print()
+        print("    python -m pipelines trie wordlist")
         sys.exit(1)
 
     print(f"Reading wordlist from {input_path}")
-    words = read_wordlist(input_path, limit=args.limit)
+    words = read_wordlist(input_path, limit=limit)
     print(f"  Total words: {len(words):,}")
 
-    batches = chunk_words(words, args.batch_size)
+    batches = chunk_words(words, batch_size)
     num_batches = len(batches)
-    workers = min(args.workers, num_batches)
-    print(f"  Batches: {num_batches} × {args.batch_size} words")
+    workers = min(workers, num_batches)
+    print(f"  Batches: {num_batches} x {batch_size} words")
     print(f"  Workers: {workers}")
-    print(f"  Model: {args.model}")
-    print(f"  Region: {args.region}")
+    print(f"  Model: {model}")
+    print(f"  Region: {region}")
 
     # Set up Bedrock client (thread-safe for invoke_model)
-    client = boto3.client("bedrock-runtime", region_name=args.region)
+    client = boto3.client("bedrock-runtime", region_name=region)
 
     # Log file for raw LLM responses (append mode — accumulates across runs)
     log_path = output_path.parent / "llm_filter.log"
@@ -257,7 +232,7 @@ def cmd_generate(args: argparse.Namespace) -> None:
 
     with ThreadPoolExecutor(max_workers=workers) as executor:
         futures = {
-            executor.submit(call_bedrock, client, args.model, i, batch): i
+            executor.submit(call_bedrock, client, model, i, batch): i
             for i, batch in enumerate(batches)
         }
 
@@ -285,13 +260,14 @@ def cmd_generate(args: argparse.Namespace) -> None:
     # -----------------------------------------------------------------------
     # Write log file in batch order
     # -----------------------------------------------------------------------
+    log_path.parent.mkdir(parents=True, exist_ok=True)
     with open(log_path, "a", encoding="utf-8") as log_file:
         log_file.write(f"\n{'=' * 72}\n")
         log_file.write(f"RUN: {run_ts}\n")
-        log_file.write(f"Model: {args.model} | Region: {args.region}\n")
-        log_file.write(f"Input: {input_path} | Limit: {args.limit}\n")
+        log_file.write(f"Model: {model} | Region: {region}\n")
+        log_file.write(f"Input: {input_path} | Limit: {limit}\n")
         log_file.write(
-            f"Words: {len(words):,} | Batches: {num_batches} × {args.batch_size}"
+            f"Words: {len(words):,} | Batches: {num_batches} x {batch_size}"
             f" | Workers: {workers}\n"
         )
         log_file.write(f"Elapsed: {elapsed:.1f}s\n")
@@ -299,8 +275,8 @@ def cmd_generate(args: argparse.Namespace) -> None:
 
         for idx in range(num_batches):
             br = results[idx]
-            word_start = idx * args.batch_size + 1
-            word_end = idx * args.batch_size + br.batch_size
+            word_start = idx * batch_size + 1
+            word_end = idx * batch_size + br.batch_size
             log_file.write(
                 f"\n--- Batch {idx + 1}/{num_batches} "
                 f"(words {word_start}-{word_end}) ---\n"
@@ -354,26 +330,30 @@ def cmd_generate(args: argparse.Namespace) -> None:
     print()
     print("Next steps:")
     print("  1. Review the output file, remove any legitimate words.")
-    print("  2. Run: python -m pipelines.trie.llm_filter approve --version 1.0.0")
+    print("  2. Run: python -m pipelines llm-filter approve --version 1.0.0")
 
 
-def cmd_approve(args: argparse.Namespace) -> None:
+def cmd_approve(
+    input_path: Path,
+    version: str,
+    exclusions_dir: Path,
+) -> None:
     """Copy the reviewed exclusion list to the data directory."""
-    raw_path = Path(args.input)
-    version = args.version
-    dest = EXCLUSIONS_DIR / f"exclusions-v{version}.txt"
+    import sys
 
-    if not raw_path.exists():
-        print(f"ERROR: Exclusion list not found at {raw_path}")
+    dest = exclusions_dir / f"exclusions-v{version}.txt"
+
+    if not input_path.exists():
+        print(f"ERROR: Exclusion list not found at {input_path}")
         print("  Run 'generate' first, then review the output.")
         sys.exit(1)
 
     # Read and validate
-    with open(raw_path, encoding="utf-8") as f:
+    with open(input_path, encoding="utf-8") as f:
         words = sorted({line.strip() for line in f if line.strip()})
 
     print(f"Approving exclusion list v{version}")
-    print(f"  Source: {raw_path}")
+    print(f"  Source: {input_path}")
     print(f"  Words:  {len(words):,}")
     print(f"  Dest:   {dest}")
 
@@ -385,87 +365,4 @@ def cmd_approve(args: argparse.Namespace) -> None:
     print(f"  Done. Exclusion list saved.")
     print()
     print("To use in the pipeline, run:")
-    print(f"  python -m pipelines.trie.generate --exclusion-list {dest}")
-
-
-# ---------------------------------------------------------------------------
-# CLI
-# ---------------------------------------------------------------------------
-
-
-def main() -> None:
-    parser = argparse.ArgumentParser(
-        description="LLM-based vocabulary filter for the trie pipeline.",
-    )
-    subparsers = parser.add_subparsers(dest="command", required=True)
-
-    # -- generate --
-    gen_parser = subparsers.add_parser(
-        "generate",
-        help="Generate raw exclusion list using LLM",
-    )
-    gen_parser.add_argument(
-        "--input",
-        default=str(DEFAULT_INPUT),
-        help=f"Path to wordlist CSV (default: {DEFAULT_INPUT})",
-    )
-    gen_parser.add_argument(
-        "--output",
-        default=str(DEFAULT_OUTPUT),
-        help=f"Path for raw output (default: {DEFAULT_OUTPUT})",
-    )
-    gen_parser.add_argument(
-        "--batch-size",
-        type=int,
-        default=DEFAULT_BATCH_SIZE,
-        help=f"Words per LLM batch (default: {DEFAULT_BATCH_SIZE})",
-    )
-    gen_parser.add_argument(
-        "--limit",
-        type=int,
-        default=RAW_WORDLIST_LIMIT,
-        help=f"Max words to process from the wordlist (default: {RAW_WORDLIST_LIMIT})",
-    )
-    gen_parser.add_argument(
-        "--workers",
-        type=int,
-        default=DEFAULT_WORKERS,
-        help=f"Concurrent API calls (default: {DEFAULT_WORKERS})",
-    )
-    gen_parser.add_argument(
-        "--model",
-        default=DEFAULT_MODEL_ID,
-        help=f"Bedrock model ID (default: {DEFAULT_MODEL_ID})",
-    )
-    gen_parser.add_argument(
-        "--region",
-        default=DEFAULT_REGION,
-        help=f"AWS region (default: {DEFAULT_REGION})",
-    )
-
-    # -- approve --
-    app_parser = subparsers.add_parser(
-        "approve",
-        help="Approve reviewed exclusion list and copy to data directory",
-    )
-    app_parser.add_argument(
-        "--input",
-        default=str(DEFAULT_OUTPUT),
-        help=f"Path to reviewed raw file (default: {DEFAULT_OUTPUT})",
-    )
-    app_parser.add_argument(
-        "--version",
-        required=True,
-        help="Version string (e.g., 1.0.0)",
-    )
-
-    args = parser.parse_args()
-
-    if args.command == "generate":
-        cmd_generate(args)
-    elif args.command == "approve":
-        cmd_approve(args)
-
-
-if __name__ == "__main__":
-    main()
+    print(f"  python -m pipelines trie run")

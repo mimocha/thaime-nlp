@@ -1,3 +1,41 @@
+# v0.5.0 (2026-03-15): Restore all pruned romanization variants.
+With bigram/trigram Viterbi scoring now in the engine, the stronger scoring
+model can disambiguate a larger candidate set. Relative to v0.4.1, v0.5.0
+restores 37 variants in the actual dictionary contents.
+Note: the earlier v0.4.x changelog counts below are likely inconsistent, so
+the corrected totals here are based on the v0.5.0 dictionary itself.
+Total variants: 120 -> 157 (+37 restored).
+Onsets (53 -> 57, 4 restored):
+- t: restored [dt]
+- p: restored [bp]
+- tr: restored [dtr]
+- w: restored [v]
+Vowels (51 -> 82, 31 restored):
+- a: restored [ah]
+- aa: restored [ah]
+- ee: restored [e, eh]
+- ii: restored [i]
+- u: restored [oo]
+- oo: restored [ou]
+- uu: restored [u]
+- O: restored [or, oa]
+- OO: restored [o, aw]
+- ae: restored [aae]
+- aae: restored [aae]
+- ue: restored [uee, eu]
+- uee: restored [eu]
+- oe: restored [eo]
+- oee: restored [eo, uh]
+- ai: restored [aai, aii]
+- ao: restored [aao, au, aw]
+- ia: restored [ea]
+- oi: restored [oy]
+- iao: restored [iaw, iew]
+- ua: restored [uaa]
+- uea: restored [ueaa]
+Codas (16 -> 18, 2 restored in c entry):
+- c: restored [t, d]
+
 # v0.4.2 (2026-03-11): Directory restructuring
 - Moved dictionary YAML to be under `data/dictionaries/component-romanization/dictionary-vX.X.X.yaml`
 - Changelog now residing separately in this file
@@ -18,6 +56,9 @@ Vowels (54 -> 50, 4 removed) - will rely on fuzzy trie matching to cover these:
 # v0.4.0 (2026-03-11): Aggressive variant pruning to reduce combinatorial explosion.
 Total variants: 151 -> 123 (28 removed, 19% reduction).
 Mean variants/entry: 2.13 -> 1.73.
+Note: this entry likely contains arithmetic/count inconsistencies and is the
+probable source of the later v0.5.0 miscounts. The original numbers are kept
+here for historical context.
 Onsets (57 -> 54, 3 removed):
 - t: removed [dt] — Paiboon-style dt produces noise at scale
 - p: removed [bp] — same rationale as t/dt

@@ -120,18 +120,23 @@ def apply_overrides(
     existing_words = {e.word for e in entries}
     added = 0
 
+    # Floor frequency for override-only words: use the minimum observed corpus
+    # frequency so they rank at the bottom but remain selectable by the Viterbi
+    # scorer when bigram/trigram context favors them.
+    min_freq = min((e.frequency for e in entries if e.frequency > 0), default=1e-9)
+
     for word, romanizations in overrides.items():
         variants[word] = romanizations
         if word not in existing_words:
             entries.append(WordEntry(
-                word=word, frequency=0.0, sources={"overrides"},
+                word=word, frequency=min_freq, sources={"overrides"},
             ))
             existing_words.add(word)
             added += 1
 
     replaced = len(overrides) - added
     console.print(f"  Manual overrides applied: {len(overrides)} words "
-                   f"({replaced} replaced, {added} new)")
+                   f"({replaced} replaced, {added} new, floor freq={min_freq:.2e})")
 
     return entries, variants
 
@@ -710,7 +715,7 @@ def run(ctx, sources, workers, max_variants, vocab_limit, min_sources,
         console.print(f"  Loaded {len(entries):,} words from cache")
         wordlist_was_cached = True
     else:
-        entries = assemble_wordlist(sources=sources_dict)
+        entries = assemble_wordlist(sources=sources_dict, num_workers=workers)
         if not entries:
             console.print("[red]ERROR: No words assembled. Check that corpora are downloaded.[/red]")
             sys.exit(1)
@@ -760,8 +765,9 @@ def run(ctx, sources, workers, max_variants, vocab_limit, min_sources,
 
 @cli.command()
 @click.option("--sources", default=None, help="Comma-separated sources (default: all configured)")
+@click.option("--workers", default=_cfg.num_workers, type=int, help=f"Worker processes (default: {_cfg.num_workers})")
 @click.option("--output-dir", default=None, type=click.Path(), help="Base output directory")
-def wordlist(sources, output_dir):
+def wordlist(sources, workers, output_dir):
     """Step 1: Assemble word list from corpora."""
     sources_dict = _parse_sources(sources)
     wordlist_dir = _resolve_output_dir(output_dir, "wordlist")
@@ -771,7 +777,7 @@ def wordlist(sources, output_dir):
     console.print("Step 1: Word List Assembly")
     console.print("=" * 60)
 
-    entries = assemble_wordlist(sources=sources_dict)
+    entries = assemble_wordlist(sources=sources_dict, num_workers=workers)
     if not entries:
         console.print("[red]ERROR: No words assembled.[/red]")
         sys.exit(1)
