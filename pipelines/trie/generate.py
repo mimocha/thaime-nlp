@@ -21,6 +21,7 @@ import logging
 import re
 import sys
 import time
+import tomllib
 from concurrent.futures import ProcessPoolExecutor
 from datetime import datetime, timezone
 from multiprocessing import get_context
@@ -43,6 +44,25 @@ logger = logging.getLogger(__name__)
 
 # Default config instance
 _cfg = TrieConfig()
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+_PYPROJECT_PATH = _REPO_ROOT / "pyproject.toml"
+
+
+def _load_project_version() -> str:
+    """Load the package version from pyproject.toml."""
+    try:
+        with open(_PYPROJECT_PATH, "rb") as f:
+            pyproject = tomllib.load(f)
+        version = pyproject.get("project", {}).get("version")
+        if isinstance(version, str) and version:
+            return version
+    except (OSError, tomllib.TOMLDecodeError) as e:
+        logger.error("Failed to load project version from %s: %s", _PYPROJECT_PATH, e)
+
+    return "unknown_version"
+
+
+_PROJECT_VERSION = _load_project_version()
 
 
 # ---------------------------------------------------------------------------
@@ -57,7 +77,7 @@ def _generate_variants_for_word(args: tuple[str, int]) -> tuple[str, int, list[s
         from src.variant_generator import generate_word_variants
         variants = generate_word_variants(thai_word, max_variants=max_variants)
     except Exception as e:
-        logger.warning("Failed to generate variants for %s: %s", thai_word, e)
+        logger.error("Failed to generate variants for %s: %s", thai_word, e)
         variants = []
     return (thai_word, -1, variants)
 
@@ -439,7 +459,7 @@ def export_json(
 
     output = {
         "metadata": {
-            "version": "0.1.0",
+            "version": _PROJECT_VERSION,
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "vocab_size": len(dataset),
             "total_romanization_keys": total_keys,

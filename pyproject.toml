@@ -1,6 +1,6 @@
 [project]
 name = "thaime-nlp"
-version = "0.1.0"
+version = "0.5.0"
 description = "NLP research repository for the THAIME project"
 readme = "README.md"
 license = { text = "MIT" }
