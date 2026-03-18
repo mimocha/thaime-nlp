@@ -1,0 +1,93 @@
+======================================================================
+008-ngram-delivery: N-gram Binary Format Benchmarking
+======================================================================
+
+Loading all n-gram data...
+  Loaded in 5.6s: 15,876 uni, 2,617,474 bi, 6,411,893 tri
+
+Building work items...
+  mc=2: 15,876 uni + 2,617,474 bi + 6,411,893 tri, vocab=15,876
+  mc=5: 15,876 uni + 1,244,196 bi + 1,827,967 tri, vocab=15,876
+  mc=10: 15,876 uni + 735,831 bi + 809,140 tri, vocab=15,876
+  mc=25: 15,876 uni + 362,284 bi + 281,050 tri, vocab=15,876
+  mc=50: 15,876 uni + 205,675 bi + 123,486 tri, vocab=15,876
+
+Running 45 encoding jobs across 16 workers...
+  Encoding phase complete in 301.0s
+
+────────────────────────────────────────────────────────────
+min_count = 2  (15,876 uni + 2,617,474 bi + 6,411,893 tri, vocab=15,876)
+  E5_tsv                       raw= 370.98 MB gz=  75.23 MB br=  61.95 MB enc=2.6s dec=0.0s —
+  E1_flat_hashmap              raw=  81.48 MB gz=  32.28 MB br=  31.78 MB enc=22.0s dec=0.0s —
+  E2_flat_bsearch              (same binary as E1)
+  E3a_u8_uniform               raw=  55.63 MB gz=  31.52 MB br=  28.04 MB enc=107.2s dec=0.0s —
+  E3a_u8_log                   raw=  55.63 MB gz=  28.89 MB br=  25.97 MB enc=112.1s dec=0.0s —
+  E3b_u16_uniform              raw=  64.26 MB gz=  34.53 MB br=  31.66 MB enc=108.4s dec=0.0s —
+  E3b_u16_log                  raw=  64.32 MB gz=  33.42 MB br=  30.71 MB enc=110.5s dec=0.0s —
+  E4_mph_sim                   raw=  37.39 MB gz=   2.74 MB br=   2.70 MB enc=2.6s dec=0.0s —
+  E6_fst_sim                   raw=  66.91 MB gz=  24.40 MB br=  23.05 MB enc=32.7s dec=0.0s —
+  E7_ef_trie_sim               raw=  28.90 MB gz=  28.65 MB br=  28.63 MB enc=46.0s dec=0.0s —
+
+────────────────────────────────────────────────────────────
+min_count = 5  (15,876 uni + 1,244,196 bi + 1,827,967 tri, vocab=15,876)
+  E5_tsv                       raw= 120.23 MB gz=  24.71 MB br=  20.45 MB enc=1.5s dec=0.0s —
+  E1_flat_hashmap              raw=  27.29 MB gz=  11.91 MB br=  11.72 MB enc=7.6s dec=0.0s —
+  E2_flat_bsearch              (same binary as E1)
+  E3a_u8_uniform               raw=  18.48 MB gz=  11.57 MB br=  10.22 MB enc=35.4s dec=0.0s —
+  E3a_u8_log                   raw=  18.49 MB gz=  10.01 MB br=   8.97 MB enc=36.8s dec=0.0s —
+  E3b_u16_uniform              raw=  21.43 MB gz=  13.25 MB br=  12.17 MB enc=29.7s dec=0.0s —
+  E3b_u16_log                  raw=  21.49 MB gz=  12.50 MB br=  11.56 MB enc=33.7s dec=0.0s —
+  E4_mph_sim                   raw=  12.96 MB gz=   1.02 MB br= 1016.1 KB enc=1.6s dec=0.0s —
+  E6_fst_sim                   raw=  23.07 MB gz=   9.24 MB br=   8.75 MB enc=11.1s dec=0.0s —
+  E7_ef_trie_sim               raw=  10.19 MB gz=   9.94 MB br=   9.93 MB enc=26.3s dec=0.0s —
+
+────────────────────────────────────────────────────────────
+min_count = 10  (15,876 uni + 735,831 bi + 809,140 tri, vocab=15,876)
+  E5_tsv                       raw=  59.33 MB gz=  12.16 MB br=  10.19 MB enc=1.2s dec=0.0s —
+  E1_flat_hashmap              raw=  13.69 MB gz=   6.29 MB br=   6.18 MB enc=6.2s dec=1.1s All 1,560,847 match
+  E2_flat_bsearch              (same binary as E1)
+  E3a_u8_uniform               raw=   9.26 MB gz=   6.03 MB br=   5.40 MB enc=19.5s dec=0.0s —
+  E3a_u8_log                   raw=   9.26 MB gz=   5.13 MB br=   4.59 MB enc=16.0s dec=0.0s —
+  E3b_u16_uniform              raw=  10.75 MB gz=   7.10 MB br=   6.49 MB enc=15.9s dec=0.0s —
+  E3b_u16_log                  raw=  10.82 MB gz=   6.63 MB br=   6.12 MB enc=13.2s dec=0.0s —
+  E4_mph_sim                   raw=   6.70 MB gz=  586.7 KB br=  566.2 KB enc=0.9s dec=0.0s —
+  E6_fst_sim                   raw=  11.85 MB gz=   5.00 MB br=   4.77 MB enc=7.2s dec=0.0s —
+  E7_ef_trie_sim               raw=   5.43 MB gz=   5.18 MB br=   5.17 MB enc=14.9s dec=0.0s —
+
+────────────────────────────────────────────────────────────
+min_count = 25  (15,876 uni + 362,284 bi + 281,050 tri, vocab=15,876)
+  E5_tsv                       raw=  23.96 MB gz=   5.01 MB br=   4.26 MB enc=0.4s dec=0.0s —
+  E1_flat_hashmap              raw=   5.81 MB gz=   2.80 MB br=   2.75 MB enc=2.1s dec=0.0s —
+  E2_flat_bsearch              (same binary as E1)
+  E3a_u8_uniform               raw=   3.95 MB gz=   2.61 MB br=   2.31 MB enc=6.7s dec=0.0s —
+  E3a_u8_log                   raw=   3.95 MB gz=   2.22 MB br=   2.01 MB enc=7.4s dec=0.0s —
+  E3b_u16_uniform              raw=   4.58 MB gz=   3.17 MB br=   2.87 MB enc=5.2s dec=0.0s —
+  E3b_u16_log                  raw=   4.65 MB gz=   2.97 MB br=   2.72 MB enc=5.9s dec=0.0s —
+  E4_mph_sim                   raw=   3.00 MB gz=  318.9 KB br=  303.4 KB enc=0.4s dec=0.0s —
+  E6_fst_sim                   raw=   5.20 MB gz=   2.30 MB br=   2.24 MB enc=1.8s dec=0.0s —
+  E7_ef_trie_sim               raw=   2.57 MB gz=   2.31 MB br=   2.30 MB enc=7.9s dec=0.0s —
+
+────────────────────────────────────────────────────────────
+min_count = 50  (15,876 uni + 205,675 bi + 123,486 tri, vocab=15,876)
+  E5_tsv                       raw=  12.13 MB gz=   2.61 MB br=   2.23 MB enc=0.3s dec=0.0s —
+  E1_flat_hashmap              raw=   3.11 MB gz=   1.54 MB br=   1.49 MB enc=1.0s dec=0.0s —
+  E2_flat_bsearch              (same binary as E1)
+  E3a_u8_uniform               raw=   2.15 MB gz=   1.40 MB br=   1.26 MB enc=2.9s dec=0.0s —
+  E3a_u8_log                   raw=   2.15 MB gz=   1.20 MB br=   1.08 MB enc=2.1s dec=0.0s —
+  E3b_u16_uniform              raw=   2.48 MB gz=   1.72 MB br=   1.55 MB enc=2.7s dec=0.0s —
+  E3b_u16_log                  raw=   2.56 MB gz=   1.64 MB br=   1.50 MB enc=2.3s dec=0.0s —
+  E4_mph_sim                   raw=   1.71 MB gz=  224.5 KB br=  210.3 KB enc=0.2s dec=0.0s —
+  E6_fst_sim                   raw=   2.88 MB gz=   1.29 MB br=   1.28 MB enc=1.1s dec=0.0s —
+  E7_ef_trie_sim               raw=   1.54 MB gz=   1.28 MB br=   1.27 MB enc=5.1s dec=0.0s —
+
+────────────────────────────────────────────────────────────
+Phase 3: Quantization error analysis (min_count=10)...
+  u8/uniform: mean=0.017554 p95=0.033542 max=0.035262 rank_pres=99.3500%
+  u8/log: mean=0.310458 p95=0.649515 max=0.915322 rank_pres=87.0800%
+  u16/uniform: mean=0.000068 p95=0.000130 max=0.000137 rank_pres=100.0000%
+  u16/log: mean=0.001200 p95=0.002564 max=0.005970 rank_pres=99.9600%
+
+✓ Results: /workspaces/thaime-nlp/experiments/008-ngram-delivery/results.md
+✓ Raw JSON: /workspaces/thaime-nlp/experiments/008-ngram-delivery/data/benchmark_results.json
+
+Done!
