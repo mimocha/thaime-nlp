@@ -107,6 +107,13 @@ class NgramConfig:
     chunk_size: int = 100
     log_interval: int = 10000
 
+    # Encode settings (Stage 4)
+    encode_min_count: int = 15
+    encode_min_source_count: int = 2
+    encode_min_frequency: float = 5e-6
+    encode_alpha: float = 0.4
+    encode_smoothing: str = "sbo"
+
     # Output paths
     output_dir: Path = field(default_factory=lambda: OUTPUT_DIR)
 
@@ -116,6 +123,10 @@ class NgramConfig:
 
     @property
     def ngram_dir(self) -> Path:
+        return self.output_dir / "ngram"
+
+    @property
+    def encode_dir(self) -> Path:
         return self.output_dir / "ngram"
 
     @property

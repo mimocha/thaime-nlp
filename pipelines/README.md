@@ -34,10 +34,11 @@ python -m pipelines [--no-cache] [--workers N]
 │   ├── review           # Read-only inspection
 │   └── validate         # Benchmark regression
 ├── ngram
-│   ├── run              # Full: tokenize -> count -> validate
+│   ├── run              # Full: tokenize -> count -> validate -> encode
 │   ├── tokenize         # Stage 1 only
 │   ├── count            # Stage 2 only
-│   └── validate         # Stage 3 only
+│   ├── validate         # Stage 3 only
+│   └── encode           # Stage 4: binary encoding
 ├── llm-filter
 │   ├── generate         # Run LLM filter on wordlist → raw exclusion candidates
 │   └── approve          # Copy reviewed exclusion list to data directory
@@ -73,7 +74,8 @@ pipelines/outputs/
 ├── ngram/               # Final n-gram artifacts
 │   ├── ngrams_{1,2,3}_merged.tsv
 │   ├── ngrams_{1,2,3}_merged_raw.tsv
-│   └── ngrams_{1,2,3}_{corpus}.tsv
+│   ├── ngrams_{1,2,3}_{corpus}.tsv
+│   └── thaime_ngram_v1_mc{N}.bin  # Production binary
 ├── llm_filter/          # LLM filter outputs
 │   ├── dropped_words_raw.txt
 │   └── llm_filter.log
