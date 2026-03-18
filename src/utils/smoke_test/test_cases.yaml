@@ -1,0 +1,35 @@
+# Smoke test cases for release validation.
+#
+# Each case specifies a Latin input and the expected Thai output.
+# The runner checks whether the expected output appears in the top-K
+# beam search results.
+#
+# Status values: pass (rank 1), warn (in top-K but not rank 1), fail (not found)
+#
+# Add new cases as needed. Multi-word phrases exercise Viterbi scoring.
+
+- input: "thaime"
+  expected: "ไทยมี"
+  note: ""
+- input: "malongchaithaime"
+  expected: "มาลองใช้ไทยมี"
+  note: "Web demo flagship phrase"
+- input: "sawasdeekrub"
+  expected: "สวัสดีครับ"
+  note: ""
+- input: "sawatdeekrub"
+  expected: "สวัสดีครับ"
+  note: ""
+- input: "pimthaimaidai"
+  expected: "พิมพ์ไทยไม่ได้"
+  note: ""
+- input: "pimthaidailaew"
+  expected: "พิมพ์ไทยได้แล้ว"
+  note: ""
+- input: "kuenrodklabban"
+  expected: "ขึ้นรถกลับบ้าน"
+  note: ""
+- input: "jerkunprungneekrab"
+  expected: "เจอกันพรุ่งนี้ครับ"
+  note: ""
+

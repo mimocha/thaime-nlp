@@ -430,6 +430,7 @@ def export_json(
     dataset: list[dict],
     sources_used: list[str],
     path: Path,
+    version: str = "dev",
 ) -> None:
     """Export trie dataset as JSON."""
     total_keys = sum(len(e["romanizations"]) for e in dataset)
@@ -439,7 +440,7 @@ def export_json(
 
     output = {
         "metadata": {
-            "version": "0.1.0",
+            "version": version,
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "vocab_size": len(dataset),
             "total_romanization_keys": total_keys,
@@ -603,6 +604,7 @@ def _run_export(
     min_sources: int,
     vocab_limit: int,
     trie_dir: Path,
+    version: str = "dev",
 ) -> None:
     """Apply overrides, exclusions, filters, and export dataset."""
     # Apply manual overrides
@@ -648,7 +650,7 @@ def _run_export(
 
     dataset = build_trie_dataset(entries, variants)
     trie_dir.mkdir(parents=True, exist_ok=True)
-    export_json(dataset, sources_used, trie_dir / "trie_dataset.json")
+    export_json(dataset, sources_used, trie_dir / "trie_dataset.json", version=version)
     export_csv(dataset, trie_dir / "trie_dataset.csv")
 
     print_stats(dataset)
@@ -680,9 +682,11 @@ def cli():
 @click.option("--overrides", default=None, type=click.Path(), help="Path to overrides YAML (default: latest)")
 @click.option("--no-cache", is_flag=True, help="Ignore cached files, force full rebuild")
 @click.option("--output-dir", default=None, type=click.Path(), help="Base output directory")
+@click.option("--release-version", default="dev", help="Version string for trie dataset metadata (default: dev)")
 @click.pass_context
 def run(ctx, sources, workers, max_variants, vocab_limit, min_sources,
-        exclusion_list, no_exclusion_list, overrides, no_cache, output_dir):
+        exclusion_list, no_exclusion_list, overrides, no_cache, output_dir,
+        release_version):
     """Run the full pipeline: wordlist, variants, export."""
     # Inherit global --no-cache / --workers if set
     parent = ctx.parent.obj if ctx.parent and ctx.parent.obj else {}
@@ -750,6 +754,7 @@ def run(ctx, sources, workers, max_variants, vocab_limit, min_sources,
         entries, variants, sources_dict,
         overrides, exclusion_list, no_exclusion_list,
         min_sources, vocab_limit, trie_dir,
+        version=release_version,
     )
 
     console.print(f"\n{'=' * 60}")
@@ -847,8 +852,9 @@ def variant(workers, max_variants, output_dir):
 @click.option("--vocab-limit", default=_cfg.vocab_limit, type=int, help=f"Top N words by frequency (default: {_cfg.vocab_limit}, 0=no limit)")
 @click.option("--min-sources", default=_cfg.min_source_count, type=int, help=f"Minimum corpus source count (default: {_cfg.min_source_count})")
 @click.option("--output-dir", default=None, type=click.Path(), help="Base output directory")
+@click.option("--release-version", default="dev", help="Version string for trie dataset metadata (default: dev)")
 def export(sources, exclusion_list, no_exclusion_list, overrides,
-           vocab_limit, min_sources, output_dir):
+           vocab_limit, min_sources, output_dir, release_version):
     """Steps 3-4: Apply filters and export. Requires cached wordlist.csv and variants.json."""
     sources_dict = _parse_sources(sources)
     base = Path(output_dir) if output_dir else _cfg.output_dir
@@ -878,6 +884,7 @@ def export(sources, exclusion_list, no_exclusion_list, overrides,
         entries, variants, sources_dict,
         overrides, exclusion_list, no_exclusion_list,
         min_sources, vocab_limit, trie_dir,
+        version=release_version,
     )
 
     console.print(f"\n{'=' * 60}")
