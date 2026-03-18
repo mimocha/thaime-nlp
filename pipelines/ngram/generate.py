@@ -199,9 +199,12 @@ def cli():
 @click.option("--no-vocab-filter", is_flag=True, help="Disable vocabulary filtering")
 @click.option("--min-count", default=2, type=int, help="Minimum n-gram count in output (default: 2)")
 @click.option("--no-cache", is_flag=True, help="Force re-tokenization even if token files exist")
+@click.option("--encode-min-count", default=_cfg.encode_min_count, type=int, help=f"Minimum raw n-gram count for encode (default: {_cfg.encode_min_count})")
+@click.option("--alpha", default=_cfg.encode_alpha, type=float, help=f"Stupid Backoff alpha (default: {_cfg.encode_alpha})")
+@click.option("--smoothing", default=_cfg.encode_smoothing, type=click.Choice(["sbo", "mkn", "katz"]), help=f"Smoothing method (default: {_cfg.encode_smoothing})")
 @click.pass_context
-def run(ctx, corpora, output_dir, workers, vocab_filter, no_vocab_filter, min_count, no_cache):
-    """Run the full pipeline: tokenize, count, validate."""
+def run(ctx, corpora, output_dir, workers, vocab_filter, no_vocab_filter, min_count, no_cache, encode_min_count, alpha, smoothing):
+    """Run the full pipeline: tokenize, count, validate, encode."""
     # Inherit global options
     parent = ctx.parent.obj if ctx.parent and ctx.parent.obj else {}
     if parent.get("no_cache"):
@@ -245,6 +248,12 @@ def run(ctx, corpora, output_dir, workers, vocab_filter, no_vocab_filter, min_co
 
     # Stage 3: Validate
     _run_validate_stage(ngram_dir)
+
+    # Stage 4: Encode
+    trie_path = _cfg.trie_dataset_path
+    if vocab_filter:
+        trie_path = Path(vocab_filter)
+    _run_encode_stage(ngram_dir, trie_path, ngram_dir, encode_min_count, alpha, smoothing)
 
     # Summary
     total_elapsed = time.time() - pipeline_start
@@ -415,6 +424,41 @@ def _run_validate_stage(ngram_dir: Path) -> None:
     run_validation(ngram_dir)
 
 
+def _run_encode_stage(
+    ngram_dir: Path,
+    trie_path: Path,
+    output_dir: Path,
+    min_count: int,
+    alpha: float,
+    smoothing: str,
+) -> None:
+    """Run Stage 4: binary encoding."""
+    if not trie_path.exists():
+        console.print(f"\n  [yellow]WARNING: Trie dataset not found at {trie_path}[/yellow]")
+        console.print(f"  Skipping encode stage. Run 'python -m pipelines trie run' first.")
+        return
+
+    console.print(f"\n{'=' * 60}")
+    console.print("Stage 4: Binary Encoding")
+    console.print(f"{'=' * 60}")
+    console.print(f"  min_count={min_count}, smoothing={smoothing}, α={alpha}")
+
+    from pipelines.ngram.encode import run_encode
+    from pipelines.config import TEXT_CORPORA
+
+    result = run_encode(
+        ngram_dir=ngram_dir,
+        trie_path=trie_path,
+        output_dir=output_dir,
+        corpora=list(TEXT_CORPORA),
+        min_count=min_count,
+        alpha=alpha,
+        smoothing=smoothing,
+    )
+    if not result:
+        console.print(f"  [red]Encode stage failed[/red]")
+
+
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
@@ -439,8 +483,10 @@ def _print_output_summary(base: Path) -> None:
 
 
 from pipelines.ngram.validate import validate as _validate_cmd  # noqa: E402
+from pipelines.ngram.encode import encode as _encode_cmd  # noqa: E402
 
 cli.add_command(_validate_cmd, "validate")
+cli.add_command(_encode_cmd, "encode")
 
 
 if __name__ == "__main__":
