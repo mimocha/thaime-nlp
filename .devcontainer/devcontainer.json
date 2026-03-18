@@ -5,7 +5,8 @@
 	"runArgs": ["--security-opt", "label=disable"],
 	"remoteUser": "vscode",
 	"features": {
-		"ghcr.io/va-h/devcontainers-features/uv:1": {}
+		"ghcr.io/va-h/devcontainers-features/uv:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {}
 	},
 
 	"postCreateCommand": "uv sync",
