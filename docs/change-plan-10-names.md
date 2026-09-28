@@ -4,7 +4,7 @@
 **Author:** Chawit Leosrisook (maintainer) + Claude (agent)
 **Repo:** `mimocha/thaime-nlp`
 **Branch:** `pipeline/names`
-**Status:** Draft
+**Status:** Planned for nlp-data v1.1.0 (revised 2026-09-28: permissioned sources dropped)
 
 ## Objective
 
@@ -28,8 +28,6 @@ If names are injected into the existing pipeline without special treatment, most
 
 ## Data Sources
 
-### Phase 1 Sources (freely available, immediate use)
-
 **Source A — thai-names-corpus (GitHub, CC-BY 4.0):**
 https://github.com/korkeatw/thai-names-corpus
 
@@ -41,28 +39,11 @@ Characteristics:
 - TLTK word decomposition may struggle with some names (names often contain rare character combinations or don't decompose into standard syllable patterns)
 - Size: expected hundreds to low thousands of entries per file
 
-### Phase 2 Sources (require owner permission, added incrementally)
+### Dropped Sources
 
-**Source B — Behind the Name (web, permission required):**
-https://www.behindthename.com/submit/names/usage/thai
+Two further sources were considered: Behind the Name (https://www.behindthename.com/submit/names/usage/thai) and thai-language.com (first names, nicknames, and foreign names in Thai). Both have hand-curated romanizations but require the owner's permission to reuse. The maintainer emailed both owners and received no reply after several months, so both are treated as unavailable and are out of scope for this plan.
 
-Hand-curated collection of Thai names with romanization attached. High-quality data with both Thai script and Latin spelling. Paginated web interface — extraction requires scraping or a data request to the owner.
-
-Copyright: https://www.behindthename.com/info/copyright — maintainer will email the owner to request permission and potentially the dataset itself. If permission is denied, this source is dropped.
-
-**Source C — thai-language.com (web, permission required):**
-http://www.thai-language.com
-
-Three relevant pages with Thai spellings, pronunciations, and romanization:
-- Foreign names in Thai: http://www.thai-language.com/id/589838
-- Thai first names: http://www.thai-language.com/id/589844
-- Thai nicknames: http://www.thai-language.com/id/589843
-
-Contact: glenn@thai-language.com — maintainer will email for permission. If permission is denied, this source is dropped.
-
-### Phase staging rationale
-
-Phase 1 (Source A) is immediately usable with no legal uncertainty. The pipeline should be built and tested with this source first. Phase 2 sources are added only if and when permission is granted. The architecture must support incremental addition of new name sources without restructuring.
+Source A is the only names source. The ingestion layout (one subdirectory per source under `names/raw/`) keeps it possible to add another permissively licensed source later without restructuring.
 
 ## Approach
 
@@ -156,25 +137,7 @@ Names that produce empty or clearly wrong TLTK output should be:
 3. Manually romanized by the maintainer if they're common/important names
 4. Added via the overrides mechanism (same pattern as CP07)
 
-### Phase 4: Permissioned Source Integration (conditional)
-
-If the maintainer receives permission from behindthename.com and/or thai-language.com:
-
-**Task 4.1 — Data extraction:**
-- behindthename.com: scrape paginated name listings (Thai name + romanization pairs) or use the dataset if provided directly by the owner
-- thai-language.com: extract name tables from the three identified pages
-
-**Task 4.2 — Integration with existing pipeline:**
-- Names from permissioned sources are added to the `names/processed/` directory with source attribution
-- Names that come with pre-existing romanizations (behindthename, thai-language.com) get those romanizations added as additional trie keys alongside the TLTK-generated ones, with higher confidence (0.9) since they are human-curated
-- Deduplicate against Phase 1 names — if a name appears in both thai-names-corpus and behindthename, keep all romanization variants from both sources
-
-**Task 4.3 — License compliance:**
-- Document the license terms for each source in `data/names/README.md`
-- Verify license compatibility with THAIME's MPL-2.0
-- Add required attribution notices
-
-### Phase 5: Validation
+### Phase 4: Validation
 
 Validation is qualitative — the maintainer tests name inputs in the CLI/TUI:
 
@@ -188,11 +151,9 @@ Validation is qualitative — the maintainer tests name inputs in the CLI/TUI:
 
 - **No frequency data for names.** All names receive uniform frequency, so the engine cannot distinguish common names (สมชาย) from rare ones (สิริกัญญาพร). This means name candidates are ranked purely by romanization match quality and unigram cost floor, not by popularity. Acquiring name frequency data (e.g., from census statistics) would improve ranking but is not available publicly.
 
-- **Romanization is only phonologically generated.** The pipeline produces romanizations based on Thai phonological rules (via TLTK + variant generator), not based on how real people actually romanize their names. A person named ณัฐ who romanizes as "Nutch" will not find their name unless they also try "nat" (the phonologically predicted form). User dictionary remains the answer for personal romanization preferences.
+- **Romanization is only phonologically generated.** The pipeline produces romanizations based on Thai phonological rules (via TLTK + variant generator), not based on how real people actually romanize their names. A person named ณัฐ who romanizes as "Nutch" will not find their name unless they also try "nat" (the phonologically predicted form). User dictionary remains the answer for personal romanization preferences. With the curated-romanization sources dropped, the planned crowdsourced typing demo (`thaime` repo, `docs/plans/crowdsourcing-demo.md`) is the most likely future source of real name spellings.
 
 - **TLTK decomposition failures on names.** Names frequently contain unusual character combinations that TLTK's syllable decomposition doesn't handle well (this was noted in R003 as affecting ~5% of syllables). The failure rate for names may be higher than for common vocabulary. Failed names are excluded rather than included with bad romanizations.
-
-- **Phase 2 sources may not materialize.** Permission from behindthename.com and thai-language.com is not guaranteed. The plan is designed so Phase 1 alone delivers value — Phase 2 is additive, not required.
 
 - **Name/word ambiguity.** Some Thai words are also names (e.g., มานะ is both the name "Mana" and the word "perseverance"). The pipeline doesn't need to distinguish these — the same Thai text appears once in the trie regardless of whether it's a name, a word, or both. Frequency from text corpora (if available) takes precedence over the uniform name frequency.
 
@@ -207,14 +168,10 @@ Validation is qualitative — the maintainer tests name inputs in the CLI/TUI:
 | 2 | T2.2 | Frequency assignment design | 0.5 day | T2.1 |
 | 3 | T3.1 | Romanization generation for names | 1 day | T1.2 |
 | 3 | T3.2 | TLTK failure handling | 0.5 day | T3.1 |
-| 4 | T4.1 | Permissioned source extraction | 1–2 days | Permission granted |
-| 4 | T4.2 | Pipeline integration for Phase 2 sources | 1 day | T4.1 |
-| 4 | T4.3 | License compliance documentation | 0.5 day | T4.1 |
-| 5 | T5 | Validation (qualitative, maintainer-led) | 1 day | T3.1 |
+| 4 | T4 | Validation (qualitative, maintainer-led) | 1 day | T3.1 |
 
 **Phase 1–3 effort:** ~4.5 days
-**Phase 4 effort:** ~2.5–3.5 days (conditional on permission)
-**Phase 5 effort:** ~1 day
+**Phase 4 effort:** ~1 day
 
 ## Open Questions
 
@@ -222,7 +179,7 @@ Validation is qualitative — the maintainer tests name inputs in the CLI/TUI:
 
 2. **Should the names corpus participate in n-gram counting?** Names don't appear in sentence contexts in the names corpus (they're just lists), so they contribute nothing to bigram/trigram data. However, names DO appear in text corpora (news articles mention people). The current n-gram pipeline already captures these. No action needed — just noting that the names corpus is excluded from n-gram counting by design.
 
-3. **How to handle foreign names in Thai script?** The thai-language.com foreign names page (http://www.thai-language.com/id/589838) contains foreign names transliterated into Thai (e.g., จอห์น for "John"). These could be useful — a user typing "john" might want จอห์น. But this overlaps with the loanword approach (CP09). Consider handling foreign-name-in-Thai as a loanword subcase rather than duplicating in the names corpus.
+3. **How to handle foreign names in Thai script?** Foreign names transliterated into Thai (e.g., จอห์น for "John") could be useful — a user typing "john" might want จอห์น. But this overlaps with the loanword approach (CP09). Consider handling foreign-name-in-Thai as a loanword subcase rather than duplicating in the names corpus.
 
 4. **Should nicknames be treated differently?** Thai nicknames (ชื่อเล่น) are often single syllables (บี, เอ, โอ, นิว) that collide heavily with common Thai words and particles. Including them may add noise. Consider either excluding nicknames from Phase 1 or giving them even lower weight than full names.
 
@@ -235,7 +192,5 @@ Validation is qualitative — the maintainer tests name inputs in the CLI/TUI:
 - Change Plan 05: Trie Pipeline — `docs/plans/change-plan-05-trie-pipeline.md`
 - Change Plan 07: Trie Quality — `docs/plans/change-plan-07-trie-quality.md`
 - thai-names-corpus: https://github.com/korkeatw/thai-names-corpus (CC-BY 4.0)
-- Behind the Name (Thai): https://www.behindthename.com/submit/names/usage/thai
-- thai-language.com names: http://www.thai-language.com/id/589844
-- thai-language.com nicknames: http://www.thai-language.com/id/589843
-- thai-language.com foreign names: http://www.thai-language.com/id/589838
+- Behind the Name (Thai), dropped: https://www.behindthename.com/submit/names/usage/thai
+- thai-language.com, dropped: http://www.thai-language.com/id/589844

@@ -15,7 +15,9 @@
 
 ## In Progress
 
-*None*
+| # | Topic | Stage | Branch | Description |
+|---|-------|-------|--------|-------------|
+| 9 | Google Input Tools Comparison | Plan (2026-07-12) | `research/009-google-input-tools` | Benchmark THAIME against Google Input Tools' Thai transliteration, sort THAIME's losses by category, and mine romanization variants Google accepts that THAIME doesn't generate. Next step: Phase 1 API go/no-go check (run by the maintainer, needs network access). |
 
 ## Future Research
 

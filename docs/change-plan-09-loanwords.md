@@ -4,13 +4,15 @@
 **Author:** Chawit Leosrisook (maintainer) + Claude (agent)
 **Repo:** `mimocha/thaime-nlp`
 **Branch:** `pipeline/loanwords`
-**Status:** Draft
+**Status:** Planned for nlp-data v1.1.0
 
 ## Objective
 
 Identify loanwords in the existing vocabulary, generate dual romanization keys (English source spelling + Thai-pronunciation romanization) for each, and integrate them into the trie pipeline as enriched entries. This addresses one of the two largest vocabulary gaps in THAIME: users typing loanwords by their English source spelling (e.g., typing "coffee" for กาแฟ, "taxi" for แท็กซี่) currently get no results.
 
 ## Context
+
+A user has asked for this directly: [mimocha/thaime#6](https://github.com/mimocha/thaime/issues/6) (คำทับศัพท์) asks whether THAIME will support typing loanwords by their English spelling.
 
 Research 001 identified the loanword gap: no programmatic romanization source produces English source spellings from Thai phonological romanization. The variant generator (CP04) cannot produce "coffee" from กาแฟ's onset/vowel/coda decomposition — these are fundamentally different romanization strategies. Research 001 also validated PyThaiNLP's `lookup` engine as the best existing automated source for loanword mappings, though it covers only a subset.
 
